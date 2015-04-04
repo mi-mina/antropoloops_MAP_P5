@@ -46,7 +46,7 @@ void oscEvent(OscMessage theOscMessage) {
 
     loopsIndexed.add(infoLoop.get("trackLoop")+"-"+infoLoop.get("clipLoop"));
 
-    PImage unaImagen = loadImage("../0_portadas/"+(String)infoLoop.get("nombreLoop")+".jpg");
+    PImage unaImagen = loadImage("../0_covers/"+(String)infoLoop.get("nombreLoop")+".jpg");
 
     misImagenes.put(infoLoop.get("trackLoop")+"-"+infoLoop.get("clipLoop"), unaImagen);
   }
