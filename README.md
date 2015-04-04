@@ -8,6 +8,5 @@ antropoloop_Map se ha desarrollado con [processing](https://processing.org/) par
 
 Aquí tenéis vídeos de un par de sesiones: 
 
-<iframe src="https://player.vimeo.com/video/118357778" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/118357778">Sacromonte&#039;s gettin Fuzzy</a> from <a href="https://vimeo.com/user27007447">antropoloops</a> on <a href="https://vimeo.com">Vimeo</a>.</p> Compuesta con 27 loops procedentes de 20 canciones diferentes
-
-<iframe src="https://player.vimeo.com/video/92180493" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/92180493">Detente Judas Dance</a> from <a href="https://vimeo.com/user27007447">antropoloops</a> on <a href="https://vimeo.com">Vimeo</a>.</p> Compuesta con 36 loops procedentes de 22 canciones diferentes.
+<iframe src="https://player.vimeo.com/video/118357778" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/118357778">Sacromonte&#039;s gettin Fuzzy</a> from <a href="https://vimeo.com/user27007447">antropoloops</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+<iframe src="https://player.vimeo.com/video/92180493" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/92180493">Detente Judas Dance</a> from <a href="https://vimeo.com/user27007447">antropoloops</a> on <a href="https://vimeo.com">Vimeo</a>.</p> 
