@@ -6,9 +6,7 @@ antropoloops_MAP is an application made with [processing](https://processing.org
 antropoloops_MAP 1.0 is structured to receive data from the session in [ableton live](https://www.ableton.com/en/live/new-in-9/) via [OSC](http://opensoundcontrol.org/) and display it live on screen. The application shows the location and year of each loop recording, and the album covers of the original songs. It also shows the main fields of the mp3 ID3 tag (title, album and artist)
 Here's a couple of videos to see the application running:
 
-[![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778)
-
-[![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/detente%20judas%20dance.jpg)](https://vimeo.com/92180493)
+[![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778) [![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/detente%20judas%20dance.jpg)](https://vimeo.com/92180493)
 
 ### Concerning the code
 This is my first code and my first application ever, so, the code can be very likely improved…
