@@ -15,15 +15,15 @@ Suggestions are welcome and appreciated.
 ### Before you run the app
 
 ### How to run antropoloops_MAP
-Open your song in Ableton Live
-Open antropoloops_MAP
-Press 1 and wait until the grey point in the bottom left corner disappears.
-Press 2 and wait until the white point in the bottom left corner disappears.
-Press 3 and play your song!
+* Open your song in Ableton Live
+* Open antropoloops_MAP
+* Press 1 and wait until the grey point in the bottom left corner disappears.
+* Press 2 and wait until the white point in the bottom left corner disappears.
+* Press 3 and play your song!
 
 This first version was developed before we began to use Max for live. We are now exploring more possibilities for interaction with ableton live, improving graphics and trying to evolve towards clojure...
 
-
+## antropoloops_MAP
 antropoloops_MAP es una aplicación interactiva creada con [processing](https://processing.org/) para [antropoloops] (http://antropoloops.tumblr.com/)
 
 [antropoloops] (http://antropoloops.tumblr.com/) es un proyecto musical que crea canciones nuevas uniendo fragmentos de otras canciones, mezclando melodías y ritmos de distintas épocas y territorios. Las canciones se mezclan en directo usando Ableton Live 9 standard y el controlador APC40 MKII de Akai.
