@@ -1,6 +1,5 @@
 # antropoloops_MAP
-
-
+<img src="https://github.com/mi-mina/antropoloops_P5/blob/master/antropoloops-map-1.0.jpg" align="right" />
 
 antropoloops_MAP es una aplicación interactiva creada con [processing](https://processing.org/) para [antropoloops] (http://antropoloops.tumblr.com/)
 
