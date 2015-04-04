@@ -6,6 +6,12 @@ antropoloops_MAP is an application made with [processing](https://processing.org
 
 
 
+Here's a couple of videos showing the app running:
+
+[![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778)
+
+[![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778)
+
 
 antropoloops_MAP es una aplicación interactiva creada con [processing](https://processing.org/) para [antropoloops] (http://antropoloops.tumblr.com/)
 
@@ -14,13 +20,6 @@ antropoloops_MAP es una aplicación interactiva creada con [processing](https://
 antropoloop_Map se ha desarrollado con [processing](https://processing.org/) para visualizar en tiempo real como se van mezclando los diferentes loops y se va construyendo la canción. La aplicación muestra la procedencia y el año de grabación de cada loop, así como las portadas de los discos a los que pertenecen las canciones originales.  
 
 Aquí tenéis vídeos de un par de sesiones: 
-[![Sacromontes Getting Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778)
-
-
-<iframe src="https://player.vimeo.com/video/118357778" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/118357778">Sacromonte&#039;s gettin Fuzzy</a> from <a href="https://vimeo.com/user27007447">antropoloops</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-<iframe src="https://player.vimeo.com/video/92180493" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/92180493">Detente Judas Dance</a> from <a href="https://vimeo.com/user27007447">antropoloops</a> on <a href="https://vimeo.com">Vimeo</a>.</p> 
-
-
 
 
 
