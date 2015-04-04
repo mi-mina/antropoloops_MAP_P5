@@ -1,10 +1,10 @@
-# antropoloops MAP
+# antropoloops_MAP
 
-antropoloops MAP es una aplicación interactiva creada con [processing](https://processing.org/) para [antropoloops] (http://antropoloops.tumblr.com/)
+antropoloops_MAP es una aplicación interactiva creada con [processing](https://processing.org/) para [antropoloops] (http://antropoloops.tumblr.com/)
 
 [antropoloops] (http://antropoloops.tumblr.com/) es un proyecto musical que crea canciones nuevas uniendo fragmentos de otras canciones, mezclando melodías y ritmos de distintas épocas y territorios. Las canciones se mezclan en directo usando Ableton Live 9 standard y el controlador APC40 MKII de Akai.
 
-antropoloop Map se ha desarrollado con [processing](https://processing.org/) para visualizar en tiempo real como se van mezclando los diferentes loops y se va construyendo la canción. La aplicación muestra la procedencia y el año de grabación de cada loop, así como las portadas de los discos a los que pertenecen las canciones originales.  
+antropoloop_Map se ha desarrollado con [processing](https://processing.org/) para visualizar en tiempo real como se van mezclando los diferentes loops y se va construyendo la canción. La aplicación muestra la procedencia y el año de grabación de cada loop, así como las portadas de los discos a los que pertenecen las canciones originales.  
 
 Aquí tenéis vídeos de un par de sesiones: 
 
