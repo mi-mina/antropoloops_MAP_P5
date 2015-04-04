@@ -3,6 +3,7 @@
 
 antropoloops_MAP is an application made with [processing](https://processing.org/) for [antropoloops] (http://antropoloops.tumblr.com/).
 
+[antropoloops] (http://antropoloops.tumblr.com/) is a musical project that creates new songs by combining fragments of other songs, traditional folk songs from around the world. 
 
 
 
@@ -10,7 +11,7 @@ Here's a couple of videos showing the app running:
 
 [![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778)
 
-[![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778)
+[![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/detente%20judas%20dance.jpg)](https://vimeo.com/92180493)
 
 
 antropoloops_MAP es una aplicación interactiva creada con [processing](https://processing.org/) para [antropoloops] (http://antropoloops.tumblr.com/)
