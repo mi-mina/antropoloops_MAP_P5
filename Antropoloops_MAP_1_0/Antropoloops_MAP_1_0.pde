@@ -76,7 +76,7 @@ void setup() {
   timerOnda = new Timer(0);
 
   //**********Cargo los datos de las Bases de Datos***************
-  misLoopsJSON = loadJSONArray ("../1_BDatos/"+"BDLoops.txt");
+  misLoopsJSON = loadJSONArray ("../1_BDatos/"+"BDloops.txt");
   misLugaresJSON = loadJSONArray ("../1_BDatos/"+"BDlugares.txt");
 
   todosMisLoops = new HashMap<String, HashMap<String, Object>>();
