@@ -25,7 +25,7 @@ The app uses two JSON files stored in the folder 1_BDatos. In the first JSON fil
 "lugar":"Nigeria",
 "antropoloop":"Antioch Okwagala Express"}
 ```
-You have to create this database ad hoc for your songs. It can be done easily using Jaikoz, to manage the mp3 ID3Tags.
+You have to create this database *ad hoc* for your songs. It can be done easily using Jaikoz, to manage the mp3 ID3Tags.
 In the second JSON file, *BDlugares*, we store the coordinates of the places where the songs come from.
 The coordinates are calculated based on the world map used as background image. If you change the background, you´ll have to recalculate the coordinates.
 
@@ -62,7 +62,7 @@ La aplicación usa dos archivos JSON ubicados en la carpeta 1_BDatos. En el prim
 "lugar":"Nigeria",
 "antropoloop":"Antioch Okwagala Express"}
 ```
-Esta base de datos tenéis que crearla ad hoc para vuestras canciones. Se puede hacer de forma sencilla usando Jaikoz para gestionar las ID3Tags de los mp3, y [Mr. Data Converter](http://shancarter.github.io/mr-data-converter/) para convertir a JSON.
+Esta base de datos tenéis que crearla *ad hoc* para vuestras canciones. Se puede hacer de forma sencilla usando Jaikoz para gestionar las ID3Tags de los mp3, y [Mr. Data Converter](http://shancarter.github.io/mr-data-converter/) para convertir a JSON.
 En el segundo JSON, *BDlugares*, almacenamos las coordenadas de los lugares de donde proceden las canciones. Las coordenadas están calculadas en base al mapamundi usado como imagen de fondo de la aplicación. Si cambias la imagen de fondo, tendrás que recalcular las coordenadas.
 
 ### Para poner en marcha la aplicación:
