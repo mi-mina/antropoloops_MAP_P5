@@ -38,6 +38,8 @@ The coordinates are calculated based on the world map used as background image. 
 
 This first version was developed before we began to use Max for live. We are now exploring more possibilities for interaction with ableton live, improving graphics and trying to evolve towards clojure...
 
+We want to thank [Tangrammer](https://github.com/tangrammer) for his invaluable help. Without him, this wouldn´t have been possible. :) 
+***
 ## antropoloops_MAP
 antropoloops_MAP 1.0 es la primera versión de una aplicación interactiva creada con [processing](https://processing.org/) para [antropoloops] (http://antropoloops.tumblr.com/), un proyecto musical que crea canciones nuevas uniendo fragmentos de otras canciones, mezclando melodías y ritmos de distintas épocas y territorios. El objetivo de la aplicación es hacer la remezcla más transparente y darle visibilidad a las fuentes que la componen.  
 antropoloops_MAP 1.0 se ha programado para recibir los datos de la sesión en [ableton live](https://www.ableton.com/en/live/new-in-9/) via [OSC](http://opensoundcontrol.org/) y visualizarlos en la pantalla en directo. La aplicación muestra la procedencia y el año de grabación de cada loop, así como las portadas de los discos a los que pertenecen las canciones originales. También muestra los campos principales de el ID3tag del mp3 (título, álbum y artista).
@@ -73,3 +75,5 @@ En el segundo JSON, *BDlugares*, almacenamos las coordenadas de los lugares de d
 * Pulsa 3 y ¡ya puedes empezar a pinchar!
 
 Esta primera versión se ha desarrollado antes de que empezáramos a usar Max for live. Ahora andamos explorando más posibilidades de interacción con el ableton live, estamos tratando de mejorar los gráficos, así como intentando evolucionar hacia clojure...
+
+Queremos darle las gracias a [Tangrammer](https://github.com/tangrammer). Sin su inestimable ayuda esto no habría sido posible. :)
