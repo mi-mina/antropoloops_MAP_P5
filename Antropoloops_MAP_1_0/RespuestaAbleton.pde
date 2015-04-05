@@ -56,8 +56,7 @@ void oscEvent(OscMessage theOscMessage) {
     int claveTrack = theOscMessage.get(0).intValue();
     int claveClip = theOscMessage.get(1).intValue();
     int state = (Integer)theOscMessage.get(2).intValue();
-    //println(claveTrack, claveClip, state);
-
+    
     miAntropoloops.get(claveTrack+"-"+claveClip).put("state", state);
 
     if (state == 2) {

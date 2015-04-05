@@ -13,7 +13,6 @@ class Red {
   }
 
   void dibujaRed() {
-    // if (a<=0.45) {
     stroke(h, s, b, a);
     strokeWeight(2);
     line(x1, y1, x2, y2);

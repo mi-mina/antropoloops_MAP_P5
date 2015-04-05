@@ -120,7 +120,6 @@ void draw() {
     text("www.mi-mina.com", (width-(height*1.6))/2+10, height-13);
   }
   if (float(width)/float(height)<1.6) {
-    //println("menor");
     image(mundi, 0, (height-(width/1.6))/2, width, width/1.6);
     fill(50);
     noStroke();
