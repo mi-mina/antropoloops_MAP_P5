@@ -15,7 +15,7 @@ Suggestions are welcome and appreciated.
 
 ### Before you run the app
 We store images of the albums in the folder 0_covers. The name of the images must match the name of the song. 
-The app uses two JSON files stored in the folder 1_BDatos. In the first JSON file, called BDloops, we store the mp3 files metadata. For example:
+The app uses two JSON files stored in the folder 1_BDatos. In the first JSON file, called *BDloops*, we store the mp3 files metadata. For example:
 ```
 {"nombreArchivo":"01 Chant de louanges Sonrai",
 "artista":"Charles Duvelle",
@@ -25,8 +25,8 @@ The app uses two JSON files stored in the folder 1_BDatos. In the first JSON fil
 "lugar":"Nigeria",
 "antropoloop":"Antioch Okwagala Express"}
 ```
-You have to create this database ad hoc for your songs. It can be done easily using Jaikoz  to manage the mp3 ID3Tags.
-In the second JSON file, BDlugares, we store the coordinates of the places where the songs come from.
+You have to create this database ad hoc for your songs. It can be done easily using Jaikoz, to manage the mp3 ID3Tags.
+In the second JSON file, *BDlugares*, we store the coordinates of the places where the songs come from.
 The coordinates are calculated based on the world map used as background image. If you change the background, you´ll have to recalculate the coordinates.
 
 ### How to run antropoloops_MAP
@@ -51,7 +51,8 @@ Se agradecen sugerencias y mejoras si os apetece jugar con él.
 
 ### Antes de poner en marcha la aplicación.
 En la carpeta 0_covers guardamos las portadas de los álbumes a los que pertenecen las canciones. El nombre de las imágenes debe coincidir con el nombre de la canción. 
-La aplicación usa dos archivos JSON ubicados en la carpeta 1_BDatos. En el primero, llamado BDloops, almacenamos los metadatos de los archivos mp3 usados. Ejemplo:
+
+La aplicación usa dos archivos JSON ubicados en la carpeta 1_BDatos. En el primero, llamado *BDloops*, almacenamos los metadatos de los archivos mp3 usados. Ejemplo:
 ```
 {"nombreArchivo":"01 Chant de louanges Sonrai",
 "artista":"Charles Duvelle",
@@ -61,8 +62,8 @@ La aplicación usa dos archivos JSON ubicados en la carpeta 1_BDatos. En el prim
 "lugar":"Nigeria",
 "antropoloop":"Antioch Okwagala Express"}
 ```
-Esta base de datos tenéis que crearla ad hoc para vuestras canciones. Se puede hacer de forma sencilla usando Jaikoz para gestionar las ID3Tags de los mp3, y Mr. Data Converter http://shancarter.github.io/mr-data-converter/ para convertir a JSON.
-En el segundo JSON, BDlugares, almacenamos las coordenadas de los lugares de donde proceden las canciones. Las coordenadas están calculadas en base al mapamundi usado como imagen de fondo de la aplicación. Si cambias la imagen de fondo, tendrás que recalcular las coordenadas.
+Esta base de datos tenéis que crearla ad hoc para vuestras canciones. Se puede hacer de forma sencilla usando Jaikoz para gestionar las ID3Tags de los mp3, y [Mr. Data Converter](http://shancarter.github.io/mr-data-converter/) para convertir a JSON.
+En el segundo JSON, *BDlugares*, almacenamos las coordenadas de los lugares de donde proceden las canciones. Las coordenadas están calculadas en base al mapamundi usado como imagen de fondo de la aplicación. Si cambias la imagen de fondo, tendrás que recalcular las coordenadas.
 
 ### Para poner en marcha la aplicación:
 * Abre en Ableton Live la canción que quieras pinchar
