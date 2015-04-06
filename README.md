@@ -36,7 +36,7 @@ The coordinates are calculated based on the world map used as background image. 
 * Press 2 and wait until the white point in the bottom left corner disappears.
 * Press 3 and play your song!
 
-This first version was developed before we began to use Max for live. We are now exploring more possibilities for interaction with ableton live, improving graphics and trying to evolve towards clojure...
+This first version was developed before we began to use Max for live. We are now exploring more possibilities for interaction with ableton live, improving graphics and trying to evolve towards [clojure](http://clojure.org/)...
 
 We want to thank [Tangrammer](https://github.com/tangrammer) for his invaluable help. Without him, this wouldn´t have been possible. :) 
 ***
@@ -74,6 +74,6 @@ En el segundo JSON, *BDlugares*, almacenamos las coordenadas de los lugares de d
 * Pulsa 2 y espera a que se apague el punto blanco que aparece en la esquina inferior izquierda de la pantalla.
 * Pulsa 3 y ¡ya puedes empezar a pinchar!
 
-Esta primera versión se ha desarrollado antes de que empezáramos a usar Max for live. Ahora andamos explorando más posibilidades de interacción con el ableton live, estamos tratando de mejorar los gráficos, así como intentando evolucionar hacia clojure...
+Esta primera versión se ha desarrollado antes de que empezáramos a usar Max for live. Ahora andamos explorando más posibilidades de interacción con el ableton live, estamos tratando de mejorar los gráficos, así como intentando evolucionar hacia [clojure](http://clojure.org/)...
 
 Queremos darle las gracias a [Tangrammer](https://github.com/tangrammer). Sin su inestimable ayuda esto no habría sido posible. :)
