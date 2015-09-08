@@ -54,7 +54,6 @@ float d;
 //============================================================================
 void setup() {
   size(displayWidth, displayHeight);
-  size(1280, 720);
   if (frame != null) {
     frame.setResizable(true);
   }
@@ -107,8 +106,7 @@ void setup() {
 void draw() {
 
   background(#2c2c2c);
-  if (float(width)/float(height)>=1.6) {
-    //println("mayor");
+  if (float(width)/float(height)>=1.6) { //El tamaño de la imagen de fondo es 1280x800. 1280/800=1.6
     image(mundi, (width-(height*1.6))/2, 0, height*1.6, height );
     fill(50);
     noStroke();
@@ -263,10 +261,10 @@ void draw() {
                   int posicion = (Integer)unClip.get("trackLoop");
                   String fecha= (String)miCancion.get("fecha");
 
-                  miRed[i]= new Red(coordX, coordY, ( origenX+(ladoCaratula*posicion)+(textWidth(fecha))+7), origenY+ladoCaratula+linSep+alturaRect+linSep+alturaText, h, s, b, vol*50);
+                  miRed[i]= new Red(coordX, coordY, (origenX+(ladoCaratula*posicion)+(textWidth(fecha))+7), origenY+ladoCaratula+linSep+alturaRect+linSep+alturaText, h, s, b, vol*70);
                   miRed[i].dibujaRed();
 
-                  misAbanicos[i]= new Abanico(coordX, coordY, vol*width/12.8, h, s, b);    //al multiplicar por width/12.8 lo hago dependiente de la resolución
+                  misAbanicos[i]= new Abanico(coordX, coordY, vol*100, h, s, b);    
 
                   pushMatrix();
                   translate(coordX, coordY);
@@ -363,7 +361,7 @@ void draw() {
                       miRed[i]= new Red(coordX, coordY, ( origenX+(ladoCaratula*posicion)+(textWidth(fecha))+7), origenY+ladoCaratula+linSep+alturaRect+linSep+alturaText, h, s, b, vol*50);
                       miRed[i].dibujaRed();
 
-                      misAbanicos[i]= new Abanico(coordX, coordY, vol*width/12.8, h, s, b);
+                      misAbanicos[i]= new Abanico(coordX, coordY, vol*100, h, s, b);
 
                       pushMatrix();
                       translate(coordX, coordY);
