@@ -1,12 +1,12 @@
 class Abanico {
   float d;
   float x, y, h, s, b;
-
+  
   // Abanico constructor
   Abanico(float coorX, float coorY, float diam, float colorH, float colorS, float colorB) {
     x = coorX;
     y = coorY;
-    d = diam;
+    d = diam*0.8;
     h = colorH;
     s = colorS;
     b = colorB;
