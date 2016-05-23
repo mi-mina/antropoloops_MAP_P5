@@ -100,6 +100,7 @@ void setup() {
   misImagenes = new HashMap<String, PImage>();
   ultimoLoop = new HashMap<String, Object>();
   web = "www.antropoloops.com";
+  
 }
 
 //=======================================================================
@@ -168,9 +169,9 @@ void draw() {
     break;
 
   case 2:
-
-    if (miAntropoloops != null && drawing==true) {
-
+     
+      if (miAntropoloops != null && drawing==true) {
+      
       misAbanicos = new Abanico[miAntropoloops.size()];
       miRed = new Red[miAntropoloops.size()];
       m = millis();
@@ -234,7 +235,7 @@ void draw() {
                     ladoCaratula = height*1.6/8;
                     finalX = width-(width-(height*1.6))/2;
                     finalY = height;
-                    ladoCuadrado = height/14;
+                    ladoCuadrado = height/13;
                   } 
                   else if (float(width)/float(height)<1.6) {
                     origenX = 0;
@@ -244,7 +245,7 @@ void draw() {
                     ladoCaratula = width/8;
                     finalX = width;
                     finalY = height-(height-(width/1.6))/2;
-                    ladoCuadrado = (width/1.6)/16;
+                    ladoCuadrado = (width/1.6)/13;
                   }
                   float alturaRect = ladoCaratula/10;
                   int linSep = 3;
@@ -420,7 +421,7 @@ void draw() {
         println(loopsIndexed);
       }
       else if (key == '5') {
-        println(miAntropoloops);
+        println(todosMisLoops);
       }
     }
 
