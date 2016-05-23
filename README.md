@@ -14,7 +14,7 @@ This is my first code and my first application ever, so, the code can be very li
 Suggestions are welcome and appreciated.
 
 ### Before you run the app
-We store images of the albums in the folder 0_covers. The name of the images must match the name of the song. 
+We store images of the albums in the folder 0_covers. The name of the images must match the name of the song.
 The app uses two JSON files stored in the folder 1_BDatos. In the first JSON file, called *BDloops*, we store the mp3 files metadata. For example:
 ```
 {"nombreArchivo":"01 Chant de louanges Sonrai",
@@ -38,13 +38,13 @@ The coordinates are calculated based on the world map used as background image. 
 
 This first version was developed before we began to use [Max for live](https://www.ableton.com/en/live/max-for-live/). We are now exploring more possibilities for interaction with ableton live, improving graphics and trying to evolve towards [clojure](http://clojure.org/)...
 
-We want to thank [Tangrammer](https://github.com/tangrammer) for his invaluable help. Without him, this wouldn´t have been possible. :) 
+We want to thank [Tangrammer](https://github.com/tangrammer) for his invaluable help. Without him, this wouldn´t have been possible. :)
 ***
 ## antropoloops_MAP
 antropoloops_MAP 1.0 es la primera versión de una aplicación interactiva creada con [processing](https://processing.org/) para [antropoloops] (http://antropoloops.tumblr.com/), un proyecto musical que crea canciones nuevas uniendo fragmentos de otras canciones, mezclando melodías y ritmos de distintas épocas y territorios. El objetivo de la aplicación es hacer la remezcla más transparente y darle visibilidad a las fuentes que la componen.  
 antropoloops_MAP 1.0 se ha programado para recibir los datos de la sesión en [ableton live](https://www.ableton.com/en/live/new-in-9/) via [OSC](http://opensoundcontrol.org/) y visualizarlos en la pantalla en directo. La aplicación muestra la procedencia y el año de grabación de cada loop, así como las portadas de los discos a los que pertenecen las canciones originales. También muestra los campos principales de el ID3tag del mp3 (título, álbum y artista).
 
-Aquí tenéis un par de vídeos para ver la aplicación en funcionamiento: 
+Aquí tenéis un par de vídeos para ver la aplicación en funcionamiento:   
 [![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778) [![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/detente%20judas%20dance.jpg)](https://vimeo.com/92180493)
 
 ### En relación al código.
@@ -52,7 +52,7 @@ Este es mi primer código y mi primera aplicación chispas, por lo que el códig
 Se agradecen sugerencias y mejoras si os apetece jugar con él.
 
 ### Antes de poner en marcha la aplicación.
-En la carpeta 0_covers guardamos las portadas de los álbumes a los que pertenecen las canciones. El nombre de las imágenes debe coincidir con el nombre de la canción. 
+En la carpeta 0_covers guardamos las portadas de los álbumes a los que pertenecen las canciones. El nombre de las imágenes debe coincidir con el nombre de la canción.
 
 La aplicación usa dos archivos JSON ubicados en la carpeta 1_BDatos. En el primero, llamado *BDloops*, almacenamos los metadatos de los archivos mp3 usados. Ejemplo:
 ```
