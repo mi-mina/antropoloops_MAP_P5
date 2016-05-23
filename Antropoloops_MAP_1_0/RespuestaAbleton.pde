@@ -4,10 +4,6 @@ void oscEvent(OscMessage theOscMessage) {
   String path=theOscMessage.addrPattern();
 
   //Nos da la info de todos los clips que hay (track, clip, name, color) 
-  if (path.equals("/live/name/clip/done")) {
-   println("***********DONE************");
-  }
-  
   if (path.equals("/live/name/clip")) {
     println("+++++++++++++Oyendo "+path+"++++++++++++++++");
     timerPuntoRojo.start(1);
@@ -50,11 +46,17 @@ void oscEvent(OscMessage theOscMessage) {
     //infoLoop.get("nombreLoop")
 
     loopsIndexed.add(infoLoop.get("trackLoop")+"-"+infoLoop.get("clipLoop"));
-    println(loopsIndexed);
+    //println(loopsIndexed);
 
     PImage unaImagen = loadImage("../0_covers/"+(String)infoLoop.get("nombreLoop")+".jpg");
 
     misImagenes.put(infoLoop.get("trackLoop")+"-"+infoLoop.get("clipLoop"), unaImagen);
+  }
+  
+  // Me avisa cuando live/name/clip ha terminado de lanzar mensajes
+  if (path.equals("/live/name/clip/done")) {
+   println("***********DONE************");
+   //println(theOscMessage.arguments()[0]);
   }
 
   //Aquí escuchamos si un clip cambia de estado (no clip (0), has clip (1), playing (2), triggered (3))
@@ -106,7 +108,7 @@ void oscEvent(OscMessage theOscMessage) {
     ct1 = ct1 + 1;
     String idTrackClip=loopsIndexed.get(ct1);
     miAntropoloops.get(idTrackClip).put("loopend", theOscMessage.get(0).floatValue());
-    println("loopend "+theOscMessage.get(0).floatValue());
+    //println("loopend "+theOscMessage.get(0).floatValue());
   }
 
   if (path.equals("/live/volume")) {
@@ -115,7 +117,7 @@ void oscEvent(OscMessage theOscMessage) {
       int[] a = int(split(claveClip, '-'));
       if (a[0] == theOscMessage.get(0).intValue()) {
         miAntropoloops.get(claveClip).put("volume", theOscMessage.get(1).floatValue());
-        println("volume "+theOscMessage.get(0).intValue()+" "+theOscMessage.get(1).floatValue());
+        //println("volume "+theOscMessage.get(0).intValue()+" "+theOscMessage.get(1).floatValue());
        }
     }
   }
@@ -136,7 +138,7 @@ void oscEvent(OscMessage theOscMessage) {
       int[] a = int(split(claveClip, '-'));
       if (a[0] == theOscMessage.get(0).intValue()) {
         miAntropoloops.get(claveClip).put("mute", theOscMessage.get(1).intValue());
-        println("mute "+theOscMessage.get(1).intValue());
+        //println("mute "+theOscMessage.get(1).intValue());
       }
     }
   }
