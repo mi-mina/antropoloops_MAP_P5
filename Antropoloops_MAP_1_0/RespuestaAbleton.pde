@@ -54,6 +54,7 @@ void oscEvent(OscMessage theOscMessage) {
   }
   
   // Me avisa cuando live/name/clip ha terminado de lanzar mensajes
+  // Es un path que he añadido yo a LiveOSC
   if (path.equals("/live/name/clip/done")) {
    println("***********DONE************");
    //println(theOscMessage.arguments()[0]);
