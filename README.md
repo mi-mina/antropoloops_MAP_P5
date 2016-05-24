@@ -13,6 +13,10 @@ Here's a couple of videos to see the application running:
 This is my first code and my first application ever, so, the code can be very likely improved…
 Suggestions are welcome and appreciated.
 
+### App Schema
+<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/AppSchema-P5.jpg" alt="App Schema" title="App Schema" align="center"/>  
+[This](https://prezi.com/-aet0_dmvstm/antropoloops-processing/) is a schema of how the app works.
+
 ### Before you run the app
 We store images of the albums in the folder 0_covers. The name of the images must match the name of the song.
 The app uses two JSON files stored in the folder 1_BDatos. In the first JSON file, called *BDloops*, we store the mp3 files metadata. For example:
@@ -50,6 +54,10 @@ Aquí tenéis un par de vídeos para ver la aplicación en funcionamiento:
 ### En relación al código.
 Este es mi primer código y mi primera aplicación chispas, por lo que el código es muy mejorable :)
 Se agradecen sugerencias y mejoras si os apetece jugar con él.
+
+### Esquema de la aplicación.
+<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/AppSchema-P5.jpg" alt="App Schema" title="App Schema" align="center"/>  
+[Este](https://prezi.com/-aet0_dmvstm/antropoloops-processing/) es un esquema de cómo funciona la aplicación.
 
 ### Antes de poner en marcha la aplicación.
 En la carpeta 0_covers guardamos las portadas de los álbumes a los que pertenecen las canciones. El nombre de las imágenes debe coincidir con el nombre de la canción.
