@@ -1,7 +1,12 @@
-/*Coded by MI-MI NA
- www.mi-mina.com
- for Antropoloops
- www.antropoloops.com
+/*
+ * Needs OSCLive from http://livecontrol.q3f.org/ableton-liveapi/liveosc/
+ * to be installed within Ableton
+ * complete List of OSC calls at http://monome.q3f.org/browser/trunk/LiveOSC/OSCAPI.txt
+ * 
+ * Coded by MI-MI NA
+ * www.mi-mina.com
+ * for Antropoloops
+ * www.antropoloops.com
  */
 
 import oscP5.*;
