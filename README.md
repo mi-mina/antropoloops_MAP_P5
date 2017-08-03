@@ -1,4 +1,4 @@
-# antropoloops_MAP
+# antropoloops MAP 1.0.0
 <img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/resources/antropoloops-MAP.jpg" alt="antropoloops_MAP" title="antropoloops_MAP"  align="center"/>
 
 antropoloops_MAP is an application made with [processing](https://processing.org/) for [antropoloops](http://antropoloops.tumblr.com/), a musical project that creates sound collages with fragments of other songs, mixing melodies and rhythms from different times and territories. The aim of the application is to make the mix more transparent and give visibility to the sources that compose it.
