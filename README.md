@@ -1,7 +1,7 @@
 # antropoloops_MAP
 <img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/resources/antropoloops-MAP.jpg" alt="antropoloops_MAP" title="antropoloops_MAP"  align="center"/>
 
-antropoloops_MAP is an application made with [processing](https://processing.org/) for [antropoloops] (http://antropoloops.tumblr.com/), a musical project that creates sound collages with fragments of other songs, mixing melodies and rhythms from different times and territories. The aim of the application is to make the mix more transparent and give visibility to the sources that compose it.
+antropoloops_MAP is an application made with [processing](https://processing.org/) for [antropoloops](http://antropoloops.tumblr.com/), a musical project that creates sound collages with fragments of other songs, mixing melodies and rhythms from different times and territories. The aim of the application is to make the mix more transparent and give visibility to the sources that compose it.
 
 antropoloops_MAP 1.0 is structured to receive data from the session in [ableton live](https://www.ableton.com/en/live/new-in-9/) via [OSC](http://opensoundcontrol.org/) and display it live on screen. The application shows the location and year of each loop recording, and the album covers of the original songs. It also shows the main fields of the mp3 ID3 tag (title, album and artist).
 
