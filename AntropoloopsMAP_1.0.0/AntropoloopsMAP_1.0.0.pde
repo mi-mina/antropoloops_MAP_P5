@@ -289,7 +289,7 @@ void draw() {
                   miRed[i]= new Red(coordX, coordY, (origenX+(ladoCaratula*posicion)+(textWidth(fecha))+7), origenY+ladoCaratula+linSep+alturaRect+linSep+alturaText, h, s, b, vol*70);
                   miRed[i].dibujaRed();
 
-                  misAbanicos[i]= new Abanico(coordX, coordY, vol*100, h, s, b);    
+                  misAbanicos[i]= new Abanico(coordX, coordY, vol*140, h, s, b); // Tamaño círculos vol * tamaño    
 
                   pushMatrix();
                   translate(coordX, coordY);
@@ -448,4 +448,3 @@ void draw() {
         println(todosMisLoops);
       }
     }
-
