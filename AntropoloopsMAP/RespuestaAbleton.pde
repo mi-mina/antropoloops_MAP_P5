@@ -151,5 +151,9 @@ void oscEvent(OscMessage theOscMessage) {
     tempo = theOscMessage.get(0).floatValue();
     println("tempo: OK");
   }
+  
+  if (path.equals("/live/master/volume")) {
+    masterVolume = theOscMessage.get(0).floatValue();
+    println("masterVolume: "+masterVolume);
+  }
 }
-

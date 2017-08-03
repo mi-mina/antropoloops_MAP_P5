@@ -50,6 +50,9 @@ void pregunta() {
   OscMessage tempoMessage = new OscMessage("/live/tempo");
   //oscP5.send(tempoMessage, myRemoteLocation);
   oscP5.send(tempoMessage);
+  
+  //Pregunto por el master volume
+  OscMessage masterVolumeMessage = new OscMessage("/live/master/volume");
+  oscP5.send(masterVolumeMessage);
   println("+++++++++++++Fin Pregunta++++++++++++++");
 }
-

@@ -16,5 +16,3 @@ boolean soloState() {
 
   return soloState.containsValue(1);
 }
-
-

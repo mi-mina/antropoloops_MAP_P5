@@ -39,6 +39,7 @@ HashMap<String, Object> ultimoLoop;
 int ct1;
 int m; //millis
 float tempo;
+float masterVolume;
 float coordX, coordY, coordXOnda, coordYOnda;
 float origenX, origenY;
 float ladoCaratula;
@@ -289,7 +290,7 @@ void draw() {
                   miRed[i]= new Red(coordX, coordY, (origenX+(ladoCaratula*posicion)+(textWidth(fecha))+7), origenY+ladoCaratula+linSep+alturaRect+linSep+alturaText, h, s, b, vol*70);
                   miRed[i].dibujaRed();
 
-                  misAbanicos[i]= new Abanico(coordX, coordY, vol*140, h, s, b); // Tamaño círculos vol * tamaño    
+                  misAbanicos[i]= new Abanico(coordX, coordY, vol*140, masterVolume,h, s, b); // Tamaño círculos vol * tamaño    
 
                   pushMatrix();
                   translate(coordX, coordY);
@@ -386,7 +387,7 @@ void draw() {
                       miRed[i]= new Red(coordX, coordY, ( origenX+(ladoCaratula*posicion)+(textWidth(fecha))+7), origenY+ladoCaratula+linSep+alturaRect+linSep+alturaText, h, s, b, vol*50);
                       miRed[i].dibujaRed();
 
-                      misAbanicos[i]= new Abanico(coordX, coordY, vol*100, h, s, b);
+                      misAbanicos[i]= new Abanico(coordX, coordY, vol*100, masterVolume, h, s, b);
 
                       pushMatrix();
                       translate(coordX, coordY);
