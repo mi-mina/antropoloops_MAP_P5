@@ -1,5 +1,5 @@
 # antropoloops_MAP
-<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/antropoloops-MAP.jpg" alt="antropoloops_MAP" title="antropoloops_MAP"  align="center"/>
+<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/resources/antropoloops-MAP.jpg" alt="antropoloops_MAP" title="antropoloops_MAP"  align="center"/>
 
 antropoloops_MAP is an application made with [processing](https://processing.org/) for [antropoloops] (http://antropoloops.tumblr.com/), a musical project that creates sound collages with fragments of other songs, mixing melodies and rhythms from different times and territories. The aim of the application is to make the mix more transparent and give visibility to the sources that compose it.
 
@@ -7,14 +7,14 @@ antropoloops_MAP 1.0 is structured to receive data from the session in [ableton 
 
 Here's a couple of videos to see the application running:
 
-[![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778) [![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/detente%20judas%20dance.jpg)](https://vimeo.com/92180493)
+[![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/resources/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778) [![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/resources/detente%20judas%20dance.jpg)](https://vimeo.com/92180493)
 
 ### Concerning the code
 This is my first code and my first application ever, so, the code can be very likely improved…
 Suggestions are welcome and appreciated.
 
 ### App Schema
-<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/AppSchema-P5.jpg" alt="App Schema" title="App Schema" align="center"/>  
+<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/resources/AppSchema-P5.jpg" alt="App Schema" title="App Schema" align="center"/>  
 [This](https://prezi.com/-aet0_dmvstm/antropoloops-processing/) is a schema of how the app works.
 
 ### Before you run the app
@@ -49,14 +49,14 @@ antropoloops_MAP 1.0 es la primera versión de una aplicación interactiva cread
 antropoloops_MAP 1.0 se ha programado para recibir los datos de la sesión en [ableton live](https://www.ableton.com/en/live/new-in-9/) via [OSC](http://opensoundcontrol.org/) y visualizarlos en la pantalla en directo. La aplicación muestra la procedencia y el año de grabación de cada loop, así como las portadas de los discos a los que pertenecen las canciones originales. También muestra los campos principales de el ID3tag del mp3 (título, álbum y artista).
 
 Aquí tenéis un par de vídeos para ver la aplicación en funcionamiento:   
-[![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778) [![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/detente%20judas%20dance.jpg)](https://vimeo.com/92180493)
+[![Sacromontes Gettin' Fyzzy](https://github.com/mi-mina/antropoloops_P5/blob/master/resources/sacromontes%20getting%20fuzzy.jpg)](https://vimeo.com/118357778) [![Detente Judas Dance](https://github.com/mi-mina/antropoloops_P5/blob/master/resources/detente%20judas%20dance.jpg)](https://vimeo.com/92180493)
 
 ### En relación al código.
 Este es mi primer código y mi primera aplicación chispas, por lo que el código es muy mejorable :)
 Se agradecen sugerencias y mejoras si os apetece jugar con él.
 
 ### Esquema de la aplicación.
-<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/AppSchema-P5.jpg" alt="App Schema" title="App Schema" align="center"/>  
+<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/resources/AppSchema-P5.jpg" alt="App Schema" title="App Schema" align="center"/>  
 [Este](https://prezi.com/-aet0_dmvstm/antropoloops-processing/) es un esquema de cómo funciona la aplicación.
 
 ### Antes de poner en marcha la aplicación.
