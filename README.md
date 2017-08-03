@@ -14,7 +14,8 @@ This is my first code and my first application ever, so, the code can be very li
 Suggestions are welcome and appreciated.
 
 ### App Schema
-<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/resources/AppSchema-P5.jpg" alt="App Schema" title="App Schema" align="center"/>  
+<img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/resources/AppSchema-P5.jpg" alt="App Schema" title="App Schema" align="center"/>
+ 
 [This](https://prezi.com/-aet0_dmvstm/antropoloops-processing/) is a schema of how the app works.
 
 ### Before you run the app
