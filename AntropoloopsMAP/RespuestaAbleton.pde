@@ -43,10 +43,10 @@ void oscEvent(OscMessage theOscMessage) {
 
     miAntropoloops.put(infoLoop.get("trackLoop")+"-"+infoLoop.get("clipLoop"), infoLoop); 
     println(infoLoop.get("trackLoop")+"-"+infoLoop.get("clipLoop"), "/", infoLoop);
-    //infoLoop.get("nombreLoop")
+    // infoLoop.get("nombreLoop")
 
     loopsIndexed.add(infoLoop.get("trackLoop")+"-"+infoLoop.get("clipLoop"));
-    //println(loopsIndexed);
+    // println(loopsIndexed);
 
     PImage unaImagen = loadImage("../0_covers/"+(String)infoLoop.get("nombreLoop")+".jpg");
 
@@ -57,7 +57,7 @@ void oscEvent(OscMessage theOscMessage) {
   // Es un path que he añadido yo a LiveOSC
   if (path.equals("/live/name/clip/done")) {
    println("***********DONE************");
-   //println(theOscMessage.arguments()[0]);
+   clipsLoaded = true;
   }
 
   //Aquí escuchamos si un clip cambia de estado (no clip (0), has clip (1), playing (2), triggered (3))
@@ -65,13 +65,13 @@ void oscEvent(OscMessage theOscMessage) {
     int claveTrack = theOscMessage.get(0).intValue();
     int claveClip = theOscMessage.get(1).intValue();
     int state = (Integer)theOscMessage.get(2).intValue();
-    println(claveTrack+"-"+claveClip+": "+state);
+    // println(claveTrack+"-"+claveClip+": "+state);
     
     miAntropoloops.get(claveTrack+"-"+claveClip).put("state", state);
 
     if (state == 2) {
       ultimoLoop = miAntropoloops.get(claveTrack+"-"+claveClip);
-      println(ultimoLoop);
+      // println(ultimoLoop);
       timerOnda.start(5);
       dibujaOnda = true;
       ultLoopParado = false;
@@ -100,6 +100,7 @@ void oscEvent(OscMessage theOscMessage) {
 
   if (path.equals("/live/play")) {
     playStop = theOscMessage.get(0).intValue();
+    // println("playStop", playStop);
   }
 
   if (path.equals("/live/clip/loopend")) {
@@ -107,9 +108,18 @@ void oscEvent(OscMessage theOscMessage) {
     statePuntoVerde = 1;
 
     ct1 = ct1 + 1;
-    String idTrackClip=loopsIndexed.get(ct1);
+    String idTrackClip = loopsIndexed.get(ct1);
     miAntropoloops.get(idTrackClip).put("loopend", theOscMessage.get(0).floatValue());
-    //println("loopend "+theOscMessage.get(0).floatValue());
+    // println("loopend "+theOscMessage.get(0).floatValue());
+    
+    // Este es el último mensaje que lanza la función pregunta()
+    // Compruebo que llega el mensaje para el último clip para hacer que drawing = true
+    String lastClip = loopsIndexed.get(loopsIndexed.size() - 1);   
+    if (idTrackClip == lastClip) {
+      // Ha llegado al último clip
+      drawing = true;
+      println("drawing", drawing);
+    }    
   }
 
   if (path.equals("/live/volume")) {
@@ -118,7 +128,7 @@ void oscEvent(OscMessage theOscMessage) {
       int[] a = int(split(claveClip, '-'));
       if (a[0] == theOscMessage.get(0).intValue()) {
         miAntropoloops.get(claveClip).put("volume", theOscMessage.get(1).floatValue());
-        //println("volume "+theOscMessage.get(0).intValue()+" "+theOscMessage.get(1).floatValue());
+        // println("volume "+theOscMessage.get(0).intValue()+" "+theOscMessage.get(1).floatValue());
        }
     }
   }
@@ -129,6 +139,7 @@ void oscEvent(OscMessage theOscMessage) {
       int[] a = int(split(claveClip, '-'));
       if (a[0] == theOscMessage.get(0).intValue()) {
         miAntropoloops.get(claveClip).put("solo", theOscMessage.get(1).intValue());
+        // println("solo "+theOscMessage.get(1).intValue());
       }
     }
   }
@@ -139,7 +150,7 @@ void oscEvent(OscMessage theOscMessage) {
       int[] a = int(split(claveClip, '-'));
       if (a[0] == theOscMessage.get(0).intValue()) {
         miAntropoloops.get(claveClip).put("mute", theOscMessage.get(1).intValue());
-        //println("mute "+theOscMessage.get(1).intValue());
+        // println("mute "+theOscMessage.get(1).intValue());
       }
     }
   }
@@ -149,11 +160,11 @@ void oscEvent(OscMessage theOscMessage) {
     statePuntoVerde = 1;
 
     tempo = theOscMessage.get(0).floatValue();
-    println("tempo: OK");
+    // println("tempo: OK");
   }
   
   if (path.equals("/live/master/volume")) {
     masterVolume = theOscMessage.get(0).floatValue();
-    println("masterVolume: "+masterVolume);
+    // println("masterVolume: "+masterVolume);
   }
 }

@@ -1,5 +1,5 @@
 class Red {
-  float h, s, b, a, x1, y1,  x2, y2;
+  float h, s, b, a, x1, y1, x2, y2;
 
   Red(float tempx1, float tempy1, float tempx2, float tempy2, float colorH, float colorS, float colorB, float alpha) {
     x1=tempx1;
