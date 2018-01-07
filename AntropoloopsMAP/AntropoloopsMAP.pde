@@ -61,6 +61,7 @@ void setup() {
   size(displayWidth, displayHeight);
   if (frame != null) {
     frame.setResizable(true);
+    frameRate(7);
   }
 
   mundi = loadImage("../1_BDatos/"+"mapa_1728x1080.jpg");
@@ -289,7 +290,7 @@ void draw() {
                   miRed[i]= new Red(coordX, coordY, (origenX+(ladoCaratula*posicion)+(textWidth(fecha))+7), origenY+ladoCaratula+linSep+alturaRect+linSep+alturaText, h, s, b, vol*70);
                   miRed[i].dibujaRed();
 
-                  misAbanicos[i]= new Abanico(coordX, coordY, vol*140, h, s, b); // Tamaño círculos vol * tamaño    
+                  misAbanicos[i]= new Abanico(coordX, coordY, vol*110, h, s, b); // Tamaño círculos vol * tamaño    
 
                   pushMatrix();
                   translate(coordX, coordY);
@@ -386,7 +387,7 @@ void draw() {
                       miRed[i]= new Red(coordX, coordY, ( origenX+(ladoCaratula*posicion)+(textWidth(fecha))+7), origenY+ladoCaratula+linSep+alturaRect+linSep+alturaText, h, s, b, vol*50);
                       miRed[i].dibujaRed();
 
-                      misAbanicos[i]= new Abanico(coordX, coordY, vol*100, h, s, b);
+                      misAbanicos[i]= new Abanico(coordX, coordY, vol*110, h, s, b);
 
                       pushMatrix();
                       translate(coordX, coordY);
