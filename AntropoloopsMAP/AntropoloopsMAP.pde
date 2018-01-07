@@ -123,7 +123,10 @@ void setup() {
 void draw() {
   background(#000000);
   float bWidth, bHeight, bX, bY, textX, textY;
-  int padding = 10;
+  float puntoX, puntoY;
+  int dPuntos = 10;
+  int paddingTexto = 10;
+  int paddingPunto = 15;
 
   // La posición del background y del texto www.antropoloops.com cambia dependiendo
   // de la proporción de la pantalla.
@@ -132,15 +135,15 @@ void draw() {
     bHeight = height;
     bX = (width - bWidth) / 2;
     bY = 0;
-    textX = (width - bWidth) / 2 + padding;
-    textY = height - padding;
+    textX = (width - bWidth) / 2 + paddingTexto + paddingPunto;
+    textY = height - paddingTexto;
   } else {
     bWidth = width;
     bHeight = width / 1.6;
     bX = 0;
     bY = (height - bHeight) / 2;
-    textX = padding;
-    textY = (height + bHeight) / 2 - padding;
+    textX = paddingTexto;
+    textY = (height + bHeight) / 2 - paddingTexto + paddingPunto;
   }
 
   image(mundi, bX, bY, bWidth, bHeight);
@@ -159,25 +162,28 @@ void draw() {
     dibujaOnda = false;
   }
 
-  fill(150);
+  noStroke();
   if (float(width) / float(height) >= 1.6) {
+    puntoX = (width - bWidth) / 2 + paddingPunto;
+    puntoY = height - paddingPunto;
     if (statePuntoRojo == 1) {
-      ellipse((width - (height * 1.6)) / 2 + textWidth(web) + 30, height - 20, 15, 15);
+      fill(150);
+      ellipse(puntoX, puntoY, dPuntos, dPuntos);
     }
-  } else if (float(width) / float(height) < 1.6) {
+    if (statePuntoVerde == 1) {
+      fill(360);
+      ellipse(puntoX, puntoY, dPuntos, dPuntos);
+    }
+  } else {
+    puntoX = paddingPunto;
+    puntoY = (height + bHeight) / 2 - paddingPunto;
     if (statePuntoRojo == 1) {
-      ellipse(textWidth(web) + 30, height-(height-width / 1.6) / 2 - 20, 15, 15);
+      fill(150);
+      ellipse(puntoX, puntoY, dPuntos, dPuntos);
     }
-  }
-
-  fill(360);
-  if (float(width) / float(height) >= 1.6) {
     if (statePuntoVerde == 1) {
-      ellipse((width - (height * 1.6)) / 2 + textWidth(web) + 30, height - 20, 15, 15);
-    }
-  } else if (float(width) / float(height) < 1.6) {
-    if (statePuntoVerde == 1) {
-      ellipse(textWidth(web) + 30, height - (height - width / 1.6) / 2 - 20, 15, 15);
+      fill(360);
+      ellipse(puntoX, puntoY, dPuntos, dPuntos);
     }
   }
 
@@ -271,7 +277,7 @@ void draw() {
                     miRed[i] = new Red(coordX, coordY, (origenX + (ladoCaratula * posicion) + (textWidth(fecha)) + 7), origenY + ladoCaratula + linSep + alturaRect + linSep + alturaText, h, s, b, vol * 70);
                     miRed[i].dibujaRed();
 
-                    misAbanicos[i] = new Abanico(coordX, coordY, vol * 110, h, s, b); // Tamaño círculos vol * tamaño
+                    misAbanicos[i] = new Abanico(vol * 110, h, s, b); // Tamaño círculos vol * tamaño
 
                     pushMatrix();
                     translate(coordX, coordY);
@@ -282,6 +288,7 @@ void draw() {
 
                     popMatrix();
 
+                    textAlign(LEFT, CENTER);
                     if (vol <= 0.45) {
                       fill(h, s, b, vol * 223); //100/0.45 = 223
                       rect(origenX + (ladoCaratula * posicion), origenY + ladoCaratula + linSep, ladoCaratula, alturaRect);
@@ -364,7 +371,7 @@ void draw() {
                     miRed[i]= new Red(coordX, coordY, (origenX + (ladoCaratula * posicion) + (textWidth(fecha)) + 7), origenY + ladoCaratula + linSep + alturaRect + linSep + alturaText, h, s, b, vol * 50);
                     miRed[i].dibujaRed();
 
-                    misAbanicos[i]= new Abanico(coordX, coordY, vol * 110, h, s, b);
+                    misAbanicos[i]= new Abanico(vol * 110, h, s, b);
 
                     pushMatrix();
                     translate(coordX, coordY);
@@ -374,6 +381,7 @@ void draw() {
                     misAbanicos[i].dibuja();
                     popMatrix();
 
+                    textAlign(LEFT, CENTER);
                     if (vol <= 0.45) {
                       fill(h, s, b, vol * 223);
                       rect(origenX + (ladoCaratula * posicion), origenY + ladoCaratula + linSep, ladoCaratula, alturaRect);

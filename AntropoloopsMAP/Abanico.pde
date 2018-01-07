@@ -1,12 +1,10 @@
 class Abanico {
   float d;
-  float x, y, h, s, b;
+  float h, s, b;
   float stopAngle = radians(360) - HALF_PI;
 
   // Abanico constructor
-  Abanico(float coorX, float coorY, float diam, float colorH, float colorS, float colorB) {
-    x = coorX;
-    y = coorY;
+  Abanico(float diam, float colorH, float colorS, float colorB) {
     d = diam * 0.8;
     h = colorH;
     s = colorS;
