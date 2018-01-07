@@ -27,7 +27,6 @@ HashMap<String, HashMap<String, Object>> todosMisLoops;
 HashMap<String, HashMap<String, Object>> todosMisLugares;
 HashMap<String, PImage> misImagenes;
 
-
 ArrayList<String> loopsIndexed;
 
 processing.data.JSONArray misLoopsJSON;
@@ -69,9 +68,6 @@ void setup() {
   PFont font;
   font= loadFont("ArialMT-20.vlw");
   textAlign(LEFT, CENTER);
-
-// oscP5 = new OscP5(this, inPort);
-// myRemoteLocation = new NetAddress("localhost", outPort);
   
   /* create a new osc properties object */
   OscProperties properties = new OscProperties();
@@ -88,9 +84,6 @@ void setup() {
    /* initialize oscP5 with our osc properties */
   oscP5 = new OscP5(this,properties);
   //println("Estas son las propiedades "+properties.toString());
-
-
-
 
   statePuntoRojo = 0;
   statePuntoVerde = 0;
@@ -125,7 +118,6 @@ void setup() {
   misImagenes = new HashMap<String, PImage>();
   ultimoLoop = new HashMap<String, Object>();
   web = "www.antropoloops.com";
-  
 }
 
 //=======================================================================
