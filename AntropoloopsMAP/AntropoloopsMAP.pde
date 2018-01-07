@@ -67,7 +67,6 @@ void setup() {
   colorMode(HSB, 360, 100, 100, 100);
   // PFont font;
   // font= loadFont("ArialMT-20.vlw");
-  textAlign(LEFT, CENTER);
 
   /* create a new osc properties object */
   OscProperties properties = new OscProperties();
@@ -123,23 +122,37 @@ void setup() {
 //=======================================================================
 void draw() {
   background(#000000);
+  float bWidth;
+  float bHeight;
+  float bX;
+  float bY;
+  float textX;
+  float textY;
+  int padding = 10;
+
+  // La posición del background y del texto www.antropoloops.com cambia dependiendo
+  // de la proporción de la pantalla.
   if (float(width) / float(height) >= 1.6) { //El tamaño de la imagen de fondo es 1280x800. 1280/800=1.6
-    float bWidth = height * 1.6;
-    float x = (width - bWidth) / 2;
-
-    image(mundi, x, 0, bWidth, height);
-    textSize(height * 1.6 / 8 / 13);
-    fill(255);
-    text(web, (width - bWidth) / 2 + 10, height - 28);
+    bWidth = height * 1.6;
+    bHeight = height;
+    bX = (width - bWidth) / 2;
+    bY = 0;
+    textX = (width - bWidth) / 2 + padding;
+    textY = height - padding;
   } else {
-    float bHeight = width / 1.6;
-    float y = (height - bHeight) / 2;
-
-    image(mundi, 0, y, width, bHeight);
-    textSize(width / 8 / 13);
-    fill(255);
-    text(web, 10, height - (height - bHeight) / 2 - 28);
+    bWidth = width;
+    bHeight = width / 1.6;
+    bX = 0;
+    bY = (height - bHeight) / 2;
+    textX = padding;
+    textY = (height + bHeight) / 2 - padding;
   }
+
+  image(mundi, bX, bY, bWidth, bHeight);
+  textAlign(LEFT, BOTTOM);
+  textSize(bWidth / 100);
+  fill(255);
+  text("www.antropoloops.com", textX, textY);
 
   if (timerPuntoRojo.isFinished()) {
     statePuntoRojo = 0;
