@@ -2,8 +2,6 @@ class Abanico {
   float d;
   float x, y, h, s, b;
   float stopAngle = radians(360) - HALF_PI;
-  float rWidth = width / 1280;
-  float rHeight = height / 800;
 
   // Abanico constructor
   Abanico(float coorX, float coorY, float diam, float colorH, float colorS, float colorB) {
@@ -16,27 +14,31 @@ class Abanico {
   }
 
   void dibuja() {
+    float rWidth = float(width) / 1280;
+    float rHeight = float(height) / 800;
     for (int i = 0; i < 20; i++) {
       float startAngle = radians(i * 24) - HALF_PI;
+      stroke(h, s, b);
+      strokeWeight(1);
+
       if (float(width)/float(height) >= 1.6) {
+
         if (d <= 40) {
-          stroke(h, s, b);
-          strokeWeight(1);
           line(0, 0, 0, -d * 3 / 8 * rHeight * 1.2);
+
           noStroke();
           fill(h, s, b, 25);
           arc(0, 0, d * 3 / 4 * rHeight, d * 3 / 4 * rHeight, startAngle, stopAngle);
           fill(h, s, b, 2);
           arc(0, 0, d * 2 * rHeight, d * 2 * rHeight, startAngle, stopAngle);
         } else if (40 < d && d <= 70) {
-          stroke(h, s, b);
-          strokeWeight(1);
           line(0, 0, 0, -(4 * d - 70) / 6 * rHeight * 1.2);
+
           noStroke();
           fill(h, s, b, 25);
           arc(0, 0, (4 * d - 70) / 3 * rHeight, (4 * d - 70) / 3 * rHeight, startAngle, stopAngle);
           fill(h, s, b, 2);
-          arc(0, 0, d * 2.5 * rHeight, d*  2.5 * rHeight, startAngle, stopAngle);
+          arc(0, 0, d * 2.5 * rHeight, d * 2.5 * rHeight, startAngle, stopAngle);
         } else if (d > 70 && d <= 80) {
           stroke(h, s, b);
           strokeWeight(1);
@@ -56,7 +58,7 @@ class Abanico {
           fill(h, s, b, 2);
           arc(0, 0, d * 2.5 * rHeight, d * 2.5 * rHeight, startAngle, stopAngle);
         }
-      } else if (float(width) / float(height) < 1.6) {
+      } else {
         if (d <= 40) {
           stroke(h, s, b);
           strokeWeight(1);
@@ -85,8 +87,7 @@ class Abanico {
           fill(h, s, b, 2);
           arc(0, 0, d * 2.5 * rWidth, d * 2.5 * rWidth, startAngle, stopAngle);
         } else if (d > 80) {
-          stroke(h, s, b);
-          strokeWeight(1);
+
           line(0, 0, 0, -60 * rWidth * 1.2);
           noStroke();
           fill(h, s, b, 25);

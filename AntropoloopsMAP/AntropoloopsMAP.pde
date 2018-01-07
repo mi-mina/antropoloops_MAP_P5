@@ -122,12 +122,7 @@ void setup() {
 //=======================================================================
 void draw() {
   background(#000000);
-  float bWidth;
-  float bHeight;
-  float bX;
-  float bY;
-  float textX;
-  float textY;
+  float bWidth, bHeight, bX, bY, textX, textY;
   int padding = 10;
 
   // La posición del background y del texto www.antropoloops.com cambia dependiendo
@@ -305,12 +300,12 @@ void draw() {
                       image(miImagen, origenX + (ladoCaratula * posicion), origenY, ladoCaratula, ladoCaratula);
                     }
 
-                    //Info mp3 abajo a la derecha
+                    //Info cuadrado abajo derecha ultimo loop
                     textSize((ladoCuadrado - 13) / 3);
-
                     if ((Integer)ultimoLoop.get("mute")!= null) {
-                      int muteu = (Integer)ultimoLoop.get("mute");
-                      if (muteu == 0 && ultLoopParado == false) { //condicional para que no lo dibuje si se mutea ese loop
+                      // int muteu = (Integer)ultimoLoop.get("mute");
+                      if ((Integer)ultimoLoop.get("mute") == 0 && ultLoopParado == false) {
+                        // Si el último loop está muteado no se dibuja
                         fill(hu, su, bu, volu * 225);
                         rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
 
@@ -331,7 +326,7 @@ void draw() {
                         text("artist", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
                         text("album", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
                       }
-                    }
+                    } // Fin info cuadrado abajo derecha ultimo loop
                   }
                 } else {
                   if ((Integer)unClip.get("solo") == 1) {
@@ -423,6 +418,7 @@ void keyPressed() {
   } else if (key == '4') {
     println(loopsIndexed);
   } else if (key == '5') {
-    println(todosMisLoops);
+    println("miAntropoloops: " + miAntropoloops);
+    println("todosMisLoops: " + todosMisLoops);
   }
 }
