@@ -197,33 +197,42 @@ void draw() {
         miRed = new Red[miAntropoloops.size()];
         m = millis();
 
-        float hu = (Float)ultimoLoop.get("colorH");
-        float su = (Float)ultimoLoop.get("colorS");
-        float bu = (Float)ultimoLoop.get("colorB");
-        float volu = (Float)ultimoLoop.get("volume");
+        float hu;
+        float su;
+        float bu;
+        float volu;
 
-        if (dibujaOnda == true && volu > 0.05) {
-          d = d + 4;
-          String ondaLoop = (String)ultimoLoop.get("nombreLoop");
-          HashMap<String, Object> ondaLugar = (HashMap)todosMisLoops.get(ondaLoop);
-          String miOndaLugar = (String)ondaLugar.get("lugar");
-          HashMap<String, Object> ondaCoordenadas = (HashMap)todosMisLugares.get(miOndaLugar);
+        // Dibuja una ONDA en el ÚLTIMO LOOP lanzado.
+        if (!ultimoLoop.isEmpty()) { // primero compruebo que hay último loop para que no de error si no hay
+          hu = (Float)ultimoLoop.get("colorH");
+          su = (Float)ultimoLoop.get("colorS");
+          bu = (Float)ultimoLoop.get("colorB");
+          volu = (Float)ultimoLoop.get("volume");
 
-          stroke(hu, su, bu, 100 - d / 90);
-          float a = (500 * (d * d)) / ((d * d) + 50);
-          strokeWeight(500 - a);
-          noFill();
-          if (float(width) / float(height) >= 1.6) {
-            coordXOnda = origenX + map((Integer)ondaCoordenadas.get("coordX"), 0, 1280, 0, height * 1.6);
-            coordYOnda = map((Integer)ondaCoordenadas.get("coordY"), 0, 800, 0, height);
-            ellipse(coordXOnda, coordYOnda, d, d);
-          }
-          else if (float(width) / float(height) < 1.6) {
-            coordXOnda = map((Integer)ondaCoordenadas.get("coordX"), 0, 1280, 0, width);
-            coordYOnda = origenY + map((Integer)ondaCoordenadas.get("coordY"), 0, 800, 0, width / 1.6);
-            ellipse(coordXOnda, coordYOnda, d, d);
+          if (dibujaOnda == true && volu > 0.05) {
+            d = d + 4;
+            String ondaLoop = (String)ultimoLoop.get("nombreLoop");
+            HashMap<String, Object> ondaLugar = (HashMap)todosMisLoops.get(ondaLoop);
+            String miOndaLugar = (String)ondaLugar.get("lugar");
+            HashMap<String, Object> ondaCoordenadas = (HashMap)todosMisLugares.get(miOndaLugar);
+
+            stroke(hu, su, bu, 100 - d / 90);
+            float a = (500 * (d * d)) / ((d * d) + 50);
+            strokeWeight(500 - a);
+            noFill();
+            if (float(width) / float(height) >= 1.6) {
+              coordXOnda = origenX + map((Integer)ondaCoordenadas.get("coordX"), 0, 1280, 0, height * 1.6);
+              coordYOnda = map((Integer)ondaCoordenadas.get("coordY"), 0, 800, 0, height);
+              ellipse(coordXOnda, coordYOnda, d, d);
+            }
+            else if (float(width) / float(height) < 1.6) {
+              coordXOnda = map((Integer)ondaCoordenadas.get("coordX"), 0, 1280, 0, width);
+              coordYOnda = origenY + map((Integer)ondaCoordenadas.get("coordY"), 0, 800, 0, width / 1.6);
+              ellipse(coordXOnda, coordYOnda, d, d);
+            }
           }
         }
+        // Fin ONDA en el ÚLTIMO LOOP
 
         Iterator recorreMiAntropoloops = miAntropoloops.entrySet().iterator();
         while (recorreMiAntropoloops.hasNext ()) {
@@ -309,31 +318,37 @@ void draw() {
 
                     //Info cuadrado abajo derecha ultimo loop
                     textSize((ladoCuadrado - 13) / 3);
-                    if ((Integer)ultimoLoop.get("mute")!= null) {
-                      // int muteu = (Integer)ultimoLoop.get("mute");
-                      if ((Integer)ultimoLoop.get("mute") == 0 && ultLoopParado == false) {
-                        // Si el último loop está muteado no se dibuja
-                        fill(hu, su, bu, volu * 225);
-                        rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
+                    if (!ultimoLoop.isEmpty()) { // Compruebo que hay ultimo loop para que no de error
+                      if ((Integer)ultimoLoop.get("mute") != null) {
+                        if ((Integer)ultimoLoop.get("mute") == 0 && ultLoopParado == false) {
+                          // Si el último loop está muteado no se dibuja
+                          hu = (Float)ultimoLoop.get("colorH");
+                          su = (Float)ultimoLoop.get("colorS");
+                          bu = (Float)ultimoLoop.get("colorB");
+                          volu = (Float)ultimoLoop.get("volume");
+                          fill(hu, su, bu, volu * 225);
+                          rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
 
-                        String esteLoop = (String)ultimoLoop.get("nombreLoop");
-                        HashMap<String, Object> ultLoop = (HashMap)todosMisLoops.get(esteLoop);
-                        String artista = (String)ultLoop.get("artista");
-                        String titulo = (String)ultLoop.get("titulo");
-                        String album = (String)ultLoop.get("album");
-                        textAlign(RIGHT, CENTER);
-                        fill(230, volu * 223);
-                        text(titulo, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
-                        text(artista, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
-                        text(album, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
-                        textAlign(LEFT, CENTER);
+                          String esteLoop = (String)ultimoLoop.get("nombreLoop");
+                          HashMap<String, Object> ultLoop = (HashMap)todosMisLoops.get(esteLoop);
+                          String artista = (String)ultLoop.get("artista");
+                          String titulo = (String)ultLoop.get("titulo");
+                          String album = (String)ultLoop.get("album");
+                          textAlign(RIGHT, CENTER);
+                          fill(230, volu * 223);
+                          text(titulo, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
+                          text(artista, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
+                          text(album, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
+                          textAlign(LEFT, CENTER);
 
-                        fill(0, 0, 17, volu * 223);
-                        text("title", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
-                        text("artist", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
-                        text("album", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
-                      }
-                    } // Fin info cuadrado abajo derecha ultimo loop
+                          fill(0, 0, 17, volu * 223);
+                          text("title", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
+                          text("artist", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
+                          text("album", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
+                        }
+                      } // Fin info cuadrado abajo derecha ultimo loop
+                    }
+
                   }
                 } else {
                   if ((Integer)unClip.get("solo") == 1) {
