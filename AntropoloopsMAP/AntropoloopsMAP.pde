@@ -64,10 +64,10 @@ void setup() {
     frameRate(7);
   }
 
-  mundi = loadImage("../1_BDatos/"+"mapa_1728x1080.jpg");
+  mundi = loadImage("mapa_1728x1080.jpg");
   colorMode(HSB, 360, 100, 100, 100);
   PFont font;
-  font= loadFont("../1_BDatos/"+"ArialMT-20.vlw");
+  font= loadFont("ArialMT-20.vlw");
   textAlign(LEFT, CENTER);
 
 // oscP5 = new OscP5(this, inPort);
@@ -100,8 +100,8 @@ void setup() {
   timerOnda = new Timer(0);
 
   //**********Cargo los datos de las Bases de Datos***************
-  misLoopsJSON = loadJSONArray ("../1_BDatos/"+"BDloops.txt");
-  misLugaresJSON = loadJSONArray ("../1_BDatos/"+"BDlugares.txt");
+  misLoopsJSON = loadJSONArray ("BDloops.txt");
+  misLugaresJSON = loadJSONArray ("BDlugares.txt");
 
   todosMisLoops = new HashMap<String, HashMap<String, Object>>();
   for (int i=0; i<misLoopsJSON.size(); i++) { 
