@@ -16,86 +16,58 @@ class Abanico {
   void dibuja() {
     float rWidth = float(width) / 1280;
     float rHeight = float(height) / 800;
+
     for (int i = 0; i < 20; i++) {
       float startAngle = radians(i * 24) - HALF_PI;
-      stroke(h, s, b);
-      strokeWeight(1);
+      float yLine = 0.0;
+      float dArc1 = 0.0;
+      float dArc2 = 0.0;
 
       if (float(width)/float(height) >= 1.6) {
-
         if (d <= 40) {
-          line(0, 0, 0, -d * 3 / 8 * rHeight * 1.2);
-
-          noStroke();
-          fill(h, s, b, 25);
-          arc(0, 0, d * 3 / 4 * rHeight, d * 3 / 4 * rHeight, startAngle, stopAngle);
-          fill(h, s, b, 2);
-          arc(0, 0, d * 2 * rHeight, d * 2 * rHeight, startAngle, stopAngle);
+          yLine = -d * rHeight * 1.2 * 3 / 8;
+          dArc1 = d * rHeight * 3 / 4;
+          dArc2 = d * rHeight * 2;
         } else if (40 < d && d <= 70) {
-          line(0, 0, 0, -(4 * d - 70) / 6 * rHeight * 1.2);
-
-          noStroke();
-          fill(h, s, b, 25);
-          arc(0, 0, (4 * d - 70) / 3 * rHeight, (4 * d - 70) / 3 * rHeight, startAngle, stopAngle);
-          fill(h, s, b, 2);
-          arc(0, 0, d * 2.5 * rHeight, d * 2.5 * rHeight, startAngle, stopAngle);
+          yLine = -(4 * d - 70) / 6 * rHeight * 1.2;
+          dArc1 = (4 * d - 70) / 3 * rHeight;
+          dArc2 = d * rHeight * 2.5;
         } else if (d > 70 && d <= 80) {
-          stroke(h, s, b);
-          strokeWeight(1);
-          line(0, 0, 0, -(5 * d - 280) / 2 * rHeight * 1.2);
-          noStroke();
-          fill(h, s, b, 25);
-          arc(0, 0, (5 * d - 280) * rHeight, (5 * d - 280) * rHeight, startAngle, stopAngle);
-          fill(h, s, b, 2);
-          arc(0, 0, d * 2.5 * rHeight, d * 2.5 * rHeight, startAngle, stopAngle);
+          yLine = -(5 * d - 280) / 2 * rHeight * 1.2;
+          dArc1 = (5 * d - 280) * rHeight;
+          dArc2 = d * rHeight * 2.5;
         } else if (d > 80) {
-          stroke(h, s, b);
-          strokeWeight(1);
-          line(0, 0, 0, -60 * rHeight * 1.2);
-          noStroke();
-          fill(h, s, b, 25);
-          arc(0, 0, 120 * rHeight, 120 * rHeight, startAngle, stopAngle);
-          fill(h, s, b, 2);
-          arc(0, 0, d * 2.5 * rHeight, d * 2.5 * rHeight, startAngle, stopAngle);
+          yLine = -60 * rHeight * 1.2;
+          dArc1 = 120 * rHeight;
+          dArc2 = d * rHeight * 2.5;
         }
       } else {
         if (d <= 40) {
-          stroke(h, s, b);
-          strokeWeight(1);
-          line(0, 0, 0, -d * 3 / 8 * rWidth * 1.2);
-          noStroke();
-          fill(h, s, b, 25);
-          arc(0, 0, d * 3 / 4 * rWidth, d * 3 / 4 * rWidth, startAngle, stopAngle);
-          fill(h, s, b, 2);
-          arc(0, 0, d * 2 * rWidth, d * 2 * rWidth, startAngle, stopAngle);
+          yLine = -d * 3 / 8 * rWidth * 1.2;
+          dArc1 = d * 3 / 4 * rWidth;
+          dArc2 = d * rHeight * 2;
         } else if (40 < d && d <= 70) {
-          stroke(h, s, b);
-          strokeWeight(1);
-          line(0, 0, 0, - (4 * d - 70) / 6 * rWidth * 1.2);
-          noStroke();
-          fill(h, s, b, 25);
-          arc(0, 0, (4 * d - 70) / 3 * rWidth, (4 * d - 70) / 3 * rWidth, startAngle, stopAngle);
-          fill(h, s, b, 2);
-          arc(0, 0, d * 2.5 * rWidth, d * 2.5 * rWidth, startAngle, stopAngle);
+          yLine = -(4 * d - 70) / 6 * rWidth * 1.2;
+          dArc1 = (4 * d - 70) / 3 * rWidth;
+          dArc2 = d * rHeight * 2.5;
         } else if (d > 70 && d <= 80) {
-          stroke(h, s, b);
-          strokeWeight(1);
-          line(0, 0, 0, -(5 * d - 280) / 2 * rWidth * 1.2);
-          noStroke();
-          fill(h, s, b, 25);
-          arc(0, 0, (5 * d - 280) * rWidth, (5 * d - 280) * rWidth, startAngle, stopAngle);
-          fill(h, s, b, 2);
-          arc(0, 0, d * 2.5 * rWidth, d * 2.5 * rWidth, startAngle, stopAngle);
+          yLine = -(5 * d - 280) / 2 * rWidth * 1.2;
+          dArc1 = (5 * d - 280) * rWidth;
+          dArc2 = d * rHeight * 2.5;
         } else if (d > 80) {
-
-          line(0, 0, 0, -60 * rWidth * 1.2);
-          noStroke();
-          fill(h, s, b, 25);
-          arc(0, 0, 120 * rWidth, 120 * rWidth, startAngle, stopAngle);
-          fill(h, s, b, 2);
-          arc(0, 0, d * 2.5 * rWidth, d * 2.5 * rWidth, startAngle, stopAngle);
+          yLine = -60 * rWidth * 1.2;
+          dArc1 = 120 * rWidth;
+          dArc2 = d * rHeight * 2.5;
         }
       }
+      stroke(h, s, b);
+      strokeWeight(1);
+      line(0, 0, 0, yLine);
+      noStroke();
+      fill(h, s, b, 25);
+      arc(0, 0, dArc1, dArc1, startAngle, stopAngle);
+      fill(h, s, b, 2);
+      arc(0, 0, dArc2, dArc2, startAngle, stopAngle);
     }
   }
 }
