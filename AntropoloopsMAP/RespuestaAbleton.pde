@@ -90,6 +90,7 @@ void oscEvent(OscMessage theOscMessage) {
 
   if (path.equals("/live/play")) {
     playStop = theOscMessage.get(0).intValue();
+    println("playStop", playStop);
   }
 
   if (path.equals("/live/clip/loopend")) {
