@@ -65,8 +65,8 @@ void setup() {
 
   mundi = loadImage("mapa_1728x1080.jpg");
   colorMode(HSB, 360, 100, 100, 100);
-  PFont font;
-  font= loadFont("ArialMT-20.vlw");
+  // PFont font;
+  // font= loadFont("ArialMT-20.vlw");
   textAlign(LEFT, CENTER);
 
   /* create a new osc properties object */
@@ -122,24 +122,23 @@ void setup() {
 
 //=======================================================================
 void draw() {
-  background(#2c2c2c);
+  background(#000000);
   if (float(width) / float(height) >= 1.6) { //El tamaño de la imagen de fondo es 1280x800. 1280/800=1.6
-    image(mundi, (width - (height * 1.6)) / 2, 0, height * 1.6, height);
-    fill(50);
-    noStroke();
-    rect(0, 0, width, height * 1.6 / 8);
+    float bWidth = height * 1.6;
+    float x = (width - bWidth) / 2;
+
+    image(mundi, x, 0, bWidth, height);
     textSize(height * 1.6 / 8 / 13);
     fill(255);
-    text(web, (width - (height * 1.6)) / 2 + 10, height - 28);
-  }
-  if (float(width) / float(height) < 1.6) {
-    image(mundi, 0, (height - (width / 1.6)) / 2, width, width / 1.6);
-    fill(50);
-    noStroke();
-    rect(0, 0, width, (height - (width / 1.6)) / 2 + width / 8);
-    textSize(width/ 8 / 13);
+    text(web, (width - bWidth) / 2 + 10, height - 28);
+  } else {
+    float bHeight = width / 1.6;
+    float y = (height - bHeight) / 2;
+
+    image(mundi, 0, y, width, bHeight);
+    textSize(width / 8 / 13);
     fill(255);
-    text(web, 10, height - (height - (width / 1.6)) / 2 - 28);
+    text(web, 10, height - (height - bHeight) / 2 - 28);
   }
 
   if (timerPuntoRojo.isFinished()) {
