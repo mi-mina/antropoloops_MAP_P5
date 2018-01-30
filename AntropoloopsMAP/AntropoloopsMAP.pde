@@ -44,7 +44,6 @@ float ladoCaratula;
 float ladoCuadrado;
 float finalX;
 float finalY;
-String web;
 int statePuntoRojo, statePuntoVerde;
 boolean dibujaOnda, ultLoopParado;
 Timer timerPuntoRojo, timerPuntoVerde, timerOnda;
@@ -116,7 +115,6 @@ void setup() {
   }
   misImagenes = new HashMap<String, PImage>();
   ultimoLoop = new HashMap<String, Object>();
-  web = "www.antropoloops.com";
 } // End setup()
 
 //=======================================================================
@@ -142,8 +140,8 @@ void draw() {
     bHeight = width / 1.6;
     bX = 0;
     bY = (height - bHeight) / 2;
-    textX = paddingTexto;
-    textY = (height + bHeight) / 2 - paddingTexto + paddingPunto;
+    textX = paddingTexto + paddingPunto;
+    textY = (height + bHeight) / 2 - paddingTexto;
   }
 
   image(mundi, bX, bY, bWidth, bHeight);

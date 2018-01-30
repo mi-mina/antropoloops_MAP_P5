@@ -27,5 +27,3 @@ class Timer {
      return totalTime;
   }
 }
-
-
