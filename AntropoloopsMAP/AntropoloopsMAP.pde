@@ -120,8 +120,7 @@ void setup() {
 //=======================================================================
 void draw() {
   background(#000000);
-  float bWidth, bHeight, bX, bY, textX, textY;
-  float puntoX, puntoY;
+  float bWidth, bHeight, bX, bY, textX, textY, puntoX, puntoY;
   int dPuntos = 10;
   int paddingTexto = 10;
   int paddingPunto = 15;
@@ -139,9 +138,9 @@ void draw() {
     bWidth = width;
     bHeight = width / 1.6;
     bX = 0;
-    bY = (height - bHeight) / 2;
+    bY = 0;
     textX = paddingTexto + paddingPunto;
-    textY = (height + bHeight) / 2 - paddingTexto;
+    textY = bHeight - paddingTexto;
   }
 
   image(mundi, bX, bY, bWidth, bHeight);
@@ -164,25 +163,18 @@ void draw() {
   if (float(width) / float(height) >= 1.6) {
     puntoX = (width - bWidth) / 2 + paddingPunto;
     puntoY = height - paddingPunto;
-    if (statePuntoRojo == 1) {
-      fill(150);
-      ellipse(puntoX, puntoY, dPuntos, dPuntos);
-    }
-    if (statePuntoVerde == 1) {
-      fill(360);
-      ellipse(puntoX, puntoY, dPuntos, dPuntos);
-    }
   } else {
     puntoX = paddingPunto;
-    puntoY = (height + bHeight) / 2 - paddingPunto;
-    if (statePuntoRojo == 1) {
-      fill(150);
-      ellipse(puntoX, puntoY, dPuntos, dPuntos);
-    }
-    if (statePuntoVerde == 1) {
-      fill(360);
-      ellipse(puntoX, puntoY, dPuntos, dPuntos);
-    }
+    puntoY = bHeight - paddingPunto;
+  }
+  
+  if (statePuntoRojo == 1) {
+    fill(150);
+    ellipse(puntoX, puntoY, dPuntos, dPuntos);
+  }
+  if (statePuntoVerde == 1) {
+    fill(360);
+    ellipse(puntoX, puntoY, dPuntos, dPuntos);
   }
 
   switch(playStop) {
@@ -258,12 +250,12 @@ void draw() {
                       ladoCuadrado = height / 13;
                     } else if (float(width) / float(height) < 1.6) {
                       origenX = 0;
-                      origenY = (height - (width / 1.6)) / 2;
+                      origenY = 0;
                       coordX = map((Integer)lugar.get("coordX"), 0, 1280, 0, width);
                       coordY = origenY + map((Integer)lugar.get("coordY"), 0, 800, 0, width / 1.6);
                       ladoCaratula = width / 8;
                       finalX = width;
-                      finalY = height - (height - (width / 1.6)) / 2;
+                      finalY = width / 1.6;
                       ladoCuadrado = (width / 1.6) / 13;
                     }
 
@@ -356,16 +348,16 @@ void draw() {
                     HashMap<String, Object> lugar = (HashMap)todosMisLugares.get(elLugar);
 
                     if (float(width) / float(height) >= 1.6) {
-                      coordX = (width - (height * 1.6)) / 2 + map((Integer)lugar.get("coordX"), 0, 1280, 0, height * 1.6);
-                      coordY = map((Integer)lugar.get("coordY"), 0, 800, 0, height);
                       origenX = (width - (height * 1.6)) / 2;
                       origenY = 0;
+                      coordX = origenX + map((Integer)lugar.get("coordX"), 0, 1280, 0, height * 1.6);
+                      coordY = map((Integer)lugar.get("coordY"), 0, 800, 0, height);
                       ladoCaratula = height * 1.6 / 8;
                     } else if (float(width) / float(height) < 1.6) {
-                      coordX = map((Integer)lugar.get("coordX"), 0, 1280, 0, width);
-                      coordY = (height - (width / 1.6)) / 2 + map((Integer)lugar.get("coordY"), 0, 800, 0, width / 1.6);
                       origenX = 0;
-                      origenY = (height - (width / 1.6)) / 2;
+                      origenY = 0;
+                      coordX = map((Integer)lugar.get("coordX"), 0, 1280, 0, width);
+                      coordY = origenY + map((Integer)lugar.get("coordY"), 0, 800, 0, width / 1.6);
                       ladoCaratula = width / 8;
                     }
                     float alturaRect = ladoCaratula / 10;
