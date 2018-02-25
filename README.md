@@ -1,4 +1,4 @@
-# antropoloops MAP 1.0.2
+# antropoloops MAP 1.0.3
 
 <img src="https://github.com/mi-mina/antropoloops_MAP_P5/blob/master/resources/antropoloops-MAP.jpg" alt="antropoloops_MAP" title="antropoloops_MAP"  align="center"/>
 
