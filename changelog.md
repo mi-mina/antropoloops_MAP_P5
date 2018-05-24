@@ -11,3 +11,7 @@ version 1.0.2
 version 1.0.3
 
 * El mapa siempre se queda pegado a la parte superior del monitor, independientemente de la proporción de éste.
+
+version 1.0.4
+
+* Evitar que la aplicación se cuelgue cuando no se encuentra la información de un loop, una imagen o un lugar. Mostrar mensajes de lo que no se encuentra.
