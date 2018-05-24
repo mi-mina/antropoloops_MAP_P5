@@ -101,7 +101,7 @@ void oscEvent(OscMessage theOscMessage) {
     ct1 = ct1 + 1;
     String idTrackClip = loopsIndexed.get(ct1);
     miAntropoloops.get(idTrackClip).put("loopend", theOscMessage.get(0).floatValue());
-    println("loopend "+theOscMessage.get(0).floatValue());
+    // println("loopend "+theOscMessage.get(0).floatValue());
   }
 
   if (path.equals("/live/volume")) {
