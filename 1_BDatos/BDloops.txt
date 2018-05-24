@@ -1,17 +1,17 @@
 [
     {"nombreArchivo":"02 Malambo","artista":"Atahualpa Yupanqui","album":"Camino del indio","titulo":"Malambo","fecha":"1942","lugar":"Buenos Aires","antropoloop":"Taidoumalambo"},
  
-{"nombreArchivo":"CNRSMH_I_2012_007_001_03","artista":"Manindry","album":"2008-2012 - Musique Antandroy, Madagascar, Mission - Victor Randrianary","titulo":"RIMOTSY","fecha":"2008","lugar":"Madagascar","antropoloop":"Taidoumalambo"},
- 
-{"nombreArchivo":"05. Te Hia Ai Ora - Pae","artista":"Te Hia'Ai Ora","album":"South Pacific Drums","titulo":"Pae","fecha":"1965","lugar":"Polinesia Francesa","antropoloop":"Taidoumalambo"},
- 
-{"nombreArchivo":"CNRSMH_I_2013_008_001_08","artista":"Rosa y Aida Garrido Casqueiro","album":"2007-2008 - Galicia, Spain - Félix Blume","titulo":"Chant Galicien - Rosa y Aida Garrido Casqueiro","fecha":"2007","lugar":"Galicia","antropoloop":"Taidoumalambo"},
- 
-{"nombreArchivo":"musiquetriangle03","artista":"VA","album":"Musique Des Tribus Chinoises Du Triangle D'Or ","titulo":"musiquetriangle03","fecha":"1980","lugar":"Tailandia","antropoloop":"Taidoumalambo"},
- 
-{"nombreArchivo":"AMP-72901-B1 Three peals of laughter","artista":"Various Afghani Artists","album":"AMP-72901 l'Afghanistan","titulo":"Three peals of laughter","fecha":"1966","lugar":"Afganistan","antropoloop":"Taidoumalambo"},
- 
-{"nombreArchivo":"A1 Sauvetage - Rescue- Rettung","artista":"VA","album":"[BM 30L 2502] Premiere anthologie de la musique Malienne - Le Mali de fleuve - Les Peuls 2 ","titulo":"Rescue","fecha":"1970","lugar":"Mali","antropoloop":"Taidoumalambo"},
- 
-{"nombreArchivo":"B4 Solo de femme; chante","artista":"VA","album":"[LD765] Musiques Banda - République Centrafricaine","titulo":"B4 Solo de femme; chanté","fecha":"1971","lugar":"Rep. Centroafricana","antropoloop":"Taidoumalambo"}
+    {"nombreArchivo":"CNRSMH_I_2012_007_001_03","artista":"Manindry","album":"2008-2012 - Musique Antandroy, Madagascar, Mission - Victor Randrianary","titulo":"RIMOTSY","fecha":"2008","lugar":"Madagascar","antropoloop":"Taidoumalambo"},
+
+    {"nombreArchivo":"05. Te Hia Ai Ora - Pae","artista":"Te Hia'Ai Ora","album":"South Pacific Drums","titulo":"Pae","fecha":"1965","lugar":"Polinesia Francesa","antropoloop":"Taidoumalambo"},
+
+    {"nombreArchivo":"CNRSMH_I_2013_008_001_08","artista":"Rosa y Aida Garrido Casqueiro","album":"2007-2008 - Galicia, Spain - Félix Blume","titulo":"Chant Galicien - Rosa y Aida Garrido Casqueiro","fecha":"2007","lugar":"Galicia","antropoloop":"Taidoumalambo"},
+
+    {"nombreArchivo":"musiquetriangle03","artista":"VA","album":"Musique Des Tribus Chinoises Du Triangle D'Or ","titulo":"musiquetriangle03","fecha":"1980","lugar":"Tailandia","antropoloop":"Taidoumalambo"},
+
+    {"nombreArchivo":"AMP-72901-B1 Three peals of laughter","artista":"Various Afghani Artists","album":"AMP-72901 l'Afghanistan","titulo":"Three peals of laughter","fecha":"1966","lugar":"Afganistan","antropoloop":"Taidoumalambo"},
+
+    {"nombreArchivo":"A1 Sauvetage - Rescue- Rettung","artista":"VA","album":"[BM 30L 2502] Premiere anthologie de la musique Malienne - Le Mali de fleuve - Les Peuls 2 ","titulo":"Rescue","fecha":"1970","lugar":"Mali","antropoloop":"Taidoumalambo"},
+
+    {"nombreArchivo":"B4 Solo de femme; chante","artista":"VA","album":"[LD765] Musiques Banda - République Centrafricaine","titulo":"B4 Solo de femme; chanté","fecha":"1971","lugar":"Rep. Centroafricana","antropoloop":"Taidoumalambo"}
 ]

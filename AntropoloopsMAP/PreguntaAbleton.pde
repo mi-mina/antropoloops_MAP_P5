@@ -1,7 +1,6 @@
 void remapea() {
   OscMessage myMessage = new OscMessage("/live/name/clip");
-  //oscP5.send(myMessage, myRemoteLocation);
-    oscP5.send(myMessage);
+  oscP5.send(myMessage);
   println("lanzo mensaje /live/name/clip");
 }
 
