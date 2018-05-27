@@ -15,3 +15,7 @@ version 1.0.3
 version 1.0.4
 
 * Evitar que la aplicación se cuelgue cuando no se encuentra la información de un loop, una imagen o un lugar. Mostrar mensajes de lo que no se encuentra.
+
+version 1.0.5
+
+* Cambio de mapa de fondo automáticamente cuando cambia la escena.
