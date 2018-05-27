@@ -19,7 +19,7 @@ NetAddress myRemoteLocation;
 
 int inPort = 9001;
 int outPort = 9000;
-PImage mundi;
+PImage backgroundMap;
 boolean drawing=false;
 
 HashMap<String, HashMap<String, Object>> miAntropoloops;
@@ -37,6 +37,9 @@ HashMap<String, Object> ultimoLoop;
 
 int ct1;
 int m; //millis
+int sceneNumber;
+String sceneName;
+String geoZone = "mundo";
 float tempo;
 float coordX, coordY, coordXOnda, coordYOnda;
 float origenX, origenY;
@@ -62,7 +65,7 @@ void setup() {
   }
   frameRate(7);
 
-  mundi = loadImage("../1_BDatos/mapa_1728x1080.jpg");
+  backgroundMap = loadImage("../1_BDatos/mapa_mundo.jpg");
   colorMode(HSB, 360, 100, 100, 100);
 
   /* create a new osc properties object */
@@ -90,7 +93,7 @@ void setup() {
 
   // Load data -------------------------------------------------
   misLoopsJSON = loadJSONArray ("../1_BDatos/BDloops.txt");
-  misLugaresJSON = loadJSONArray ("../1_BDatos/BDlugares.txt");
+  misLugaresJSON = loadJSONArray ("../1_BDatos/BDlugares_mundo.txt");
 
   loopsDB = new HashMap<String, HashMap<String, Object>>();
   for (int i = 0; i < misLoopsJSON.size(); i++) {
@@ -141,11 +144,11 @@ void draw() {
     textY = bHeight - paddingTexto;
   }
 
-  image(mundi, bX, bY, bWidth, bHeight);
-  textAlign(LEFT, BOTTOM);
-  textSize(bWidth / 100);
-  fill(255);
-  text("www.antropoloops.com", textX, textY);
+  image(backgroundMap, bX, bY, bWidth, bHeight);
+
+  // Translucent rectangle on the top, to obscure the area of the map where the covers are drawn.
+  fill(0, 0, 17, 75);
+  rect(0, 0, width, coverSide);
 
   if (timerPuntoRojo.isFinished()) {
     statePuntoRojo = 0;
@@ -340,6 +343,10 @@ void draw() {
                           su = (Float)ultimoLoop.get("colorS");
                           bu = (Float)ultimoLoop.get("colorB");
                           volu = (Float)ultimoLoop.get("volume");
+                          if (!geoZone.equals("mundo")) {
+                            fill(0, 0, 0, 30);
+                            rect(0, finalY - ladoCuadrado, width, ladoCuadrado);
+                          }
                           fill(hu, su, bu, volu * 225);
                           rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
 
@@ -478,6 +485,12 @@ void draw() {
     } // fin de miAntropoloops != null && drawing==true
     break;
   } // Fin de switch
+
+  // Draw antropoloops web
+  textAlign(LEFT, BOTTOM);
+  textSize(bWidth / 100);
+  fill(255);
+  text("www.antropoloops.com", textX, textY);
 }
 
 void keyPressed() {

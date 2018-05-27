@@ -143,4 +143,39 @@ void oscEvent(OscMessage theOscMessage) {
     tempo = theOscMessage.get(0).floatValue();
     println("tempo: OK");
   }
+
+  if (path.equals("/live/scene")) {
+    // Listens if a scene has been selected.
+    // The received number is the scene position, starting the enumeration at 1.
+    sceneNumber = theOscMessage.get(0).intValue();
+    // println("sceneNumber " + sceneNumber);
+    // println("Scene number " + sceneNumber + " has been selected");
+
+    // To get the scene name, I send a new message
+    OscMessage sceneMessage = new OscMessage("/live/name/scene");
+    // In order to ask by the scene name, I don't know why, the enumaration of the scenes
+    // starts at 0, as usual, that's why I have to substract 1 to sceneNumber.
+    sceneMessage.add(sceneNumber - 1);
+    oscP5.send(sceneMessage);
+    // println("Asking by scene " + (sceneNumber - 1));
+  }
+
+  if (path.equals("/live/name/scene")) {
+    sceneNumber = theOscMessage.get(0).intValue();
+    // println("sceneNumber " + sceneNumber);
+    sceneName = theOscMessage.get(1).toString();
+    // println("sceneName " + sceneName);
+    String[] parameters = sceneName.split(" ");
+    if (parameters[7] != null) {
+      geoZone = parameters[7];
+      backgroundMap = loadImage("../1_BDatos/mapa_" + geoZone + ".jpg");
+      misLugaresJSON = loadJSONArray ("../1_BDatos/BDlugares_" + geoZone + ".txt");
+      for (int i = 0; i < misLugaresJSON.size(); i++) {
+        HashMap<String, Object> coordenadas = new HashMap<String, Object>();
+        coordenadas.put("coordX", misLugaresJSON.getJSONObject(i).getInt("coordX"));
+        coordenadas.put("coordY", misLugaresJSON.getJSONObject(i).getInt("coordY"));
+        placesDB.put(misLugaresJSON.getJSONObject(i).getString("lugar"), coordenadas);
+      }
+    }
+  }
 }
