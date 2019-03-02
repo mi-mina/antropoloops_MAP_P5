@@ -33,9 +33,10 @@ void pregunta() {
     //ya que la respuesta me la da exclusivamente con el loopend, sin decirme ni el track, ni el clip
     //De esta forma, sé que la respuesta me la va a dar en el mismo orden que la mando, y por lo tanto
     //puedo hacer corresponder los datos del loopend con un track y un clip determinados
-
+    
     String claveClip=loopsIndexed.get(i);
     int[] a = int(split(claveClip, '-'));
+
 
     OscMessage loopMessage = new OscMessage("/live/clip/loopend");
     loopMessage.add(a);

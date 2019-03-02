@@ -1,10 +1,200 @@
 [
-  {"lugar":"Buenos Aires","coordX":300,"coordY":300,"pais":"Argentina"},
-  {"lugar":"Madagascar","coordX":766,"coordY":618,"pais":""},
-  {"lugar":"Polinesia Francesa","coordX":71,"coordY":626,"pais":""},
-  {"lugar":"Galicia","coordX":567,"coordY":348,"pais":"España"},
-  {"lugar":"Tailandia","coordX":951,"coordY":442,"pais":""},
-  {"lugar":"Afganistan","coordX":831,"coordY":389,"pais":""},
-  {"lugar":"Mali","coordX":578,"coordY":459,"pais":""},
-  {"lugar":"Rep. Centroafricana","coordX":671,"coordY":503,"pais":""}
+  {
+    "lugar": "Albania",
+    "coordX": 1084,
+    "coordY": 553,
+    "pais": "Albania"
+  },
+  {
+    "lugar": "Argelia",
+    "coordX": 590,
+    "coordY": 943,
+    "pais": "Argelia"
+  },
+  {
+    "lugar": "Aurés",
+    "coordX": 700,
+    "coordY": 756,
+    "pais": "Argelia"
+  },
+  {
+    "lugar": "Baleares",
+    "coordX": 590,
+    "coordY": 600,
+    "pais": "España"
+  },
+  {
+    "lugar": "Bosnia",
+    "coordX": 1010,
+    "coordY": 440,
+    "pais": "Bosnia y Herzegovina"
+  },
+  {
+    "lugar": "Campania",
+    "coordX": 935,
+    "coordY": 559,
+    "pais": "Italia"
+  },
+  {
+    "lugar": "Cerdeña",
+    "coordX": 766,
+    "coordY": 590,
+    "pais": "Italia"
+  },
+  {
+    "lugar": "Croacia",
+    "coordX": 968,
+    "coordY": 389,
+    "pais": "Croacia"
+  },
+  {
+    "lugar": "Córcega",
+    "coordX": 765,
+    "coordY": 514,
+    "pais": "Francia"
+  },
+  {
+    "lugar": "Damasco",
+    "coordX": 1597,
+    "coordY": 827,
+    "pais": "Siria"
+  },
+  {
+    "lugar": "Egipto",
+    "coordX": 1380,
+    "coordY": 964,
+    "pais": "Egipto"
+  },
+  {
+    "lugar": "España",
+    "coordX": 389,
+    "coordY": 599,
+    "pais": "España"
+  },
+  {
+    "lugar": "Fes",
+    "coordX": 352,
+    "coordY": 807,
+    "pais": "Marruecos"
+  },
+  {
+    "lugar": "Francia",
+    "coordX": 579,
+    "coordY": 354,
+    "pais": "Francia"
+  },
+  {
+    "lugar": "Grecia",
+    "coordX": 1150,
+    "coordY": 610,
+    "pais": "Grecia"
+  },
+  {
+    "lugar": "Israel",
+    "coordX": 1553,
+    "coordY": 886,
+    "pais": "Israel"
+  },
+  {
+    "lugar": "Estambul",
+    "coordX": 1344,
+    "coordY": 550,
+    "pais": "Turquía"
+  },
+  {
+    "lugar": "Italia",
+    "coordX": 849,
+    "coordY": 476,
+    "pais": "Italia"
+  },
+  {
+    "lugar": "Líbano",
+    "coordX": 1573,
+    "coordY": 811,
+    "pais": "Líbano"
+  },
+  {
+    "lugar": "Libia",
+    "coordX": 1020,
+    "coordY": 980,
+    "pais": "Libia"
+  },
+  {
+    "lugar": "Lleida",
+    "coordX": 533,
+    "coordY": 529,
+    "pais": "Lleida"
+  },
+  {
+    "lugar": "Marrakech",
+    "coordX": 255,
+    "coordY": 873,
+    "pais": "Marruecos"
+  },
+  {
+    "lugar": "Marruecos",
+    "coordX": 336,
+    "coordY": 860,
+    "pais": "Marruecos"
+  },
+  {
+    "lugar": "Mediterráneo",
+    "coordX": 1026,
+    "coordY": 740,
+    "pais": "Mediterráneo"
+  },
+  {
+    "lugar": "Málaga",
+    "coordX": 370,
+    "coordY": 705,
+    "pais": "España"
+  },
+  {
+    "lugar": "Palestina",
+    "coordX": 1567,
+    "coordY": 878,
+    "pais": "Palestina"
+  },
+  {
+    "lugar": "Sevilla",
+    "coordX": 327,
+    "coordY": 677,
+    "pais": "España"
+  },
+  {
+    "lugar": "Siria",
+    "coordX": 1649,
+    "coordY": 767,
+    "pais": "Siria"
+  },
+  {
+    "lugar": "Tarragona",
+    "coordX": 542,
+    "coordY": 547,
+    "pais": "España"
+  },
+  {
+    "lugar": "Tirana",
+    "coordX": 1079,
+    "coordY": 549,
+    "pais": "Albania"
+  },
+  {
+    "lugar": "Túnez",
+    "coordX": 785,
+    "coordY": 762,
+    "pais": "Túnez"
+  },
+  {
+    "lugar": "Turquía",
+    "coordX": 1522,
+    "coordY": 626,
+    "pais": "Turquía"
+  },
+  {
+    "lugar": "Valencia",
+    "coordX": 491,
+    "coordY": 604,
+    "pais": "España"
+  }
 ]

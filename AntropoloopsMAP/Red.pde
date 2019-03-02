@@ -14,6 +14,7 @@ class Red {
 
   void dibujaRed() {
     stroke(h, s, b, a);
+    // Grosor de laslíneas
     strokeWeight(2);
     line(x1, y1, x2, y2);
   }

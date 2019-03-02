@@ -35,6 +35,11 @@ processing.data.JSONArray misLugaresJSON;
 int playStop = 1;
 HashMap<String, Object> ultimoLoop;
 
+// Image resolution
+float backgroundImageWidth = 1920;
+float backgroundImageHeight = 1200;
+float imageRatio = backgroundImageWidth / backgroundImageHeight;
+
 int ct1;
 int m; //millis
 int sceneNumber;
@@ -49,19 +54,20 @@ float finalX;
 float finalY;
 int statePuntoRojo, statePuntoVerde;
 boolean dibujaOnda, ultLoopParado;
+IntList soloActive = new IntList();
 Timer timerPuntoRojo, timerPuntoVerde, timerOnda;
 
 Abanico[] misAbanicos;
 Red[] miRed;
 
 float v = 0;
-float d;
+float diamOnda;
 
 //============================================================================
 void setup() {
   size(displayWidth, displayHeight);
   if (frame != null) {
-    frame.setResizable(true);
+    surface.setResizable(true);
   }
   frameRate(7);
 
@@ -100,7 +106,7 @@ void setup() {
     HashMap<String, Object> canciones = new HashMap<String, Object>();
     canciones.put("lugar", misLoopsJSON.getJSONObject(i).getString("lugar"));
     canciones.put("imagen", misLoopsJSON.getJSONObject(i).getString("nombreArchivo"));
-    canciones.put("fecha", misLoopsJSON.getJSONObject(i).getString("fecha"));
+    canciones.put("fecha", misLoopsJSON.getJSONObject(i).get("fecha"));
     canciones.put("artista", misLoopsJSON.getJSONObject(i).getString("artista"));
     canciones.put("album", misLoopsJSON.getJSONObject(i).getString("album"));
     canciones.put("titulo", misLoopsJSON.getJSONObject(i).getString("titulo"));
@@ -114,6 +120,7 @@ void setup() {
     coordenadas.put("coordY", misLugaresJSON.getJSONObject(i).getInt("coordY"));
     placesDB.put(misLugaresJSON.getJSONObject(i).getString("lugar"), coordenadas);
   }
+
   misImagenes = new HashMap<String, PImage>();
   ultimoLoop = new HashMap<String, Object>();
 } // End setup()
@@ -128,8 +135,8 @@ void draw() {
 
   // La posición del background y del texto www.antropoloops.com cambia dependiendo
   // de la proporción de la pantalla.
-  if (float(width) / float(height) >= 1.6) { //El tamaño de la imagen de fondo es 1280x800. 1280/800=1.6
-    bWidth = height * 1.6;
+  if (float(width) / float(height) >= imageRatio) { //El tamaño de la imagen de fondo es 1920x1200. 1920/1200=1.6
+    bWidth = height * imageRatio;
     bHeight = height;
     bX = (width - bWidth) / 2;
     bY = 0;
@@ -137,15 +144,20 @@ void draw() {
     textY = height - paddingTexto;
   } else {
     bWidth = width;
-    bHeight = width / 1.6;
+    bHeight = width / imageRatio;
     bX = 0;
     bY = 0;
     textX = paddingTexto + paddingPunto;
     textY = bHeight - paddingTexto;
   }
 
+  noStroke();
   image(backgroundMap, bX, bY, bWidth, bHeight);
-
+  // Translucent rectangle on the bottom, to obscure the area of the map where the mp3 info is drawn.
+  if (!geoZone.equals("mundo")) {
+    fill(0, 0, 0, 30);
+    rect(0, finalY - ladoCuadrado, width, ladoCuadrado);
+  }
   // Translucent rectangle on the top, to obscure the area of the map where the covers are drawn.
   fill(0, 0, 17, 75);
   rect(0, 0, width, coverSide);
@@ -160,8 +172,7 @@ void draw() {
     dibujaOnda = false;
   }
 
-  noStroke();
-  if (float(width) / float(height) >= 1.6) {
+  if (float(width) / float(height) >= imageRatio) {
     puntoX = (width - bWidth) / 2 + paddingPunto;
     puntoY = height - paddingPunto;
   } else {
@@ -170,7 +181,7 @@ void draw() {
   }
 
   if (statePuntoRojo == 1) {
-    fill(150);
+    fill(0, 100, 100);
     ellipse(puntoX, puntoY, dPuntos, dPuntos);
   }
   if (statePuntoVerde == 1) {
@@ -179,10 +190,10 @@ void draw() {
   }
 
   switch(playStop) {
-  case 1:
+  case 0:
     break;
 
-  case 2:
+  case 1:
     if (miAntropoloops != null && drawing == true) {
       misAbanicos = new Abanico[miAntropoloops.size()];
       miRed = new Red[miAntropoloops.size()];
@@ -201,25 +212,35 @@ void draw() {
         volu = (Float)ultimoLoop.get("volume");
 
         if (dibujaOnda == true && volu > 0.05) {
-          d = d + 4;
+          diamOnda = diamOnda + 8;
           String loopName = (String)ultimoLoop.get("nombreLoop");
           HashMap<String, Object> placeObject = (HashMap)loopsDB.get(loopName);
           String placeName = (String)placeObject.get("lugar");
           HashMap<String, Object> placeCoordinates = new HashMap<String, Object>();
           if ((HashMap)placesDB.get(placeName) != null) {
-            placeCoordinates = (HashMap)placesDB.get(placeName);
-            stroke(hu, su, bu, 100 - d / 90);
-            float a = (500 * (d * d)) / ((d * d) + 50);
-            strokeWeight(500 - a);
-            noFill();
-            if (float(width) / float(height) >= 1.6) {
-              coordXOnda = origenX + map((Integer)placeCoordinates.get("coordX"), 0, 1280, 0, height * 1.6);
-              coordYOnda = map((Integer)placeCoordinates.get("coordY"), 0, 800, 0, height);
-            } else if (float(width) / float(height) < 1.6) {
-              coordXOnda = map((Integer)placeCoordinates.get("coordX"), 0, 1280, 0, width);
-              coordYOnda = origenY + map((Integer)placeCoordinates.get("coordY"), 0, 800, 0, width / 1.6);
+            int trackId = (Integer)ultimoLoop.get("trackLoop");
+            if (!soloActive.hasValue(1) && soloActive.get(trackId) == 1) {
+              println("Don't draw wave");
+            } else {
+              placeCoordinates = (HashMap)placesDB.get(placeName);
+              stroke(hu, su, bu, 100 - diamOnda / 90);
+              float a = 5 - diamOnda / 50;
+              if (a < 0) { 
+                a = 0;
+              }
+              strokeWeight(a);
+              noFill();
+              if (float(width) / float(height) >= imageRatio) {
+                origenX = (width - (height * imageRatio)) / 2;
+                coordXOnda = origenX + map((Integer)placeCoordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
+                coordYOnda = map((Integer)placeCoordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
+              } else if (float(width) / float(height) < imageRatio) {
+                coordXOnda = map((Integer)placeCoordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
+                coordYOnda = map((Integer)placeCoordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
+              }
+              ellipse(coordXOnda, coordYOnda, diamOnda, diamOnda);
+              noStroke();
             }
-            ellipse(coordXOnda, coordYOnda, d, d);
           }
         }
       }
@@ -241,15 +262,18 @@ void draw() {
                     HashMap<String, Object> miCancion = (HashMap)loopsDB.get(loopName);
 
                     String placeName = (String)miCancion.get("lugar");
-                    String fecha = (String)miCancion.get("fecha");
-                    
+                    String fecha = "";
+                    if (miCancion.get("fecha") instanceof Integer) {
+                      fecha = str((int)miCancion.get("fecha"));
+                    }
+
                     float h = (Float)loopParameters.get("colorH");
                     float s = (Float)loopParameters.get("colorS");
                     float b = (Float)loopParameters.get("colorB");
                     float vol = (Float)loopParameters.get("volume");
                     int position = (Integer)loopParameters.get("trackLoop");
                     String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
-                    
+
                     PImage miImagen = new PImage();
                     // Check if there is an image
                     if (misImagenes.get(imageIndex) != null) {
@@ -261,7 +285,7 @@ void draw() {
                     }
 
                     HashMap<String, Object> coordinates = new HashMap<String, Object>();
-                    
+
                     // Check if there is a place
                     boolean isThereAPlace = false;
                     if ((HashMap)placesDB.get(placeName) != null) {
@@ -275,25 +299,22 @@ void draw() {
                       println("No se ha encontrado ningún lugar con el nombre: " + placeName);
                       println("************************************************");
                     }
-                   
-                    if (float(width) / float(height) >= 1.6) {
-                      origenX = (width - (height * 1.6)) / 2;
-                      origenY = 0;
-                      coordX = origenX + map((Integer)coordinates.get("coordX"), 0, 1280, 0, height * 1.6);
-                      coordY = map((Integer)coordinates.get("coordY"), 0, 800, 0, height);
-                      coverSide = height * 1.6 / 8;
-                      finalX = width - (width - (height * 1.6)) / 2;
+
+                    if (float(width) / float(height) >= imageRatio) {
+                      origenX = (width - (height * imageRatio)) / 2;
+                      coordX = origenX + map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
+                      coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
+                      coverSide = height * imageRatio / 8;
+                      finalX = width - (width - (height * imageRatio)) / 2;
                       finalY = height;
                       ladoCuadrado = height / 13;
-                    } else if (float(width) / float(height) < 1.6) {
-                      origenX = 0;
-                      origenY = 0;
-                      coordX = map((Integer)coordinates.get("coordX"), 0, 1280, 0, width);
-                      coordY = origenY + map((Integer)coordinates.get("coordY"), 0, 800, 0, width / 1.6);
+                    } else if (float(width) / float(height) < imageRatio) {
+                      coordX = map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
+                      coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
                       coverSide = width / 8;
                       finalX = width;
-                      finalY = width / 1.6;
-                      ladoCuadrado = (width / 1.6) / 13;
+                      finalY = width / imageRatio;
+                      ladoCuadrado = (width / imageRatio) / 13;
                     }
 
                     float alturaRect = coverSide / 10;
@@ -302,7 +323,15 @@ void draw() {
                     textSize(alturaText);
 
                     if (isThereAPlace) {
-                      miRed[i] = new Red(coordX, coordY, (origenX + (coverSide * position) + (textWidth(fecha)) + 7), origenY + coverSide + linSep + alturaRect + linSep + alturaText, h, s, b, vol * 70);
+                      miRed[i] = new Red(
+                        coordX, 
+                        coordY, 
+                        (origenX + coverSide * (position + 0.5)), 
+                        origenY + coverSide + linSep + alturaRect, 
+                        h, 
+                        s, 
+                        b, 
+                        vol * 100);
                       miRed[i].dibujaRed();
                       misAbanicos[i] = new Abanico(vol * 110, h, s, b); // Tamaño círculos vol * tamaño
                       pushMatrix();
@@ -314,24 +343,29 @@ void draw() {
                       popMatrix();
                     }
 
+                    float a = 0;
                     textAlign(LEFT, CENTER);
                     if (vol <= 0.45) {
-                      fill(h, s, b, vol * 223); //100/0.45 = 223
-                      rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
-                      text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
-                      fill(0, vol * 223);
-                      text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 + 1);
-                      tint(360, vol * 223);
-                      image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
-                      noTint();
+                      a = vol * 223;
                     } else  if (vol > 0.45) {
-                      fill(h, s, b);
-                      rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
-                      text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
-                      fill(0);
-                      text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 + 1);
-                      image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
+                      a = 100;
                     }
+
+                    // Color rect under album cover
+                    fill(h, s, b, a); //100/0.45 = 223
+                    rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
+                    // Place name
+                    fill(0, vol * 223);
+                    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 + 1);
+                    // Date
+                    fill(0, 0, 100, vol * 223);
+                    text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
+                    // Album cover
+                    tint(360, vol * 223);
+                    image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
+                    noTint();
+
+
 
                     //Info cuadrado abajo derecha ultimo loop
                     textSize((ladoCuadrado - 13) / 3);
@@ -343,10 +377,7 @@ void draw() {
                           su = (Float)ultimoLoop.get("colorS");
                           bu = (Float)ultimoLoop.get("colorB");
                           volu = (Float)ultimoLoop.get("volume");
-                          if (!geoZone.equals("mundo")) {
-                            fill(0, 0, 0, 30);
-                            rect(0, finalY - ladoCuadrado, width, ladoCuadrado);
-                          }
+
                           fill(hu, su, bu, volu * 225);
                           rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
 
@@ -381,15 +412,19 @@ void draw() {
 
                   if ((HashMap)loopsDB.get(loopName) != null) {
                     HashMap<String, Object> miCancion = (HashMap)loopsDB.get(loopName);
-                    
+
                     String placeName = (String)miCancion.get("lugar");
-                    String fecha= (String)miCancion.get("fecha");
+
+                    String fecha = "";
+                    if (miCancion.get("fecha") instanceof Integer) {
+                      fecha = str((int)miCancion.get("fecha"));
+                    }
 
                     float h = (Float)loopParameters.get("colorH");
                     float s = (Float)loopParameters.get("colorS");
                     float b = (Float)loopParameters.get("colorB");
                     float vol = (Float)loopParameters.get("volume");
-                    int posicion = (Integer)loopParameters.get("trackLoop");
+                    int position = (Integer)loopParameters.get("trackLoop");
                     String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
 
                     PImage miImagen = new PImage();
@@ -403,7 +438,7 @@ void draw() {
                     }
 
                     HashMap<String, Object> coordinates = new HashMap<String, Object>();
-                    
+
                     // Check if there is a place
                     boolean isThereAPlace = false;
                     if ((HashMap)placesDB.get(placeName) != null) {
@@ -418,17 +453,17 @@ void draw() {
                       println("************************************************");
                     }
 
-                    if (float(width) / float(height) >= 1.6) {
-                      origenX = (width - (height * 1.6)) / 2;
+                    if (float(width) / float(height) >= imageRatio) {
+                      origenX = (width - (height * imageRatio)) / 2;
                       origenY = 0;
-                      coordX = origenX + map((Integer)coordinates.get("coordX"), 0, 1280, 0, height * 1.6);
-                      coordY = map((Integer)coordinates.get("coordY"), 0, 800, 0, height);
-                      coverSide = height * 1.6 / 8;
-                    } else if (float(width) / float(height) < 1.6) {
+                      coordX = origenX + map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
+                      coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
+                      coverSide = height * imageRatio / 8;
+                    } else if (float(width) / float(height) < imageRatio) {
                       origenX = 0;
                       origenY = 0;
-                      coordX = map((Integer)coordinates.get("coordX"), 0, 1280, 0, width);
-                      coordY = origenY + map((Integer)coordinates.get("coordY"), 0, 800, 0, width / 1.6);
+                      coordX = map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
+                      coordY = origenY + map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
                       coverSide = width / 8;
                     }
 
@@ -438,7 +473,12 @@ void draw() {
                     textSize(alturaText);
 
                     if (isThereAPlace) {
-                      miRed[i]= new Red(coordX, coordY, (origenX + (coverSide * posicion) + (textWidth(fecha)) + 7), origenY + coverSide + linSep + alturaRect + linSep + alturaText, h, s, b, vol * 50);
+                      miRed[i]= new Red(
+                        coordX, 
+                        coordY, 
+                        (origenX + coverSide * (position + 0.5)), 
+                        origenY + coverSide + linSep + alturaRect, 
+                        h, s, b, vol * 50);
                       miRed[i].dibujaRed();
 
                       misAbanicos[i]= new Abanico(vol * 110, h, s, b);
@@ -452,25 +492,27 @@ void draw() {
                       popMatrix();
                     }
 
+                    float a = 0;
                     textAlign(LEFT, CENTER);
                     if (vol <= 0.45) {
-                      fill(h, s, b, vol * 223);
-                      rect(origenX + (coverSide * posicion), origenY + coverSide + linSep, coverSide, alturaRect);
-                      text(fecha, 5 + (origenX + (coverSide * posicion)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
-                      fill(0, vol * 223);
-                      text(placeName, 5 + (origenX + (coverSide * posicion)), origenY + coverSide + alturaRect / 2 + 1);
-
-                      tint(360, vol * 223);
-                      image(miImagen, origenX + (coverSide * posicion), origenY, coverSide, coverSide);
-                      noTint();
+                      a = vol * 223;
                     } else  if (vol > 0.45) {
-                      fill(h, s, b);
-                      rect(origenX + (coverSide * posicion), origenY + coverSide + linSep, coverSide, alturaRect);
-                      text(fecha, 5 + (origenX + (coverSide * posicion)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
-                      fill(0);
-                      text(placeName, 5 + (origenX + (coverSide * posicion)), origenY + coverSide + alturaRect / 2 + 1);
-                      image(miImagen, origenX + (coverSide * posicion), origenY, coverSide, coverSide);
+                      a = 100;
                     }
+
+                    // Color rect under album cover
+                    fill(h, s, b, a); //100/0.45 = 223
+                    rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
+                    // Place name
+                    fill(0, vol * 223);
+                    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 + 1);
+                    // Date
+                    fill(0, 0, 100, vol * 223);
+                    text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
+                    // Album cover
+                    tint(360, vol * 223);
+                    image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
+                    noTint();
                   } else {
                     println("************************************************");
                     println("No se ha encontrado ningún antropoloops con el nombre: " + loopName);
