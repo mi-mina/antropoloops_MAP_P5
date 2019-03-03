@@ -1,9 +1,7 @@
-//Todos los Eventos que escuchamos de Ableton
-
 void oscEvent(OscMessage theOscMessage) {
   String path = theOscMessage.addrPattern();
 
-  //Nos da la info de todos los clips que hay (track, clip, name, color)
+  // Info about all the clips there are in Ableton (track, clip, name, color)
   if (path.equals("/live/name/clip")) {
     println("+++++++++++++Oyendo " + path + "++++++++++++++++");
     // println("typetag: ", theOscMessage.typetag());
@@ -15,16 +13,15 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("clipLoop", theOscMessage.arguments()[1]);
     infoLoop.put("nombreLoop", theOscMessage.arguments()[2]);
 
-    // Información por defecto para que no pete si se hace un remapeo automático
-    // y no se ha lanzado el método pregunta todavía.
+    // Default info to prevent errors
     infoLoop.put("loopend", 8.0);
     infoLoop.put("volume", 0.5);
     infoLoop.put("solo", 0);
     infoLoop.put("mute", 0);
-
     infoLoop.put("colorS", random(50, 100));
     infoLoop.put("colorB", random(80, 100));
 
+    // Assign colors randomly within a range
     if ((Integer)theOscMessage.arguments()[0] == 0) {
       infoLoop.put("colorH", random(105, 120));
     } else if ((Integer)theOscMessage.arguments()[0] == 1) {
@@ -45,25 +42,21 @@ void oscEvent(OscMessage theOscMessage) {
 
     miAntropoloops.put(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), infoLoop);
     println(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), "/", infoLoop);
-    //infoLoop.get("nombreLoop")
+    
     loopsIndexed.add(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"));
-    //println(loopsIndexed);
     PImage thisImage = loadImage("../0_covers/" + (String)infoLoop.get("nombreLoop") + ".jpg");
     if (thisImage != null) {
-      // println("saving image ", (String)infoLoop.get("nombreLoop"));
       misImagenes.put(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), thisImage);
     }
-    // println("loopsIndexed ", loopsIndexed);
   }
 
-  // Me avisa cuando live/name/clip ha terminado de lanzar mensajes
-  // Es un path que he añadido yo a LiveOSC
+  // Message when all live/name/clip messages are sent
   if (path.equals("/live/name/clip/done")) {
     println("***********DONE************");
     //println(theOscMessage.arguments()[0]);
   }
 
-  //Aquí escuchamos si un clip cambia de estado (clip (0), has clip (1), playing (2), triggered (3))
+  // Listener for clip state (clip (0), has clip (1), playing (2), triggered (3))
   if (path.equals("/live/clip/info")) {
     // println("typetag /live/clip/info: ", theOscMessage.typetag());
     int claveTrack = theOscMessage.get(0).intValue();
@@ -119,7 +112,6 @@ void oscEvent(OscMessage theOscMessage) {
     String idTrackClip = loopsIndexed.get(ct1);
     miAntropoloops.get(idTrackClip).put("loopend", theOscMessage.get(0).floatValue());
     // println("idTrackClip ", idTrackClip, "loopend ", theOscMessage.get(0).floatValue());
-    // println("miAntropoloops ", miAntropoloops);
   }
 
   if (path.equals("/live/volume")) {
@@ -174,42 +166,35 @@ void oscEvent(OscMessage theOscMessage) {
     // println("tempo: ", tempo);
   }
 
-  // if (path.equals("/live/scene")) {
-  //   // Listens if a scene has been selected.
-  //   // The received number is the scene position, starting the enumeration at 1.
-  //   sceneNumber = theOscMessage.get(0).intValue();
-  //   // println("sceneNumber " + sceneNumber);
-  //   // println("Scene number " + sceneNumber + " has been selected");
-
-  //   // To get the scene name, I send a new message
-  //   OscMessage sceneMessage = new OscMessage("/live/name/scene");
-  //   // In order to ask by the scene name, I don't know why, the enumaration of the scenes
-  //   // starts at 0, as usual, that's why I have to substract 1 to sceneNumber.
-  //   sceneMessage.add(sceneNumber - 1);
-  //   oscP5.send(sceneMessage);
-  //   // println("Asking by scene " + (sceneNumber - 1));
-  // }
-
   if (path.equals("/live/name/scene")) {
     // println("typetag /live/name/scene: ", theOscMessage.typetag());
     sceneName = theOscMessage.get(0).toString();
     println("sceneName " + sceneName);
     String[] parameters = sceneName.split(" ");
     if (parameters[7] != null) {
-      geoZone = parameters[7];
+      String[] geoZoneDataBg = parameters[7].split("_");
+      geoZoneBg = parameters[7];
 
-      if (loadImage("../1_BDatos/mapa_" + geoZone + ".jpg") != null) {
-        backgroundMap = loadImage("../1_BDatos/mapa_" + geoZone + ".jpg");
+      if (geoZoneDataBg.length == 1) {
+        geoZoneData = parameters[7];
+      } else if (geoZoneDataBg.length == 2) {
+        geoZoneData = geoZoneDataBg[0];
+      }
+
+      if (loadImage("../1_BDatos/mapa_" + geoZoneBg + ".jpg") != null) {
+        println("load map");
+        backgroundMapBase = backgroundMapNew;
+        backgroundMapNew = loadImage("../1_BDatos/mapa_" + geoZoneBg + ".jpg");
+        alpha = 0;
       } else {
-        backgroundMap = loadImage("../1_BDatos/mapa_mundo.jpg");
+        backgroundMapBase = loadImage("../1_BDatos/mapa_mundo.jpg");
         println("************************************************");
-        println("No se ha encontrado ninguna imagen de fondo con el nombre: mapa_" + geoZone);
+        println("No se ha encontrado ninguna imagen de fondo con el nombre: mapa_" + geoZoneBg);
         println("************************************************");
       }
 
-      if (loadJSONArray("../1_BDatos/BDlugares_" + geoZone + ".txt") != null) {
-        misLugaresJSON = loadJSONArray("../1_BDatos/BDlugares_" + geoZone + ".txt");
-
+      if (loadJSONArray("../1_BDatos/BDlugares_" + geoZoneData + ".txt") != null) {
+        misLugaresJSON = loadJSONArray("../1_BDatos/BDlugares_" + geoZoneData + ".txt");
         // Empty placesDB
         placesDB = new HashMap<String, HashMap<String, Object>>();
 
@@ -223,7 +208,7 @@ void oscEvent(OscMessage theOscMessage) {
       } else {
         misLugaresJSON = loadJSONArray("../1_BDatos/BDlugares_mundo.txt");
         println("************************************************");
-        println("No se ha encontrado ningún archivo con el nombre: BDlugares_" + geoZone);
+        println("No se ha encontrado ningún archivo con el nombre: BDlugares_" + geoZoneData);
         println("************************************************");
       }
     }

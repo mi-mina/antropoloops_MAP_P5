@@ -1,8 +1,4 @@
 /*
- * Needs OSCLive from http://livecontrol.q3f.org/ableton-liveapi/liveosc/
- * to be installed within Ableton
- * complete List of OSC calls at http://monome.q3f.org/browser/trunk/LiveOSC/OSCAPI.txt
- *
  * Coded by MI-MI NA
  * www.mi-mina.com
  * for Antropoloops
@@ -19,7 +15,10 @@ NetAddress myRemoteLocation;
 
 int inPort = 9001;
 int outPort = 9000;
-PImage backgroundMap;
+
+int alpha = 0;
+PImage backgroundMapBase;
+PImage backgroundMapNew;
 boolean drawing=false;
 
 HashMap<String, HashMap<String, Object>> miAntropoloops;
@@ -44,7 +43,8 @@ int ct1;
 int m; //millis
 int sceneNumber;
 String sceneName;
-String geoZone = "mundo";
+String geoZoneData = "mundo";
+String geoZoneBg = "mundo";
 float tempo;
 float coordX, coordY, coordXOnda, coordYOnda;
 float origenX, origenY;
@@ -69,9 +69,11 @@ void setup() {
   if (frame != null) {
     surface.setResizable(true);
   }
-  frameRate(7);
+  frameRate(10);
 
-  backgroundMap = loadImage("../1_BDatos/mapa_mundo.jpg");
+  backgroundMapBase = loadImage("../1_BDatos/default.jpg");
+  backgroundMapNew = loadImage("../1_BDatos/default.jpg");
+  
   colorMode(HSB, 360, 100, 100, 100);
 
   /* create a new osc properties object */
@@ -151,10 +153,18 @@ void draw() {
     textY = bHeight - paddingTexto;
   }
 
+  if (alpha < 100) {
+    alpha += 5;
+  }
+
   noStroke();
-  image(backgroundMap, bX, bY, bWidth, bHeight);
+  image(backgroundMapBase, bX, bY, bWidth, bHeight);
+  tint(360, alpha);
+  image(backgroundMapNew, bX, bY, bWidth, bHeight);
+  noTint();
+
   // Translucent rectangle on the bottom, to obscure the area of the map where the mp3 info is drawn.
-  if (!geoZone.equals("mundo")) {
+  if (!geoZoneData.equals("mundo")) {
     fill(0, 0, 0, 30);
     rect(0, finalY - ladoCuadrado, width, ladoCuadrado);
   }
