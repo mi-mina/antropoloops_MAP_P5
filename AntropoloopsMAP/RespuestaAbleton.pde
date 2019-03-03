@@ -9,36 +9,43 @@ void oscEvent(OscMessage theOscMessage) {
     statePuntoRojo = 1;
 
     HashMap<String, Object> infoLoop = new HashMap<String, Object>();
-    infoLoop.put("trackLoop", theOscMessage.arguments()[0]);
-    infoLoop.put("clipLoop", theOscMessage.arguments()[1]);
+    int track = (Integer)theOscMessage.arguments()[0];
+    int clip = (Integer)theOscMessage.arguments()[1];
+    infoLoop.put("trackLoop", track);
+    infoLoop.put("clipLoop", clip);
     infoLoop.put("nombreLoop", theOscMessage.arguments()[2]);
+    float colorH = 0.0;
+    float colorS = random(50, 100);
+    float colorB = random(80, 100);
+
+      // Assign colors randomly within a range
+    if (track == 0) {
+      colorH = random(105, 120);
+    } else if (track == 1) {
+      colorH = random(145, 160);
+    } else if (track == 2) {
+      colorH = random(300, 315);
+    } else if (track == 3) {
+      colorH = random(330, 345);
+    } else if (track == 4) {
+      colorH = random(190, 205);
+    } else if (track == 5) {
+      colorH = random(210, 225);
+    } else if (track == 6) {
+      colorH = random(25, 40);
+    } else if (track == 7) {
+      colorH = random(50, 65);
+    }
 
     // Default info to prevent errors
     infoLoop.put("loopend", 8.0);
     infoLoop.put("volume", 0.5);
     infoLoop.put("solo", 0);
     infoLoop.put("mute", 0);
-    infoLoop.put("colorS", random(50, 100));
-    infoLoop.put("colorB", random(80, 100));
 
-    // Assign colors randomly within a range
-    if ((Integer)theOscMessage.arguments()[0] == 0) {
-      infoLoop.put("colorH", random(105, 120));
-    } else if ((Integer)theOscMessage.arguments()[0] == 1) {
-      infoLoop.put("colorH", random(145, 160));
-    } else if ((Integer)theOscMessage.arguments()[0] == 2) {
-      infoLoop.put("colorH", random(300, 315));
-    } else if ((Integer)theOscMessage.arguments()[0] == 3) {
-      infoLoop.put("colorH", random(330, 345));
-    } else if ((Integer)theOscMessage.arguments()[0] == 4) {
-      infoLoop.put("colorH", random(190, 205));
-    } else if ((Integer)theOscMessage.arguments()[0] == 5) {
-      infoLoop.put("colorH", random(210, 225));
-    } else if ((Integer)theOscMessage.arguments()[0] == 6) {
-      infoLoop.put("colorH", random(25, 40));
-    } else if ((Integer)theOscMessage.arguments()[0] == 7) {
-      infoLoop.put("colorH", random(50, 65));
-    }
+    infoLoop.put("colorH", colorH);
+    infoLoop.put("colorS", colorS);
+    infoLoop.put("colorB", colorB); 
 
     miAntropoloops.put(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), infoLoop);
     println(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), "/", infoLoop);
@@ -48,6 +55,19 @@ void oscEvent(OscMessage theOscMessage) {
     if (thisImage != null) {
       misImagenes.put(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), thisImage);
     }
+
+    // // Send messages to Ableton
+    // color myColor = color(colorH, colorS, colorB);
+    // colorMode(RGB, 255);
+    // int red = int(red(myColor));
+    // int green = int(green(myColor));
+    // int blue = int(blue(myColor));
+    
+    // OscMessage colorMessage = new OscMessage("/live/clip/color");
+    // int[] params = {track, clip, red, green, blue};
+    // colorMessage.add(params);
+    // oscP5.send(colorMessage);
+    // colorMode(HSB, 360, 100, 100, 100);
   }
 
   // Message when all live/name/clip messages are sent
@@ -64,9 +84,7 @@ void oscEvent(OscMessage theOscMessage) {
     int state = (Integer)theOscMessage.get(2).intValue();
     println(claveTrack + "-" + claveClip + ": " + state);
     
-
     miAntropoloops.get(claveTrack + "-" + claveClip).put("state", state);
-    println("miAntropoloops", miAntropoloops.get(claveTrack + "-" + claveClip));
 
     if (state == 2) {
       HashMap<String, Object> musicalParameters = miAntropoloops.get(claveTrack + "-" + claveClip);
@@ -96,6 +114,23 @@ void oscEvent(OscMessage theOscMessage) {
         ultLoopParado = true;
       }
     }
+
+    float colorH = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorH");
+    float colorS = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorS");
+    float colorB = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorB");
+    
+    // Send color messages to Ableton
+    color myColor = color(colorH, colorS, colorB);
+    colorMode(RGB, 255);
+    int red = int(red(myColor));
+    int green = int(green(myColor));
+    int blue = int(blue(myColor));
+    
+    OscMessage colorMessage = new OscMessage("/live/clip/color");
+    int[] params = {claveTrack, claveClip, red, green, blue};
+    colorMessage.add(params);
+    oscP5.send(colorMessage);
+    colorMode(HSB, 360, 100, 100, 100);
   }
 
   if (path.equals("/live/play")) {
@@ -181,6 +216,7 @@ void oscEvent(OscMessage theOscMessage) {
         geoZoneData = geoZoneDataBg[0];
       }
 
+      // Set base map according to the scene
       if (loadImage("../1_BDatos/mapa_" + geoZoneBg + ".jpg") != null) {
         println("load map");
         backgroundMapBase = backgroundMapNew;
@@ -193,6 +229,7 @@ void oscEvent(OscMessage theOscMessage) {
         println("************************************************");
       }
 
+      // Load BDLugares acording to the scene
       if (loadJSONArray("../1_BDatos/BDlugares_" + geoZoneData + ".txt") != null) {
         misLugaresJSON = loadJSONArray("../1_BDatos/BDlugares_" + geoZoneData + ".txt");
         // Empty placesDB
@@ -213,4 +250,16 @@ void oscEvent(OscMessage theOscMessage) {
       }
     }
   }
+
+  // if (path.equals("/live/delay")) {
+  //   println("live/delay received");
+  //   int trackId = theOscMessage.get(0).intValue();
+  //   float delay = theOscMessage.get(1).floatValue();
+  //   println("trackId", trackId);
+  //   println("delay", tradelayckId);
+  // }
+
+  // if (path.equals("/live/send")) {
+  //   println("live/delay send");
+  // }
 }

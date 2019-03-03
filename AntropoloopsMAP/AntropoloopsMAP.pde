@@ -78,16 +78,21 @@ void setup() {
 
   /* create a new osc properties object */
   OscProperties properties = new OscProperties();
+
   /* set a default NetAddress. sending osc messages with no NetAddress parameter
    * in oscP5.send() will be sent to the default NetAddress.
    */
-  properties.setRemoteAddress("localhost", outPort);
+  // properties.setRemoteAddress("localhost", outPort);
+  properties.setRemoteAddress("192.168.1.35", outPort);
+
   /* the port number you are listening for incoming osc packets. */
   properties.setListeningPort(inPort);
+
   /* set the datagram byte buffer size. this can be useful when you send/receive
    * huge amounts of data, but keep in mind, that UDP is limited to 64k
    */
   properties.setDatagramSize(5000);
+
   /* initialize oscP5 with our osc properties */
   oscP5 = new OscP5(this, properties);
   //println("Estas son las propiedades "+properties.toString());
