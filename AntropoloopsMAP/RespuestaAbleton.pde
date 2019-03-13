@@ -42,6 +42,8 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("volume", 0.5);
     infoLoop.put("solo", 0);
     infoLoop.put("mute", 0);
+    infoLoop.put("delay", 0.0);
+    infoLoop.put("send", 0.0);
 
     infoLoop.put("colorH", colorH);
     infoLoop.put("colorS", colorS);
@@ -85,6 +87,7 @@ void oscEvent(OscMessage theOscMessage) {
     println(claveTrack + "-" + claveClip + ": " + state);
     
     miAntropoloops.get(claveTrack + "-" + claveClip).put("state", state);
+    println("clip: ", miAntropoloops.get(claveTrack + "-" + claveClip));
 
     if (state == 2) {
       HashMap<String, Object> musicalParameters = miAntropoloops.get(claveTrack + "-" + claveClip);
@@ -251,15 +254,29 @@ void oscEvent(OscMessage theOscMessage) {
     }
   }
 
-  // if (path.equals("/live/delay")) {
-  //   println("live/delay received");
-  //   int trackId = theOscMessage.get(0).intValue();
-  //   float delay = theOscMessage.get(1).floatValue();
-  //   println("trackId", trackId);
-  //   println("delay", tradelayckId);
-  // }
+  if (path.equals("/live/delay")) {
+    int trackId = theOscMessage.get(0).intValue();
+    float delay = theOscMessage.get(1).floatValue();
 
-  // if (path.equals("/live/send")) {
-  //   println("live/delay send");
-  // }
+    for (int i = 0; i < loopsIndexed.size(); i++) {
+      String claveClip = loopsIndexed.get(i);
+      int[] a = int(split(claveClip, '-'));
+      if (a[0] == trackId) {
+        miAntropoloops.get(claveClip).put("delay", delay);
+      }
+    }
+  }
+
+  if (path.equals("/live/send")) {
+    int trackId = theOscMessage.get(0).intValue();
+    float send = theOscMessage.get(1).floatValue();
+
+    for (int i = 0; i < loopsIndexed.size(); i++) {
+      String claveClip = loopsIndexed.get(i);
+      int[] a = int(split(claveClip, '-'));
+      if (a[0] == trackId) {
+        miAntropoloops.get(claveClip).put("send", send);
+      }
+    }
+  }
 }

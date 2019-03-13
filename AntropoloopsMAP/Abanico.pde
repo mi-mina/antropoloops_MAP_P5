@@ -1,71 +1,64 @@
 class Abanico {
-  float d;
+  float d1;
+  float d2;
   float h, s, b;
   float stopAngle = radians(360) - HALF_PI;
 
   // Abanico constructor
-  Abanico(float diam, float colorH, float colorS, float colorB) {
-    d = diam * 0.8;
+  Abanico(float vol, float effect, float colorH, float colorS, float colorB) {
+    d1 = vol * 100;
+    d2 = effect;
     h = colorH;
     s = colorS;
     b = colorB;
   }
 
   void dibuja() {
-    float rWidth = float(width) / 1280;
-    float rHeight = float(height) / 800;
+    float relativeMessure;
+    float relativeWidth = float(width) / 1280;
+    float relativeHeight = float(height) / 800;
+    if (float(width)/float(height) >= 1.6) {
+      relativeMessure = relativeHeight;
+    } else {
+      relativeMessure = relativeWidth;
+    }
 
-    for (int i = 0; i < 20; i++) {
-      float startAngle = radians(i * 24) - HALF_PI;
-      float yLine = 0.0;
-      float dArc1 = 0.0;
-      float dArc2 = 0.0;
+    int slices = 15;
+    float step = 360 / slices;
 
-      if (float(width)/float(height) >= 1.6) {
-        if (d <= 40) {
-          yLine = -d * rHeight * 1.2 * 3 / 8;
-          dArc1 = d * rHeight * 3 / 4;
-          dArc2 = d * rHeight * 2;
-        } else if (40 < d && d <= 70) {
-          yLine = -(4 * d - 70) / 6 * rHeight * 1.2;
-          dArc1 = (4 * d - 70) / 3 * rHeight;
-          dArc2 = d * rHeight * 2.5;
-        } else if (d > 70 && d <= 80) {
-          yLine = -(5 * d - 280) / 2 * rHeight * 1.2;
-          dArc1 = (5 * d - 280) * rHeight;
-          dArc2 = d * rHeight * 2.5;
-        } else if (d > 80) {
-          yLine = -60 * rHeight * 1.2;
-          dArc1 = 120 * rHeight;
-          dArc2 = d * rHeight * 2.5;
-        }
-      } else {
-        if (d <= 40) {
-          yLine = -d * 3 / 8 * rWidth * 1.2;
-          dArc1 = d * 3 / 4 * rWidth;
-          dArc2 = d * rHeight * 2;
-        } else if (40 < d && d <= 70) {
-          yLine = -(4 * d - 70) / 6 * rWidth * 1.2;
-          dArc1 = (4 * d - 70) / 3 * rWidth;
-          dArc2 = d * rHeight * 2.5;
-        } else if (d > 70 && d <= 80) {
-          yLine = -(5 * d - 280) / 2 * rWidth * 1.2;
-          dArc1 = (5 * d - 280) * rWidth;
-          dArc2 = d * rHeight * 2.5;
-        } else if (d > 80) {
-          yLine = -60 * rWidth * 1.2;
-          dArc1 = 120 * rWidth;
-          dArc2 = d * rHeight * 2.5;
-        }
+    for (int i = 0; i < slices; i++) {
+      float startAngle = radians(i * step) - HALF_PI; // HALF_PI = 3.14 / 2 = 1.57
+      float diamVolumeCircle = 0.0;
+      if (d1 <= 40) {
+        diamVolumeCircle = d1 * 3 / 4 * relativeMessure;
+      } else if (40 < d1 && d1 <= 70) {
+        diamVolumeCircle = (4 * d1 - 70) / 3 * relativeMessure;
+      } else if (d1 > 70 && d1 <= 80) {
+        diamVolumeCircle = (5 * d1 - 280) * relativeMessure;
+      } else if (d1 > 80) {
+        diamVolumeCircle = 120 * relativeMessure;
       }
+      float diamTransCircle = diamVolumeCircle * 1.6;
+      float yLine = -diamTransCircle / 2;
+      float diamEffectCircle = diamTransCircle + diamTransCircle * d2;
+
+      // line
       stroke(h, s, b);
       strokeWeight(1);
       line(0, 0, 0, yLine);
       noStroke();
-      fill(h, s, b, 25);
-      arc(0, 0, dArc1, dArc1, startAngle, stopAngle);
+
+      // volume circle
+      fill(h, s, b, 20);
+      arc(0, 0, diamVolumeCircle, diamVolumeCircle, startAngle, stopAngle);
+
+      // translucent circle
       fill(h, s, b, 2);
-      arc(0, 0, dArc2, dArc2, startAngle, stopAngle);
+      arc(0, 0, diamTransCircle, diamTransCircle, startAngle, stopAngle);
+
+      // effect circle
+      fill(h, s, b, 2);
+      arc(0, 0, diamEffectCircle, diamEffectCircle, startAngle, stopAngle);
     }
   }
 }

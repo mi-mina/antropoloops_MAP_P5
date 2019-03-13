@@ -82,8 +82,8 @@ void setup() {
   /* set a default NetAddress. sending osc messages with no NetAddress parameter
    * in oscP5.send() will be sent to the default NetAddress.
    */
-  // properties.setRemoteAddress("localhost", outPort);
-  properties.setRemoteAddress("192.168.1.35", outPort);
+  properties.setRemoteAddress("localhost", outPort);
+  // properties.setRemoteAddress("192.168.1.35", outPort);
 
   /* the port number you are listening for incoming osc packets. */
   properties.setListeningPort(inPort);
@@ -286,6 +286,9 @@ void draw() {
                     float s = (Float)loopParameters.get("colorS");
                     float b = (Float)loopParameters.get("colorB");
                     float vol = (Float)loopParameters.get("volume");
+                    float delay = (Float)loopParameters.get("delay");
+                    float send = (Float)loopParameters.get("send");
+
                     int position = (Integer)loopParameters.get("trackLoop");
                     String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
 
@@ -336,6 +339,14 @@ void draw() {
                     int linSep = 3;
                     float alturaText = alturaRect - 2;
                     textSize(alturaText);
+                    
+                    float effect;
+
+                    if (delay > send) {
+                      effect = delay;
+                    } else {
+                      effect = send;
+                    }
 
                     if (isThereAPlace) {
                       miRed[i] = new Red(
@@ -346,9 +357,9 @@ void draw() {
                         h, 
                         s, 
                         b, 
-                        vol * 100);
+                        vol * 50);
                       miRed[i].dibujaRed();
-                      misAbanicos[i] = new Abanico(vol * 110, h, s, b); // Tamaño círculos vol * tamaño
+                      misAbanicos[i] = new Abanico(vol, effect, h, s, b);
                       pushMatrix();
                       translate(coordX, coordY);
                       v = m / (60 / tempo * parseInt((Float)loopParameters.get("loopend")) * 1000 / 360);
@@ -439,6 +450,8 @@ void draw() {
                     float s = (Float)loopParameters.get("colorS");
                     float b = (Float)loopParameters.get("colorB");
                     float vol = (Float)loopParameters.get("volume");
+                    float delay = (Float)loopParameters.get("delay");
+                    float send = (Float)loopParameters.get("send");
                     int position = (Integer)loopParameters.get("trackLoop");
                     String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
 
@@ -487,6 +500,14 @@ void draw() {
                     float alturaText = alturaRect - 2;
                     textSize(alturaText);
 
+                    float effect;
+
+                    if (delay > send) {
+                      effect = delay;
+                    } else {
+                      effect = send;
+                    }
+
                     if (isThereAPlace) {
                       miRed[i]= new Red(
                         coordX, 
@@ -496,7 +517,7 @@ void draw() {
                         h, s, b, vol * 50);
                       miRed[i].dibujaRed();
 
-                      misAbanicos[i]= new Abanico(vol * 110, h, s, b);
+                      misAbanicos[i]= new Abanico(vol, effect, h, s, b);
 
                       pushMatrix();
                       translate(coordX, coordY);
