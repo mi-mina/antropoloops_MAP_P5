@@ -1,16 +1,14 @@
 class Abanico {
   float d1;
   float d2;
-  float h, s, b;
+  color tC;
   float stopAngle = radians(360) - HALF_PI;
 
   // Abanico constructor
-  Abanico(float vol, float effect, float colorH, float colorS, float colorB) {
+  Abanico(float vol, float effect, color trackColor) {
     d1 = vol * 100;
     d2 = effect;
-    h = colorH;
-    s = colorS;
-    b = colorB;
+    tC = trackColor;
   }
 
   void dibuja() {
@@ -43,21 +41,21 @@ class Abanico {
       float diamEffectCircle = diamTransCircle + diamTransCircle * d2;
 
       // line
-      stroke(h, s, b);
+      stroke(tC);
       strokeWeight(1);
       line(0, 0, 0, yLine);
       noStroke();
 
       // volume circle
-      fill(h, s, b, 20);
+      fill(tC, 20);
       arc(0, 0, diamVolumeCircle, diamVolumeCircle, startAngle, stopAngle);
 
       // translucent circle
-      fill(h, s, b, 2);
+      fill(tC, 2);
       arc(0, 0, diamTransCircle, diamTransCircle, startAngle, stopAngle);
 
       // effect circle
-      fill(h, s, b, 2);
+      fill(tC, 2);
       arc(0, 0, diamEffectCircle, diamEffectCircle, startAngle, stopAngle);
     }
   }

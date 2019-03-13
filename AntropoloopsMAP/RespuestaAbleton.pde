@@ -4,7 +4,6 @@ void oscEvent(OscMessage theOscMessage) {
   // Info about all the clips there are in Ableton (track, clip, name, color)
   if (path.equals("/live/name/clip")) {
     println("+++++++++++++Oyendo " + path + "++++++++++++++++");
-    // println("typetag: ", theOscMessage.typetag());
     timerPuntoRojo.start(1);
     statePuntoRojo = 1;
 
@@ -14,28 +13,30 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("trackLoop", track);
     infoLoop.put("clipLoop", clip);
     infoLoop.put("nombreLoop", theOscMessage.arguments()[2]);
-    float colorH = 0.0;
-    float colorS = random(50, 100);
-    float colorB = random(80, 100);
+    // float colorH = 0.0;
+    // float colorS = random(50, 100);
+    // float colorB = random(80, 100);
 
-      // Assign colors randomly within a range
-    if (track == 0) {
-      colorH = random(105, 120);
-    } else if (track == 1) {
-      colorH = random(145, 160);
-    } else if (track == 2) {
-      colorH = random(300, 315);
-    } else if (track == 3) {
-      colorH = random(330, 345);
-    } else if (track == 4) {
-      colorH = random(190, 205);
-    } else if (track == 5) {
-      colorH = random(210, 225);
-    } else if (track == 6) {
-      colorH = random(25, 40);
-    } else if (track == 7) {
-      colorH = random(50, 65);
-    }
+    // // Assign colors randomly within a range
+    // if (track == 0) {
+    //   colorH = random(105, 120);
+    // } else if (track == 1) {
+    //   colorH = random(145, 160);
+    // } else if (track == 2) {
+    //   colorH = random(300, 315);
+    // } else if (track == 3) {
+    //   colorH = random(330, 345);
+    // } else if (track == 4) {
+    //   colorH = random(190, 205);
+    // } else if (track == 5) {
+    //   colorH = random(210, 225);
+    // } else if (track == 6) {
+    //   colorH = random(25, 40);
+    // } else if (track == 7) {
+    //   colorH = random(50, 65);
+    // }
+    color trackColor = getColor("genericPalette", track);
+    println("trackColor", trackColor);
 
     // Default info to prevent errors
     infoLoop.put("loopend", 8.0);
@@ -45,9 +46,10 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("delay", 0.0);
     infoLoop.put("send", 0.0);
 
-    infoLoop.put("colorH", colorH);
-    infoLoop.put("colorS", colorS);
-    infoLoop.put("colorB", colorB); 
+    infoLoop.put("color", trackColor);
+    // infoLoop.put("colorH", colorH);
+    // infoLoop.put("colorS", colorS);
+    // infoLoop.put("colorB", colorB); 
 
     miAntropoloops.put(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), infoLoop);
     println(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), "/", infoLoop);
@@ -57,19 +59,6 @@ void oscEvent(OscMessage theOscMessage) {
     if (thisImage != null) {
       misImagenes.put(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), thisImage);
     }
-
-    // // Send messages to Ableton
-    // color myColor = color(colorH, colorS, colorB);
-    // colorMode(RGB, 255);
-    // int red = int(red(myColor));
-    // int green = int(green(myColor));
-    // int blue = int(blue(myColor));
-    
-    // OscMessage colorMessage = new OscMessage("/live/clip/color");
-    // int[] params = {track, clip, red, green, blue};
-    // colorMessage.add(params);
-    // oscP5.send(colorMessage);
-    // colorMode(HSB, 360, 100, 100, 100);
   }
 
   // Message when all live/name/clip messages are sent
@@ -80,7 +69,6 @@ void oscEvent(OscMessage theOscMessage) {
 
   // Listener for clip state (clip (0), has clip (1), playing (2), triggered (3))
   if (path.equals("/live/clip/info")) {
-    // println("typetag /live/clip/info: ", theOscMessage.typetag());
     int claveTrack = theOscMessage.get(0).intValue();
     int claveClip = theOscMessage.get(1).intValue();
     int state = (Integer)theOscMessage.get(2).intValue();
@@ -143,7 +131,6 @@ void oscEvent(OscMessage theOscMessage) {
   }
 
   if (path.equals("/live/clip/loopend")) {
-    // println("typetag /live/clip/loopend: ", theOscMessage.typetag());
     timerPuntoVerde.start(1);
     statePuntoVerde = 1;
     ct1 = ct1 + 1;
@@ -153,19 +140,16 @@ void oscEvent(OscMessage theOscMessage) {
   }
 
   if (path.equals("/live/volume")) {
-    // println("typetag /live/volume: ", theOscMessage.typetag());
     for (int i = 0; i < loopsIndexed.size(); i++) {
       String claveClip = loopsIndexed.get(i);
       int[] a = int(split(claveClip, '-'));
       if (a[0] == theOscMessage.get(0).intValue()) {
         miAntropoloops.get(claveClip).put("volume", theOscMessage.get(1).floatValue());
-        // println("trackId ", theOscMessage.get(0).intValue(), " / volume", theOscMessage.get(1).floatValue());
       }
     }
   }
 
   if (path.equals("/live/solo")) {
-    // println("typetag /live/solo: ", theOscMessage.typetag());
     int trackId = theOscMessage.get(0).intValue();
     int soloActiveId = theOscMessage.get(1).intValue(); 
     soloActive.set(trackId, soloActiveId);
@@ -175,13 +159,11 @@ void oscEvent(OscMessage theOscMessage) {
       int[] a = int(split(claveClip, '-'));
       if (a[0] == trackId) {
         miAntropoloops.get(claveClip).put("solo", soloActiveId);
-        // println("trackId ", trackId, " / solo ", soloActiveId);
       }
     }
   }
 
   if (path.equals("/live/mute")) {
-    // println("typetag /live/mute: ", theOscMessage.typetag());
     int trackId = theOscMessage.get(0).intValue();
     int muteActiveId = theOscMessage.get(1).intValue();
 
@@ -190,24 +172,21 @@ void oscEvent(OscMessage theOscMessage) {
       int[] a = int(split(claveClip, '-'));
       if (a[0] == trackId) {
         miAntropoloops.get(claveClip).put("mute", muteActiveId);
-        // println("trackId ", trackId, " / mute ", muteActiveId);
       }
     }
   }
 
   if (path.equals("/live/tempo")) {
-    // println("typetag /live/tempo: ", theOscMessage.typetag());
     timerPuntoVerde.start(1);
     statePuntoVerde = 1;
 
     tempo = theOscMessage.get(0).floatValue();
-    // println("tempo: ", tempo);
   }
 
   if (path.equals("/live/name/scene")) {
-    // println("typetag /live/name/scene: ", theOscMessage.typetag());
     sceneName = theOscMessage.get(0).toString();
     println("sceneName " + sceneName);
+    
     String[] parameters = sceneName.split(" ");
     if (parameters[7] != null) {
       String[] geoZoneDataBg = parameters[7].split("_");

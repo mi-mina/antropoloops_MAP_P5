@@ -214,16 +214,12 @@ void draw() {
       miRed = new Red[miAntropoloops.size()];
       m = millis();
 
-      float hu;
-      float su;
-      float bu;
+      color trackColorU;
       float volu;
 
       // Dibuja una ONDA en el ÚLTIMO LOOP lanzado.
       if (!ultimoLoop.isEmpty()) { // primero compruebo que hay último loop para que no de error si no hay
-        hu = (Float)ultimoLoop.get("colorH");
-        su = (Float)ultimoLoop.get("colorS");
-        bu = (Float)ultimoLoop.get("colorB");
+        trackColorU = (color)ultimoLoop.get("color");
         volu = (Float)ultimoLoop.get("volume");
 
         if (dibujaOnda == true && volu > 0.05) {
@@ -238,7 +234,7 @@ void draw() {
               println("Don't draw wave");
             } else {
               placeCoordinates = (HashMap)placesDB.get(placeName);
-              stroke(hu, su, bu, 100 - diamOnda / 90);
+              stroke(trackColorU, 100 - diamOnda / 90);
               float a = 5 - diamOnda / 50;
               if (a < 0) { 
                 a = 0;
@@ -259,7 +255,7 @@ void draw() {
           }
         }
       }
-      // Fin ONDA en el ÚLTIMO LOOP
+      // End of ONDA ÚLTIMO LOOP
 
       Iterator recorreMiAntropoloops = miAntropoloops.entrySet().iterator();
       while (recorreMiAntropoloops.hasNext()) {
@@ -282,9 +278,7 @@ void draw() {
                       fecha = str((int)miCancion.get("fecha"));
                     }
 
-                    float h = (Float)loopParameters.get("colorH");
-                    float s = (Float)loopParameters.get("colorS");
-                    float b = (Float)loopParameters.get("colorB");
+                    color trackColor = (color)loopParameters.get("color");
                     float vol = (Float)loopParameters.get("volume");
                     float delay = (Float)loopParameters.get("delay");
                     float send = (Float)loopParameters.get("send");
@@ -354,12 +348,10 @@ void draw() {
                         coordY, 
                         (origenX + coverSide * (position + 0.5)), 
                         origenY + coverSide + linSep + alturaRect, 
-                        h, 
-                        s, 
-                        b, 
+                        trackColor,
                         vol * 50);
                       miRed[i].dibujaRed();
-                      misAbanicos[i] = new Abanico(vol, effect, h, s, b);
+                      misAbanicos[i] = new Abanico(vol, effect, trackColor);
                       pushMatrix();
                       translate(coordX, coordY);
                       v = m / (60 / tempo * parseInt((Float)loopParameters.get("loopend")) * 1000 / 360);
@@ -378,7 +370,7 @@ void draw() {
                     }
 
                     // Color rect under album cover
-                    fill(h, s, b, a); //100/0.45 = 223
+                    fill(trackColor, a); //100/0.45 = 223
                     rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
                     // Place name
                     fill(0, vol * 223);
@@ -399,12 +391,10 @@ void draw() {
                       if ((Integer)ultimoLoop.get("mute") != null) {
                         if ((Integer)ultimoLoop.get("mute") == 0 && ultLoopParado == false) {
                           // Si el último loop está muteado no se dibuja
-                          hu = (Float)ultimoLoop.get("colorH");
-                          su = (Float)ultimoLoop.get("colorS");
-                          bu = (Float)ultimoLoop.get("colorB");
+                          trackColorU = (color)ultimoLoop.get("color");
                           volu = (Float)ultimoLoop.get("volume");
 
-                          fill(hu, su, bu, volu * 225);
+                          fill(trackColorU, volu * 225);
                           rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
 
                           String esteLoop = (String)ultimoLoop.get("nombreLoop");
@@ -446,9 +436,7 @@ void draw() {
                       fecha = str((int)miCancion.get("fecha"));
                     }
 
-                    float h = (Float)loopParameters.get("colorH");
-                    float s = (Float)loopParameters.get("colorS");
-                    float b = (Float)loopParameters.get("colorB");
+                    color trackColor = (color)loopParameters.get("color");
                     float vol = (Float)loopParameters.get("volume");
                     float delay = (Float)loopParameters.get("delay");
                     float send = (Float)loopParameters.get("send");
@@ -514,10 +502,10 @@ void draw() {
                         coordY, 
                         (origenX + coverSide * (position + 0.5)), 
                         origenY + coverSide + linSep + alturaRect, 
-                        h, s, b, vol * 50);
+                        trackColor, vol * 50);
                       miRed[i].dibujaRed();
 
-                      misAbanicos[i]= new Abanico(vol, effect, h, s, b);
+                      misAbanicos[i]= new Abanico(vol, effect, trackColor);
 
                       pushMatrix();
                       translate(coordX, coordY);
@@ -537,7 +525,7 @@ void draw() {
                     }
 
                     // Color rect under album cover
-                    fill(h, s, b, a); //100/0.45 = 223
+                    fill(trackColor, a); //100/0.45 = 223
                     rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
                     // Place name
                     fill(0, vol * 223);
@@ -554,15 +542,15 @@ void draw() {
                     println("No se ha encontrado ningún antropoloops con el nombre: " + loopName);
                     println("************************************************");
                   }
-                } // fin de (Integer)loopParameters.get("solo")==1
-              } // fin de !soloState()
-            } // fin de (Integer)loopParameters.get("state")==2))
-          } // fin de loopParameters.get("state")!= null
-        } // fin de for
-      } // fin de while
-    } // fin de miAntropoloops != null && drawing==true
+                } // End of (Integer)loopParameters.get("solo")==1
+              } // End of !soloState()
+            } // End of (Integer)loopParameters.get("state")==2))
+          } // End of loopParameters.get("state")!= null
+        } // End of for
+      } // End of while
+    } // End of miAntropoloops != null && drawing==true
     break;
-  } // Fin de switch
+  } // End of switch
 
   // Draw antropoloops web
   textAlign(LEFT, BOTTOM);
