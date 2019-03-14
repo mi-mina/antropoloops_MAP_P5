@@ -1,5 +1,6 @@
 class Red {
-  float tC, a, x1, y1,  x2, y2;
+  float a, x1, y1, x2, y2;
+  color tC;
 
   Red(float tempx1, float tempy1, float tempx2, float tempy2, color trackColor, float alpha) {
     x1 = tempx1;

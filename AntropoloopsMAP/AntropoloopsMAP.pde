@@ -44,7 +44,7 @@ int m; //millis
 int sceneNumber;
 String sceneName;
 String geoZoneData = "mundo";
-String geoZoneBg = "mundo";
+String geoZone = "mundo";
 float tempo;
 float coordX, coordY, coordXOnda, coordYOnda;
 float origenX, origenY;

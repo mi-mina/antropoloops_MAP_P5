@@ -13,29 +13,8 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("trackLoop", track);
     infoLoop.put("clipLoop", clip);
     infoLoop.put("nombreLoop", theOscMessage.arguments()[2]);
-    // float colorH = 0.0;
-    // float colorS = random(50, 100);
-    // float colorB = random(80, 100);
 
-    // // Assign colors randomly within a range
-    // if (track == 0) {
-    //   colorH = random(105, 120);
-    // } else if (track == 1) {
-    //   colorH = random(145, 160);
-    // } else if (track == 2) {
-    //   colorH = random(300, 315);
-    // } else if (track == 3) {
-    //   colorH = random(330, 345);
-    // } else if (track == 4) {
-    //   colorH = random(190, 205);
-    // } else if (track == 5) {
-    //   colorH = random(210, 225);
-    // } else if (track == 6) {
-    //   colorH = random(25, 40);
-    // } else if (track == 7) {
-    //   colorH = random(50, 65);
-    // }
-    color trackColor = getColor("genericPalette", track);
+    color trackColor = getColor("mundo", track);
     println("trackColor", trackColor);
 
     // Default info to prevent errors
@@ -47,13 +26,10 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("send", 0.0);
 
     infoLoop.put("color", trackColor);
-    // infoLoop.put("colorH", colorH);
-    // infoLoop.put("colorS", colorS);
-    // infoLoop.put("colorB", colorB); 
 
     miAntropoloops.put(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), infoLoop);
     println(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), "/", infoLoop);
-    
+
     loopsIndexed.add(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"));
     PImage thisImage = loadImage("../0_covers/" + (String)infoLoop.get("nombreLoop") + ".jpg");
     if (thisImage != null) {
@@ -72,10 +48,10 @@ void oscEvent(OscMessage theOscMessage) {
     int claveTrack = theOscMessage.get(0).intValue();
     int claveClip = theOscMessage.get(1).intValue();
     int state = (Integer)theOscMessage.get(2).intValue();
-    println(claveTrack + "-" + claveClip + ": " + state);
-    
+    // println(claveTrack + "-" + claveClip + ": " + state);
+
     miAntropoloops.get(claveTrack + "-" + claveClip).put("state", state);
-    println("clip: ", miAntropoloops.get(claveTrack + "-" + claveClip));
+    // println("clip: ", miAntropoloops.get(claveTrack + "-" + claveClip));
 
     if (state == 2) {
       HashMap<String, Object> musicalParameters = miAntropoloops.get(claveTrack + "-" + claveClip);
@@ -106,22 +82,22 @@ void oscEvent(OscMessage theOscMessage) {
       }
     }
 
-    float colorH = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorH");
-    float colorS = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorS");
-    float colorB = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorB");
-    
-    // Send color messages to Ableton
-    color myColor = color(colorH, colorS, colorB);
-    colorMode(RGB, 255);
-    int red = int(red(myColor));
-    int green = int(green(myColor));
-    int blue = int(blue(myColor));
-    
-    OscMessage colorMessage = new OscMessage("/live/clip/color");
-    int[] params = {claveTrack, claveClip, red, green, blue};
-    colorMessage.add(params);
-    oscP5.send(colorMessage);
-    colorMode(HSB, 360, 100, 100, 100);
+    // float colorH = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorH");
+    // float colorS = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorS");
+    // float colorB = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorB");
+
+    // // Send color messages to Ableton
+    // color myColor = color(colorH, colorS, colorB);
+    // colorMode(RGB, 255);
+    // int red = int(red(myColor));
+    // int green = int(green(myColor));
+    // int blue = int(blue(myColor));
+
+    // OscMessage colorMessage = new OscMessage("/live/clip/color");
+    // int[] params = {claveTrack, claveClip, red, green, blue};
+    // colorMessage.add(params);
+    // oscP5.send(colorMessage);
+    // colorMode(HSB, 360, 100, 100, 100);
   }
 
   if (path.equals("/live/play")) {
@@ -186,28 +162,30 @@ void oscEvent(OscMessage theOscMessage) {
   if (path.equals("/live/name/scene")) {
     sceneName = theOscMessage.get(0).toString();
     println("sceneName " + sceneName);
-    
+
     String[] parameters = sceneName.split(" ");
     if (parameters[7] != null) {
       String[] geoZoneDataBg = parameters[7].split("_");
-      geoZoneBg = parameters[7];
+      geoZone = parameters[7];
 
       if (geoZoneDataBg.length == 1) {
         geoZoneData = parameters[7];
       } else if (geoZoneDataBg.length == 2) {
         geoZoneData = geoZoneDataBg[0];
       }
+      println("geoZone***********", geoZone);
+      println("geoZoneData***********", geoZoneData);
 
       // Set base map according to the scene
-      if (loadImage("../1_BDatos/mapa_" + geoZoneBg + ".jpg") != null) {
+      if (loadImage("../1_BDatos/mapa_" + geoZone + ".jpg") != null) {
         println("load map");
         backgroundMapBase = backgroundMapNew;
-        backgroundMapNew = loadImage("../1_BDatos/mapa_" + geoZoneBg + ".jpg");
+        backgroundMapNew = loadImage("../1_BDatos/mapa_" + geoZone + ".jpg");
         alpha = 0;
       } else {
         backgroundMapBase = loadImage("../1_BDatos/mapa_mundo.jpg");
         println("************************************************");
-        println("No se ha encontrado ninguna imagen de fondo con el nombre: mapa_" + geoZoneBg);
+        println("No se ha encontrado ninguna imagen de fondo con el nombre: mapa_" + geoZone);
         println("************************************************");
       }
 
@@ -229,6 +207,17 @@ void oscEvent(OscMessage theOscMessage) {
         println("************************************************");
         println("No se ha encontrado ningún archivo con el nombre: BDlugares_" + geoZoneData);
         println("************************************************");
+      }
+
+      // Set colors according to scene
+      for (int i = 0; i < loopsIndexed.size(); i++) {
+        String claveClip = loopsIndexed.get(i);
+        int[] a = int(split(claveClip, '-'));
+        int track = a[0];
+        // println("track", track);
+        // println("geoZoneData", geoZone);
+        // println("miAntropoloops", miAntropoloops.get(claveClip));
+        miAntropoloops.get(claveClip).put("color", getColor(geoZone, track));
       }
     }
   }
