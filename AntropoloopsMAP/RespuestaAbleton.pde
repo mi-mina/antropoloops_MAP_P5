@@ -82,22 +82,18 @@ void oscEvent(OscMessage theOscMessage) {
       }
     }
 
-    // float colorH = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorH");
-    // float colorS = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorS");
-    // float colorB = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("colorB");
+    // Send color messages to Ableton
+    color myColor = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("color");
+    colorMode(RGB, 255);
+    int red = int(red(myColor));
+    int green = int(green(myColor));
+    int blue = int(blue(myColor));
 
-    // // Send color messages to Ableton
-    // color myColor = color(colorH, colorS, colorB);
-    // colorMode(RGB, 255);
-    // int red = int(red(myColor));
-    // int green = int(green(myColor));
-    // int blue = int(blue(myColor));
-
-    // OscMessage colorMessage = new OscMessage("/live/clip/color");
-    // int[] params = {claveTrack, claveClip, red, green, blue};
-    // colorMessage.add(params);
-    // oscP5.send(colorMessage);
-    // colorMode(HSB, 360, 100, 100, 100);
+    OscMessage colorMessage = new OscMessage("/live/clip/color");
+    int[] params = {claveTrack, claveClip, red, green, blue};
+    colorMessage.add(params);
+    oscP5.send(colorMessage);
+    colorMode(HSB, 360, 100, 100, 100);
   }
 
   if (path.equals("/live/play")) {
@@ -164,13 +160,13 @@ void oscEvent(OscMessage theOscMessage) {
     println("sceneName " + sceneName);
 
     String[] parameters = sceneName.split(" ");
-    if (parameters[7] != null) {
+    if (parameters[7] != null && !parameters[7].equals("x")) {
       String[] geoZoneDataBg = parameters[7].split("_");
       geoZone = parameters[7];
 
       if (geoZoneDataBg.length == 1) {
         geoZoneData = parameters[7];
-      } else if (geoZoneDataBg.length == 2) {
+      } else if (geoZoneDataBg.length > 1) {
         geoZoneData = geoZoneDataBg[0];
       }
       println("geoZone***********", geoZone);
@@ -209,15 +205,13 @@ void oscEvent(OscMessage theOscMessage) {
         println("************************************************");
       }
 
+      String geoZoneColors = geoZoneDataBg[0] + "_" + geoZoneDataBg[1];
       // Set colors according to scene
       for (int i = 0; i < loopsIndexed.size(); i++) {
         String claveClip = loopsIndexed.get(i);
         int[] a = int(split(claveClip, '-'));
         int track = a[0];
-        // println("track", track);
-        // println("geoZoneData", geoZone);
-        // println("miAntropoloops", miAntropoloops.get(claveClip));
-        miAntropoloops.get(claveClip).put("color", getColor(geoZone, track));
+        miAntropoloops.get(claveClip).put("color", getColor(geoZoneColors, track));
       }
     }
   }

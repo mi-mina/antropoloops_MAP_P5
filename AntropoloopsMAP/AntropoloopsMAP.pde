@@ -162,6 +162,10 @@ void draw() {
     alpha += 5;
   }
 
+  if (alpha == 100) {
+    backgroundMapBase = backgroundMapNew;
+  }
+
   noStroke();
   image(backgroundMapBase, bX, bY, bWidth, bHeight);
   tint(360, alpha);

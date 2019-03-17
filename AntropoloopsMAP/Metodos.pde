@@ -113,7 +113,7 @@ color getColor (String colorPalette, int track) {
       colorH = 10;
       colorS = 76;
       colorB = 70;
-    }  else if (track == 6) {
+    } else if (track == 6) {
       colorH = 329;
       colorS = 47;
       colorB = 75;
@@ -147,7 +147,7 @@ color getColor (String colorPalette, int track) {
       colorH = 144;
       colorS = 70;
       colorB = 60;
-    }  else if (track == 6) {
+    } else if (track == 6) {
       colorH = 180;
       colorS = 12;
       colorB = 70;
@@ -181,7 +181,7 @@ color getColor (String colorPalette, int track) {
       colorH = 28;
       colorS = 86;
       colorB = 91;
-    }  else if (track == 6) {
+    } else if (track == 6) {
       colorH = 42;
       colorS = 76;
       colorB = 87;
