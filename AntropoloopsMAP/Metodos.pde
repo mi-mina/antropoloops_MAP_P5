@@ -66,7 +66,7 @@ color getColor (String colorPalette, int track) {
     } else if (track == 2) {
       colorH = 203;
       colorS = 100;
-      colorB = 50;
+      colorB = 60;
     } else if (track == 3) {
       colorH = 177;
       colorS = 62;
@@ -88,11 +88,111 @@ color getColor (String colorPalette, int track) {
       colorS = 65;
       colorB = 60;
     }
+  } else if (colorPalette.equals("med_desierto")) {
+    if (track == 0) {
+      colorH = 197;
+      colorS = 29;
+      colorB = 70;
+    } else if (track == 1) {
+      colorH = 6;
+      colorS = 56;
+      colorB = 74;
+    } else if (track == 2) {
+      colorH = 257;
+      colorS = 26;
+      colorB = 80;
+    } else if (track == 3) {
+      colorH = 358;
+      colorS = 78;
+      colorB = 60;
+    } else if (track == 4) {
+      colorH = 286;
+      colorS = 33;
+      colorB = 60;
+    } else if (track == 5) {
+      colorH = 10;
+      colorS = 76;
+      colorB = 70;
+    }  else if (track == 6) {
+      colorH = 329;
+      colorS = 47;
+      colorB = 75;
+    } else if (track == 7) {
+      colorH = 17;
+      colorS = 66;
+      colorB = 61;
+    }
+  } else if (colorPalette.equals("med_rondena")) {
+    if (track == 0) {
+      colorH = 58;
+      colorS = 59;
+      colorB = 85;
+    } else if (track == 1) {
+      colorH = 109;
+      colorS = 52;
+      colorB = 70;
+    } else if (track == 2) {
+      colorH = 195;
+      colorS = 69;
+      colorB = 77;
+    } else if (track == 3) {
+      colorH = 56;
+      colorS = 63;
+      colorB = 60;
+    } else if (track == 4) {
+      colorH = 179;
+      colorS = 60;
+      colorB = 68;
+    } else if (track == 5) {
+      colorH = 144;
+      colorS = 70;
+      colorB = 60;
+    }  else if (track == 6) {
+      colorH = 180;
+      colorS = 12;
+      colorB = 70;
+    } else if (track == 7) {
+      colorH = 165;
+      colorS = 65;
+      colorB = 61;
+    }
+  } else if (colorPalette.equals("med_delfines")) {
+    if (track == 0) {
+      colorH = 0;
+      colorS = 87;
+      colorB = 64;
+    } else if (track == 1) {
+      colorH = 35;
+      colorS = 80;
+      colorB = 89;
+    } else if (track == 2) {
+      colorH = 49;
+      colorS = 91;
+      colorB = 70;
+    } else if (track == 3) {
+      colorH = 21;
+      colorS = 83;
+      colorB = 88;
+    } else if (track == 4) {
+      colorH = 49;
+      colorS = 76;
+      colorB = 85;
+    } else if (track == 5) {
+      colorH = 28;
+      colorS = 86;
+      colorB = 91;
+    }  else if (track == 6) {
+      colorH = 42;
+      colorS = 76;
+      colorB = 87;
+    } else if (track == 7) {
+      colorH = 10;
+      colorS = 58;
+      colorB = 88;
+    }
   } else {
     colorS = random(50, 100);
     colorB = random(80, 100);
-
-    // Assign colors randomly within a range
     if (track == 0) {
       colorH = random(105, 120);
     } else if (track == 1) {
