@@ -1,13 +1,15 @@
 class Abanico {
   float d1;
   float d2;
+  float f;
   color tC;
   float stopAngle = radians(360) - HALF_PI;
 
   // Abanico constructor
-  Abanico(float vol, float effect, color trackColor) {
+  Abanico(float vol, float effect, float filter, color trackColor) {
     d1 = vol * 100;
     d2 = effect;
+    f = filter;
     tC = trackColor;
   }
 
@@ -21,10 +23,11 @@ class Abanico {
       relativeMessure = relativeWidth;
     }
 
-    int slices = 15;
-    float step = 360 / slices;
+    int slicesTotal = 15;
+    int slices = int(map(f, 135, 20, 0, slicesTotal));
+    float step = 360 / slicesTotal;
 
-    for (int i = 0; i < slices; i++) {
+    for (int i = slices; i < slicesTotal; i++) {
       float startAngle = radians(i * step) - HALF_PI; // HALF_PI = 3.14 / 2 = 1.57
       float diamVolumeCircle = 0.0;
       if (d1 <= 40) {

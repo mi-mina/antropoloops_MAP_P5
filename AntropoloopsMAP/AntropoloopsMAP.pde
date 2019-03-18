@@ -287,6 +287,7 @@ void draw() {
                     float vol = (Float)loopParameters.get("volume");
                     float delay = (Float)loopParameters.get("delay");
                     float send = (Float)loopParameters.get("send");
+                    float filter = (Float)loopParameters.get("filter");
 
                     int position = (Integer)loopParameters.get("trackLoop");
                     String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
@@ -347,6 +348,15 @@ void draw() {
                       effect = send;
                     }
 
+                    float normFilter = map(filter, 135, 20, 1, 0);
+
+                    float a = 0;
+                    if (vol * normFilter <= 0.45) {
+                      a = vol * normFilter * 223; // 100 / 0.45 = 223
+                    } else  if (vol * normFilter > 0.45) {
+                      a = 100;
+                    }
+
                     if (isThereAPlace) {
                       miRed[i] = new Red(
                         coordX, 
@@ -354,9 +364,9 @@ void draw() {
                         (origenX + coverSide * (position + 0.5)), 
                         origenY + coverSide + linSep + alturaRect, 
                         trackColor,
-                        vol * 80);
+                        a * 0.6);
                       miRed[i].dibujaRed();
-                      misAbanicos[i] = new Abanico(vol, effect, trackColor);
+                      misAbanicos[i] = new Abanico(vol, effect, filter, trackColor);
                       pushMatrix();
                       translate(coordX, coordY);
                       v = m / (60 / tempo * parseInt((Float)loopParameters.get("loopend")) * 1000 / 360);
@@ -366,13 +376,7 @@ void draw() {
                       popMatrix();
                     }
 
-                    float a = 0;
                     textAlign(LEFT, CENTER);
-                    if (vol <= 0.45) {
-                      a = vol * 223; // 100 / 0.45 = 223
-                    } else  if (vol > 0.45) {
-                      a = 100;
-                    }
 
                     // Color rect under album cover
                     fill(trackColor, a); 
@@ -443,6 +447,7 @@ void draw() {
                     float vol = (Float)loopParameters.get("volume");
                     float delay = (Float)loopParameters.get("delay");
                     float send = (Float)loopParameters.get("send");
+                    float filter = (Float)loopParameters.get("filter");
                     int position = (Integer)loopParameters.get("trackLoop");
                     String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
 
@@ -499,16 +504,25 @@ void draw() {
                       effect = send;
                     }
 
+                    float normFilter = map(filter, 135, 20, 1, 0);
+
+                    float a = 0;
+                    if (vol * normFilter <= 0.45) {
+                      a = vol * normFilter * 223; // 100 / 0.45 = 223
+                    } else  if (vol * normFilter > 0.45) {
+                      a = 100;
+                    }
+
                     if (isThereAPlace) {
                       miRed[i]= new Red(
                         coordX, 
                         coordY, 
                         (origenX + coverSide * (position + 0.5)), 
                         origenY + coverSide + linSep + alturaRect, 
-                        trackColor, vol * 80);
+                        trackColor, a * 0.6);
                       miRed[i].dibujaRed();
 
-                      misAbanicos[i]= new Abanico(vol, effect, trackColor);
+                      misAbanicos[i]= new Abanico(vol, effect, filter, trackColor);
 
                       pushMatrix();
                       translate(coordX, coordY);
@@ -519,13 +533,7 @@ void draw() {
                       popMatrix();
                     }
 
-                    float a = 0;
                     textAlign(LEFT, CENTER);
-                    if (vol <= 0.45) {
-                      a = vol * 223; // 100 / 0.45 = 223
-                    } else  if (vol > 0.45) {
-                      a = 100;
-                    }
 
                     // Color rect under album cover
                     fill(trackColor, a);

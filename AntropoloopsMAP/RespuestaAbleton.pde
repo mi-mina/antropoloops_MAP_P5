@@ -237,4 +237,19 @@ void oscEvent(OscMessage theOscMessage) {
       }
     }
   }
+
+    if (path.equals("/live/filter")) {
+    int trackId = theOscMessage.get(0).intValue();
+    float filter = theOscMessage.get(1).floatValue();
+    // filter is a float between 20 and 135
+    // When there isn't any filter applied, the value is 135.
+
+    for (int i = 0; i < loopsIndexed.size(); i++) {
+      String claveClip = loopsIndexed.get(i);
+      int[] a = int(split(claveClip, '-'));
+      if (a[0] == trackId) {
+        miAntropoloops.get(claveClip).put("filter", filter);
+      }
+    }
+  }
 }
