@@ -83,7 +83,7 @@ void oscEvent(OscMessage theOscMessage) {
     }
 
     // Send color messages to Ableton
-    color myColor = (Float)miAntropoloops.get(claveTrack + "-" + claveClip).get("color");
+    color myColor = (color)miAntropoloops.get(claveTrack + "-" + claveClip).get("color");
     colorMode(RGB, 255);
     int red = int(red(myColor));
     int green = int(green(myColor));
@@ -157,7 +157,6 @@ void oscEvent(OscMessage theOscMessage) {
 
   if (path.equals("/live/name/scene")) {
     sceneName = theOscMessage.get(0).toString();
-    println("sceneName " + sceneName);
 
     String[] parameters = sceneName.split(" ");
     if (parameters[7] != null && !parameters[7].equals("x")) {
@@ -169,12 +168,9 @@ void oscEvent(OscMessage theOscMessage) {
       } else if (geoZoneDataBg.length > 1) {
         geoZoneData = geoZoneDataBg[0];
       }
-      println("geoZone***********", geoZone);
-      println("geoZoneData***********", geoZoneData);
 
       // Set base map according to the scene
       if (loadImage("../1_BDatos/mapa_" + geoZone + ".jpg") != null) {
-        println("load map");
         backgroundMapBase = backgroundMapNew;
         backgroundMapNew = loadImage("../1_BDatos/mapa_" + geoZone + ".jpg");
         alpha = 0;

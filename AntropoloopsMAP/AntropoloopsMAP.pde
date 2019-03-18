@@ -36,7 +36,8 @@ HashMap<String, Object> ultimoLoop;
 
 // Image resolution
 float backgroundImageWidth = 1920;
-float backgroundImageHeight = 1200;
+float backgroundImageHeight = 1080;
+// float backgroundImageHeight = 1200;
 float imageRatio = backgroundImageWidth / backgroundImageHeight;
 
 int ct1;
@@ -142,7 +143,7 @@ void draw() {
 
   // La posición del background y del texto www.antropoloops.com cambia dependiendo
   // de la proporción de la pantalla.
-  if (float(width) / float(height) >= imageRatio) { //El tamaño de la imagen de fondo es 1920x1200. 1920/1200=1.6
+  if (float(width) / float(height) >= imageRatio) {
     bWidth = height * imageRatio;
     bHeight = height;
     bX = (width - bWidth) / 2;
@@ -173,10 +174,10 @@ void draw() {
   noTint();
 
   // Translucent rectangle on the bottom, to obscure the area of the map where the mp3 info is drawn.
-  if (!geoZoneData.equals("mundo")) {
-    fill(0, 0, 0, 30);
-    rect(0, finalY - ladoCuadrado, width, ladoCuadrado);
-  }
+  // if (!geoZoneData.equals("mundo")) {
+  //   fill(0, 0, 0, 30);
+  //   rect(0, finalY - ladoCuadrado, width, ladoCuadrado);
+  // }
   // Translucent rectangle on the top, to obscure the area of the map where the covers are drawn.
   fill(0, 0, 17, 75);
   rect(0, 0, width, coverSide);
@@ -334,7 +335,7 @@ void draw() {
                     }
 
                     float alturaRect = coverSide / 10;
-                    int linSep = 3;
+                    int linSep = 0;
                     float alturaText = alturaRect - 2;
                     textSize(alturaText);
                     
@@ -353,7 +354,7 @@ void draw() {
                         (origenX + coverSide * (position + 0.5)), 
                         origenY + coverSide + linSep + alturaRect, 
                         trackColor,
-                        vol * 50);
+                        vol * 80);
                       miRed[i].dibujaRed();
                       misAbanicos[i] = new Abanico(vol, effect, trackColor);
                       pushMatrix();
@@ -368,58 +369,56 @@ void draw() {
                     float a = 0;
                     textAlign(LEFT, CENTER);
                     if (vol <= 0.45) {
-                      a = vol * 223;
+                      a = vol * 223; // 100 / 0.45 = 223
                     } else  if (vol > 0.45) {
                       a = 100;
                     }
 
                     // Color rect under album cover
-                    fill(trackColor, a); //100/0.45 = 223
+                    fill(trackColor, a); 
                     rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
                     // Place name
-                    fill(0, vol * 223);
-                    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 + 1);
+                    fill(0, a);
+                    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
                     // Date
-                    fill(0, 0, 100, vol * 223);
+                    fill(0, 0, 100, a);
                     text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
                     // Album cover
-                    tint(360, vol * 223);
+                    tint(360, a);
                     image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
                     noTint();
 
-
-
                     //Info cuadrado abajo derecha ultimo loop
-                    textSize((ladoCuadrado - 13) / 3);
-                    if (!ultimoLoop.isEmpty()) { // Compruebo que hay ultimo loop para que no de error
-                      if ((Integer)ultimoLoop.get("mute") != null) {
-                        if ((Integer)ultimoLoop.get("mute") == 0 && ultLoopParado == false) {
-                          // Si el último loop está muteado no se dibuja
-                          trackColorU = (color)ultimoLoop.get("color");
-                          volu = (Float)ultimoLoop.get("volume");
+                    // textSize((ladoCuadrado - 13) / 3);
+                    // if (!ultimoLoop.isEmpty()) { // Compruebo que hay ultimo loop para que no de error
+                    //   if ((Integer)ultimoLoop.get("mute") != null) {
+                    //     if ((Integer)ultimoLoop.get("mute") == 0 && ultLoopParado == false) {
+                    //       // Si el último loop está muteado no se dibuja
+                    //       trackColorU = (color)ultimoLoop.get("color");
+                    //       volu = (Float)ultimoLoop.get("volume");
 
-                          fill(trackColorU, volu * 225);
-                          rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
+                    //       fill(trackColorU, volu * 225);
+                    //       rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
 
-                          String esteLoop = (String)ultimoLoop.get("nombreLoop");
-                          HashMap<String, Object> ultLoop = (HashMap)loopsDB.get(esteLoop);
-                          String artista = (String)ultLoop.get("artista");
-                          String titulo = (String)ultLoop.get("titulo");
-                          String album = (String)ultLoop.get("album");
-                          textAlign(RIGHT, CENTER);
-                          fill(230, volu * 223);
-                          text(titulo, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
-                          text(artista, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
-                          text(album, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
-                          textAlign(LEFT, CENTER);
+                    //       String esteLoop = (String)ultimoLoop.get("nombreLoop");
+                    //       HashMap<String, Object> ultLoop = (HashMap)loopsDB.get(esteLoop);
+                    //       String artista = (String)ultLoop.get("artista");
+                    //       String titulo = (String)ultLoop.get("titulo");
+                    //       String album = (String)ultLoop.get("album");
+                    //       textAlign(RIGHT, CENTER);
+                    //       fill(230, volu * 223);
+                    //       text(titulo, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
+                    //       text(artista, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
+                    //       text(album, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
+                    //       textAlign(LEFT, CENTER);
 
-                          fill(0, 0, 17, volu * 223);
-                          text("title", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
-                          text("artist", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
-                          text("album", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
-                        }
-                      } // Fin info cuadrado abajo derecha ultimo loop
-                    }
+                    //       fill(0, 0, 17, volu * 223);
+                    //       text("title", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
+                    //       text("artist", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
+                    //       text("album", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
+                    //     }
+                    //   } // Fin info cuadrado abajo derecha ultimo loop
+                    // }
                   } else {
                     println("************************************************");
                     println("No se ha encontrado ningún antropoloops con el nombre: " + loopName);
@@ -488,7 +487,7 @@ void draw() {
                     }
 
                     float alturaRect = coverSide / 10;
-                    int linSep = 3;
+                    int linSep = 0;
                     float alturaText = alturaRect - 2;
                     textSize(alturaText);
 
@@ -506,7 +505,7 @@ void draw() {
                         coordY, 
                         (origenX + coverSide * (position + 0.5)), 
                         origenY + coverSide + linSep + alturaRect, 
-                        trackColor, vol * 50);
+                        trackColor, vol * 80);
                       miRed[i].dibujaRed();
 
                       misAbanicos[i]= new Abanico(vol, effect, trackColor);
@@ -523,22 +522,22 @@ void draw() {
                     float a = 0;
                     textAlign(LEFT, CENTER);
                     if (vol <= 0.45) {
-                      a = vol * 223;
+                      a = vol * 223; // 100 / 0.45 = 223
                     } else  if (vol > 0.45) {
                       a = 100;
                     }
 
                     // Color rect under album cover
-                    fill(trackColor, a); //100/0.45 = 223
+                    fill(trackColor, a);
                     rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
                     // Place name
-                    fill(0, vol * 223);
-                    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 + 1);
+                    fill(0, a);
+                    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
                     // Date
-                    fill(0, 0, 100, vol * 223);
+                    fill(0, 0, 100, a);
                     text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
                     // Album cover
-                    tint(360, vol * 223);
+                    tint(360, a);
                     image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
                     noTint();
                   } else {
