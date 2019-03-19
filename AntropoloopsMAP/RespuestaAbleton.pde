@@ -15,9 +15,9 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("nombreLoop", theOscMessage.arguments()[2]);
 
     color trackColor = getColor("mundo", track);
-    println("trackColor", trackColor);
 
     // Default info to prevent errors
+    infoLoop.put("state", 1);
     infoLoop.put("loopend", 8.0);
     infoLoop.put("volume", 0.5);
     infoLoop.put("solo", 0);

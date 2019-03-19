@@ -74,7 +74,7 @@ void setup() {
 
   backgroundMapBase = loadImage("../1_BDatos/default.jpg");
   backgroundMapNew = loadImage("../1_BDatos/default.jpg");
-  
+
   colorMode(HSB, 360, 100, 100, 100);
 
   /* create a new osc properties object */
@@ -264,302 +264,28 @@ void draw() {
 
       Iterator recorreMiAntropoloops = miAntropoloops.entrySet().iterator();
       while (recorreMiAntropoloops.hasNext()) {
-        for (int i = 0; i < miAntropoloops.size(); i++) {
+        for (int index = 0; index < miAntropoloops.size(); index++) {
           Map.Entry me = (Map.Entry)recorreMiAntropoloops.next();
           HashMap<String, Object> loopParameters = (HashMap)me.getValue();
-
-          if (loopParameters.get("state") != null) {
-            if ((Integer)loopParameters.get("state") == 2) {
-              if (!soloState()) {
-                if ((Integer)loopParameters.get("mute") != null && (Integer)loopParameters.get("mute") == 0) {
-                  String loopName = (String)loopParameters.get("nombreLoop"); //loopName = nombreLoop, que es el nombre del clip segun Ableton, o sea, el nombre del archivo
-
-                  if ((HashMap)loopsDB.get(loopName) != null) {
-                    HashMap<String, Object> miCancion = (HashMap)loopsDB.get(loopName);
-
-                    String placeName = (String)miCancion.get("lugar");
-                    String fecha = "";
-                    if (miCancion.get("fecha") instanceof Integer) {
-                      fecha = str((int)miCancion.get("fecha"));
-                    }
-
-                    color trackColor = (color)loopParameters.get("color");
-                    float vol = (Float)loopParameters.get("volume");
-                    float delay = (Float)loopParameters.get("delay");
-                    float send = (Float)loopParameters.get("send");
-                    float filter = (Float)loopParameters.get("filter");
-
-                    int position = (Integer)loopParameters.get("trackLoop");
-                    String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
-
-                    PImage miImagen = new PImage();
-                    // Check if there is an image
-                    if (misImagenes.get(imageIndex) != null) {
-                      miImagen = misImagenes.get(imageIndex);
-                    } else {
-                      println("************************************************");
-                      println("No se ha encontrado ninguna imagen con el nombre: " + loopName);
-                      println("************************************************");
-                    }
-
-                    HashMap<String, Object> coordinates = new HashMap<String, Object>();
-
-                    // Check if there is a place
-                    boolean isThereAPlace = false;
-                    if ((HashMap)placesDB.get(placeName) != null) {
-                      isThereAPlace = true;
-                      coordinates = (HashMap)placesDB.get(placeName);
-                    } else {
-                      isThereAPlace = false;
-                      coordinates.put("coordX", 0);
-                      coordinates.put("coordY", 0);
-                      println("************************************************");
-                      println("No se ha encontrado ningún lugar con el nombre: " + placeName);
-                      println("************************************************");
-                    }
-
-                    if (float(width) / float(height) >= imageRatio) {
-                      origenX = (width - (height * imageRatio)) / 2;
-                      coordX = origenX + map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
-                      coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
-                      coverSide = height * imageRatio / 8;
-                      finalX = width - (width - (height * imageRatio)) / 2;
-                      finalY = height;
-                      ladoCuadrado = height / 13;
-                    } else if (float(width) / float(height) < imageRatio) {
-                      coordX = map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
-                      coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
-                      coverSide = width / 8;
-                      finalX = width;
-                      finalY = width / imageRatio;
-                      ladoCuadrado = (width / imageRatio) / 13;
-                    }
-
-                    float alturaRect = coverSide / 10;
-                    int linSep = 0;
-                    float alturaText = alturaRect - 2;
-                    textSize(alturaText);
-                    
-                    float effect;
-
-                    if (delay > send) {
-                      effect = delay;
-                    } else {
-                      effect = send;
-                    }
-
-                    float normFilter = map(filter, 135, 20, 1, 0);
-
-                    float a = 0;
-                    if (vol * normFilter <= 0.45) {
-                      a = vol * normFilter * 223; // 100 / 0.45 = 223
-                    } else  if (vol * normFilter > 0.45) {
-                      a = 100;
-                    }
-
-                    if (isThereAPlace) {
-                      miRed[i] = new Red(
-                        coordX, 
-                        coordY, 
-                        (origenX + coverSide * (position + 0.5)), 
-                        origenY + coverSide + linSep + alturaRect, 
-                        trackColor,
-                        a * 0.6);
-                      miRed[i].dibujaRed();
-                      misAbanicos[i] = new Abanico(vol, effect, filter, trackColor);
-                      pushMatrix();
-                      translate(coordX, coordY);
-                      v = m / (60 / tempo * parseInt((Float)loopParameters.get("loopend")) * 1000 / 360);
-                      float sp = radians(v);
-                      rotate(sp);
-                      misAbanicos[i].dibuja();
-                      popMatrix();
-                    }
-
-                    textAlign(LEFT, CENTER);
-
-                    // Color rect under album cover
-                    fill(trackColor, a); 
-                    rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
-                    // Place name
-                    fill(0, a);
-                    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
-                    // Date
-                    fill(0, 0, 100, a);
-                    text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
-                    // Album cover
-                    tint(360, a);
-                    image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
-                    noTint();
-
-                    //Info cuadrado abajo derecha ultimo loop
-                    // textSize((ladoCuadrado - 13) / 3);
-                    // if (!ultimoLoop.isEmpty()) { // Compruebo que hay ultimo loop para que no de error
-                    //   if ((Integer)ultimoLoop.get("mute") != null) {
-                    //     if ((Integer)ultimoLoop.get("mute") == 0 && ultLoopParado == false) {
-                    //       // Si el último loop está muteado no se dibuja
-                    //       trackColorU = (color)ultimoLoop.get("color");
-                    //       volu = (Float)ultimoLoop.get("volume");
-
-                    //       fill(trackColorU, volu * 225);
-                    //       rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
-
-                    //       String esteLoop = (String)ultimoLoop.get("nombreLoop");
-                    //       HashMap<String, Object> ultLoop = (HashMap)loopsDB.get(esteLoop);
-                    //       String artista = (String)ultLoop.get("artista");
-                    //       String titulo = (String)ultLoop.get("titulo");
-                    //       String album = (String)ultLoop.get("album");
-                    //       textAlign(RIGHT, CENTER);
-                    //       fill(230, volu * 223);
-                    //       text(titulo, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
-                    //       text(artista, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
-                    //       text(album, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
-                    //       textAlign(LEFT, CENTER);
-
-                    //       fill(0, 0, 17, volu * 223);
-                    //       text("title", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
-                    //       text("artist", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
-                    //       text("album", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
-                    //     }
-                    //   } // Fin info cuadrado abajo derecha ultimo loop
-                    // }
-                  } else {
-                    println("************************************************");
-                    println("No se ha encontrado ningún antropoloops con el nombre: " + loopName);
-                    println("************************************************");
-                  }
-                }
-              } else {
-                if ((Integer)loopParameters.get("solo") == 1) {
-                  String loopName = (String)loopParameters.get("nombreLoop");
-
-                  if ((HashMap)loopsDB.get(loopName) != null) {
-                    HashMap<String, Object> miCancion = (HashMap)loopsDB.get(loopName);
-
-                    String placeName = (String)miCancion.get("lugar");
-
-                    String fecha = "";
-                    if (miCancion.get("fecha") instanceof Integer) {
-                      fecha = str((int)miCancion.get("fecha"));
-                    }
-
-                    color trackColor = (color)loopParameters.get("color");
-                    float vol = (Float)loopParameters.get("volume");
-                    float delay = (Float)loopParameters.get("delay");
-                    float send = (Float)loopParameters.get("send");
-                    float filter = (Float)loopParameters.get("filter");
-                    int position = (Integer)loopParameters.get("trackLoop");
-                    String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
-
-                    PImage miImagen = new PImage();
-                    // Check if there is an image
-                    if (misImagenes.get(imageIndex) != null) {
-                      miImagen = misImagenes.get(imageIndex);
-                    } else {
-                      println("************************************************");
-                      println("No se ha encontrado ninguna imagen con el nombre: " + loopName);
-                      println("************************************************");
-                    }
-
-                    HashMap<String, Object> coordinates = new HashMap<String, Object>();
-
-                    // Check if there is a place
-                    boolean isThereAPlace = false;
-                    if ((HashMap)placesDB.get(placeName) != null) {
-                      isThereAPlace = true;
-                      coordinates = (HashMap)placesDB.get(placeName);
-                    } else {
-                      isThereAPlace = false;
-                      coordinates.put("coordX", 0);
-                      coordinates.put("coordY", 0);
-                      println("************************************************");
-                      println("No se ha encontrado ningún lugar con el nombre: " + placeName);
-                      println("************************************************");
-                    }
-
-                    if (float(width) / float(height) >= imageRatio) {
-                      origenX = (width - (height * imageRatio)) / 2;
-                      origenY = 0;
-                      coordX = origenX + map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
-                      coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
-                      coverSide = height * imageRatio / 8;
-                    } else if (float(width) / float(height) < imageRatio) {
-                      origenX = 0;
-                      origenY = 0;
-                      coordX = map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
-                      coordY = origenY + map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
-                      coverSide = width / 8;
-                    }
-
-                    float alturaRect = coverSide / 10;
-                    int linSep = 0;
-                    float alturaText = alturaRect - 2;
-                    textSize(alturaText);
-
-                    float effect;
-
-                    if (delay > send) {
-                      effect = delay;
-                    } else {
-                      effect = send;
-                    }
-
-                    float normFilter = map(filter, 135, 20, 1, 0);
-
-                    float a = 0;
-                    if (vol * normFilter <= 0.45) {
-                      a = vol * normFilter * 223; // 100 / 0.45 = 223
-                    } else  if (vol * normFilter > 0.45) {
-                      a = 100;
-                    }
-
-                    if (isThereAPlace) {
-                      miRed[i]= new Red(
-                        coordX, 
-                        coordY, 
-                        (origenX + coverSide * (position + 0.5)), 
-                        origenY + coverSide + linSep + alturaRect, 
-                        trackColor, a * 0.6);
-                      miRed[i].dibujaRed();
-
-                      misAbanicos[i]= new Abanico(vol, effect, filter, trackColor);
-
-                      pushMatrix();
-                      translate(coordX, coordY);
-                      v = m / (60 / tempo * parseInt((Float)loopParameters.get("loopend")) * 1000 / 360);
-                      float sp= radians(v);
-                      rotate(sp);
-                      misAbanicos[i].dibuja();
-                      popMatrix();
-                    }
-
-                    textAlign(LEFT, CENTER);
-
-                    // Color rect under album cover
-                    fill(trackColor, a);
-                    rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
-                    // Place name
-                    fill(0, a);
-                    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
-                    // Date
-                    fill(0, 0, 100, a);
-                    text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
-                    // Album cover
-                    tint(360, a);
-                    image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
-                    noTint();
-                  } else {
-                    println("************************************************");
-                    println("No se ha encontrado ningún antropoloops con el nombre: " + loopName);
-                    println("************************************************");
-                  }
-                } // End of (Integer)loopParameters.get("solo")==1
-              } // End of !soloState()
-            } // End of (Integer)loopParameters.get("state")==2))
-          } // End of loopParameters.get("state")!= null
-        } // End of for
-      } // End of while
-    } // End of miAntropoloops != null && drawing==true
+          
+          // boolean stateIsSet = loopParameters.get("state") != null;
+          // if (stateIsSet) {
+            int state = (Integer)loopParameters.get("state");
+            boolean soloState = soloState();
+            // boolean muteIsSet = (Integer)loopParameters.get("mute") != null;
+            int mute = (Integer)loopParameters.get("mute");
+            int solo = (Integer)loopParameters.get("solo");
+            if (state == 2) {
+              if (!soloState && mute == 0) {
+                drawLoops(loopParameters, index);
+              } else if (soloState && solo == 1 && mute == 0) {
+                drawLoops(loopParameters, index);
+              } 
+            } 
+          // } 
+        } 
+      } 
+    }
     break;
   } // End of switch
 
@@ -568,6 +294,164 @@ void draw() {
   textSize(bWidth / 100);
   fill(255);
   text("www.antropoloops.com", textX, textY);
+}
+
+void drawLoops(HashMap loopParameters, int i) {
+  String loopName = (String)loopParameters.get("nombreLoop"); //loopName = nombreLoop, que es el nombre del clip segun Ableton, o sea, el nombre del archivo
+
+  if ((HashMap)loopsDB.get(loopName) != null) {
+    HashMap<String, Object> miCancion = (HashMap)loopsDB.get(loopName);
+
+    String placeName = (String)miCancion.get("lugar");
+    String fecha = "";
+    if (miCancion.get("fecha") instanceof Integer) {
+      fecha = str((int)miCancion.get("fecha"));
+    }
+
+    color trackColor = (color)loopParameters.get("color");
+    float vol = (Float)loopParameters.get("volume");
+    float delay = (Float)loopParameters.get("delay");
+    float send = (Float)loopParameters.get("send");
+    float filter = (Float)loopParameters.get("filter");
+    int position = (Integer)loopParameters.get("trackLoop");
+    String imageIndex = loopParameters.get("trackLoop") + "-" + loopParameters.get("clipLoop");
+
+    PImage miImagen = new PImage();
+    // Check if there is an image
+    if (misImagenes.get(imageIndex) != null) {
+      miImagen = misImagenes.get(imageIndex);
+    } else {
+      println("************************************************");
+      println("No se ha encontrado ninguna imagen con el nombre: " + loopName);
+      println("************************************************");
+    }
+
+    HashMap<String, Object> coordinates = new HashMap<String, Object>();
+
+    // Check if there is a place
+    boolean isThereAPlace = false;
+    if ((HashMap)placesDB.get(placeName) != null) {
+      isThereAPlace = true;
+      coordinates = (HashMap)placesDB.get(placeName);
+    } else {
+      isThereAPlace = false;
+      coordinates.put("coordX", 0);
+      coordinates.put("coordY", 0);
+      println("************************************************");
+      println("No se ha encontrado ningún lugar con el nombre: " + placeName);
+      println("************************************************");
+    }
+
+    if (float(width) / float(height) >= imageRatio) {
+      origenX = (width - (height * imageRatio)) / 2;
+      coordX = origenX + map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
+      coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
+      coverSide = height * imageRatio / 8;
+      finalX = width - (width - (height * imageRatio)) / 2;
+      finalY = height;
+      ladoCuadrado = height / 13;
+    } else if (float(width) / float(height) < imageRatio) {
+      coordX = map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
+      coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
+      coverSide = width / 8;
+      finalX = width;
+      finalY = width / imageRatio;
+      ladoCuadrado = (width / imageRatio) / 13;
+    }
+
+    float alturaRect = coverSide / 10;
+    int linSep = 0;
+    float alturaText = alturaRect - 2;
+    textSize(alturaText);
+
+    float effect;
+
+    if (delay > send) {
+      effect = delay;
+    } else {
+      effect = send;
+    }
+
+    float normFilter = map(filter, 135, 20, 1, 0);
+
+    float a = 0;
+    if (vol * normFilter <= 0.45) {
+      a = vol * normFilter * 223; // 100 / 0.45 = 223
+    } else  if (vol * normFilter > 0.45) {
+      a = 100;
+    }
+
+    if (isThereAPlace) {
+      miRed[i] = new Red(
+        coordX, 
+        coordY, 
+        (origenX + coverSide * (position + 0.5)), 
+        origenY + coverSide + linSep + alturaRect, 
+        trackColor, 
+        a * 0.6);
+      miRed[i].dibujaRed();
+      misAbanicos[i] = new Abanico(vol, effect, filter, trackColor);
+      pushMatrix();
+      translate(coordX, coordY);
+      v = m / (60 / tempo * parseInt((Float)loopParameters.get("loopend")) * 1000 / 360);
+      float sp = radians(v);
+      rotate(sp);
+      misAbanicos[i].dibuja();
+      popMatrix();
+    }
+
+    textAlign(LEFT, CENTER);
+
+    // Color rect under album cover
+    fill(trackColor, a); 
+    rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
+    // Place name
+    fill(0, a);
+    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
+    // Date
+    fill(0, 0, 100, a);
+    text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
+    // Album cover
+    tint(360, a);
+    image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
+    noTint();
+
+    //Info cuadrado abajo derecha ultimo loop
+    // textSize((ladoCuadrado - 13) / 3);
+    // if (!ultimoLoop.isEmpty()) { // Compruebo que hay ultimo loop para que no de error
+    //   if ((Integer)ultimoLoop.get("mute") != null) {
+    //     if ((Integer)ultimoLoop.get("mute") == 0 && ultLoopParado == false) {
+    //       // Si el último loop está muteado no se dibuja
+    //       trackColorU = (color)ultimoLoop.get("color");
+    //       volu = (Float)ultimoLoop.get("volume");
+
+    //       fill(trackColorU, volu * 225);
+    //       rect(finalX - ladoCuadrado, finalY - ladoCuadrado, ladoCuadrado, ladoCuadrado);
+
+    //       String esteLoop = (String)ultimoLoop.get("nombreLoop");
+    //       HashMap<String, Object> ultLoop = (HashMap)loopsDB.get(esteLoop);
+    //       String artista = (String)ultLoop.get("artista");
+    //       String titulo = (String)ultLoop.get("titulo");
+    //       String album = (String)ultLoop.get("album");
+    //       textAlign(RIGHT, CENTER);
+    //       fill(230, volu * 223);
+    //       text(titulo, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
+    //       text(artista, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
+    //       text(album, finalX - (ladoCuadrado + 7), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
+    //       textAlign(LEFT, CENTER);
+
+    //       fill(0, 0, 17, volu * 223);
+    //       text("title", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 2.5 + 11));
+    //       text("artist", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 1.5 + 9));
+    //       text("album", finalX - (ladoCuadrado - 4), finalY - ((ladoCuadrado - 12) / 3 * 0.5 + 6));
+    //     }
+    //   } // Fin info cuadrado abajo derecha ultimo loop
+    // }
+  } else {
+    println("************************************************");
+    println("No se ha encontrado ningún antropoloops con el nombre: " + loopName);
+    println("************************************************");
+  }
 }
 
 void keyPressed() {

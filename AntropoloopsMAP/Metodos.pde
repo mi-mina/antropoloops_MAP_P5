@@ -7,8 +7,6 @@ boolean soloState() {
       HashMap<String, Object> soloClip = (HashMap)me.getValue();
 
       soloState.put(Integer.toString(i), (Integer)soloClip.get("solo"));
-      if (soloState.containsValue(1) == true) {
-      }
     }
   }
 
