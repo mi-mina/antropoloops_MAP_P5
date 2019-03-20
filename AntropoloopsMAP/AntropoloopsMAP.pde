@@ -387,11 +387,14 @@ void drawLoops(HashMap loopParameters, int i) {
       miRed[i] = new Red(
         coordX, 
         coordY, 
-        (origenX + coverSide * (position + 0.5)), 
-        origenY + coverSide + linSep + alturaRect, 
+        (origenX + coverSide * position + coverSide * 0.02), 
+        origenY + coverSide + linSep + alturaRect * 2.1, 
         trackColor, 
         a * 0.6);
       miRed[i].dibujaRed();
+      fill(trackColor, a); 
+      ellipse(origenX + coverSide * position + coverSide * 0.02, origenY + coverSide + linSep + alturaRect * 2.1, 3, 3);
+
       misAbanicos[i] = new Abanico(vol, effect, filter, trackColor);
       pushMatrix();
       translate(coordX, coordY);
@@ -409,10 +412,10 @@ void drawLoops(HashMap loopParameters, int i) {
     rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
     // Place name
     fill(placeTextColor, a);
-    text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
+    text(placeName, coverSide * 0.04 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
     // Date
     fill(dateTextColor, a);
-    text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
+    text(fecha, coverSide * 0.04 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
     // Album cover
     tint(360, a);
     image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
