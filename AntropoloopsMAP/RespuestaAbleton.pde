@@ -15,6 +15,10 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("nombreLoop", theOscMessage.arguments()[2]);
 
     color trackColor = getColor("mundo", track);
+    float r = trackColor >> 16 & 0xFF;
+    float g = trackColor >> 8 & 0xFF;
+    float b = trackColor & 0xFF;
+    float luminance = map((0.2126 * r + 0.7152 * g + 0.0722 * b), 0, 255, 0, 1);
 
     // Default info to prevent errors
     infoLoop.put("state", 1);
@@ -24,8 +28,15 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("mute", 0);
     infoLoop.put("delay", 0.0);
     infoLoop.put("send", 0.0);
-
+    infoLoop.put("filter", 135.0);
     infoLoop.put("color", trackColor);
+    infoLoop.put("dateTextColor", color(0, 0, 0));
+
+    if (luminance < 0.5) {
+      infoLoop.put("placeTextColor", color(0, 0, 100));
+    } else {
+      infoLoop.put("placeTextColor", color(0, 0, 0));
+    }
 
     miAntropoloops.put(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), infoLoop);
     println(infoLoop.get("trackLoop") + "-" + infoLoop.get("clipLoop"), "/", infoLoop);
@@ -75,25 +86,26 @@ void oscEvent(OscMessage theOscMessage) {
           diamOnda = 120;
         }
       }
+
+      // Send track color in a osc message to Ableton
+      // Only when a clip starts to play
+      color trackColor = (color)miAntropoloops.get(claveTrack + "-" + claveClip).get("color");
+      colorMode(RGB, 255);
+      int r = int(trackColor >> 16 & 0xFF);
+      int g = int(trackColor >> 8 & 0xFF);
+      int b = int(trackColor & 0xFF);
+
+      OscMessage colorMessage = new OscMessage("/live/clip/color");
+      int[] params = {claveTrack, claveClip, r, g, b};
+      colorMessage.add(params);
+      oscP5.send(colorMessage);
+      colorMode(HSB, 360, 100, 100, 100);
     }
     if (state == 1) {
       if ((Integer)ultimoLoop.get("trackLoop") == claveTrack && (Integer)ultimoLoop.get("clipLoop") == claveClip) {
         ultLoopParado = true;
       }
     }
-
-    // Send color messages to Ableton
-    color myColor = (color)miAntropoloops.get(claveTrack + "-" + claveClip).get("color");
-    colorMode(RGB, 255);
-    int red = int(red(myColor));
-    int green = int(green(myColor));
-    int blue = int(blue(myColor));
-
-    OscMessage colorMessage = new OscMessage("/live/clip/color");
-    int[] params = {claveTrack, claveClip, red, green, blue};
-    colorMessage.add(params);
-    oscP5.send(colorMessage);
-    colorMode(HSB, 360, 100, 100, 100);
   }
 
   if (path.equals("/live/play")) {
@@ -207,7 +219,26 @@ void oscEvent(OscMessage theOscMessage) {
         String claveClip = loopsIndexed.get(i);
         int[] a = int(split(claveClip, '-'));
         int track = a[0];
-        miAntropoloops.get(claveClip).put("color", getColor(geoZoneColors, track));
+        
+        color trackColor = getColor(geoZoneColors, track);
+        miAntropoloops.get(claveClip).put("color", trackColor);
+
+        float r = trackColor >> 16 & 0xFF;
+        float g = trackColor >> 8 & 0xFF;
+        float b = trackColor & 0xFF;
+        float luminance = map((0.2126 * r + 0.7152 * g + 0.0722 * b), 0, 255, 0, 1);
+
+        if (luminance < 0.5) {
+          miAntropoloops.get(claveClip).put("placeTextColor", color(0, 0, 100));
+        } else {
+          miAntropoloops.get(claveClip).put("placeTextColor", color(0, 0, 0));
+        }
+
+        if (geoZoneColors.equals("med_delfines")) {
+          miAntropoloops.get(claveClip).put("dateTextColor", color(0, 0, 0));
+        } else {
+          miAntropoloops.get(claveClip).put("dateTextColor", color(0, 0, 100));
+        }
       }
     }
   }
@@ -239,6 +270,7 @@ void oscEvent(OscMessage theOscMessage) {
   }
 
     if (path.equals("/live/filter")) {
+    // println("typetag /live/filter: ", theOscMessage.typetag());
     int trackId = theOscMessage.get(0).intValue();
     float filter = theOscMessage.get(1).floatValue();
     // filter is a float between 20 and 135

@@ -309,6 +309,8 @@ void drawLoops(HashMap loopParameters, int i) {
     }
 
     color trackColor = (color)loopParameters.get("color");
+    color placeTextColor = (color)loopParameters.get("placeTextColor");
+    color dateTextColor = (color)loopParameters.get("dateTextColor");
     float vol = (Float)loopParameters.get("volume");
     float delay = (Float)loopParameters.get("delay");
     float send = (Float)loopParameters.get("send");
@@ -406,10 +408,10 @@ void drawLoops(HashMap loopParameters, int i) {
     fill(trackColor, a); 
     rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
     // Place name
-    fill(0, a);
+    fill(placeTextColor, a);
     text(placeName, 5 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
     // Date
-    fill(0, 0, 100, a);
+    fill(dateTextColor, a);
     text(fecha, 5 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
     // Album cover
     tint(360, a);
