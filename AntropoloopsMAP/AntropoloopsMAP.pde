@@ -15,6 +15,7 @@ NetAddress myRemoteLocation;
 
 int inPort = 9001;
 int outPort = 9000;
+// int outPort = 9000;
 
 int alpha = 0;
 PImage backgroundMapBase;
