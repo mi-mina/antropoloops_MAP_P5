@@ -1,9 +1,24 @@
 boolean soloState() {
   HashMap<String, Integer> soloState = new HashMap<String, Integer>();
-  Iterator soloInfo = miAntropoloops.entrySet().iterator();
+
+  // Create a deep copy of miAntropoloops HashMap
+  HashMap<String, HashMap<String, Object>> miAntropoloopsCopy = new HashMap<String, HashMap<String, Object>>();
+
+  for(HashMap.Entry<String, HashMap<String, Object>> entry : miAntropoloops.entrySet()){
+      miAntropoloopsCopy.put(entry.getKey(), new HashMap<String, Object>(entry.getValue()));
+  }
+
+//   for (Map.Entry<Integer, int[]> entry : originalMatrix.entrySet()) {
+//     newMatrix.put(entry.getKey(), entry.getValue().clone());
+// }
+
+  // Copy miAntropoloops content into miAntropoloopsCopy
+  // println("miAntropoloopsCopy: "+miAntropoloopsCopy);
+
+  Iterator soloInfo = miAntropoloopsCopy.entrySet().iterator();
 
   while (soloInfo.hasNext ()) {
-    for (int i = 0; i < miAntropoloops.size(); i++) {
+    for (int i = 0; i < miAntropoloopsCopy.size(); i++) {
       Map.Entry me = (Map.Entry)soloInfo.next();
       HashMap<String, Object> soloClip = (HashMap)me.getValue();
 
