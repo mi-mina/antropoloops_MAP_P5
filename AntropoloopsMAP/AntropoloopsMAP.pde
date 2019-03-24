@@ -15,7 +15,6 @@ NetAddress myRemoteLocation;
 
 int inPort = 9001;
 int outPort = 9000;
-// int outPort = 9000;
 
 int alpha = 0;
 PImage backgroundMapBase;
@@ -180,8 +179,8 @@ void draw() {
   //   rect(0, finalY - ladoCuadrado, width, ladoCuadrado);
   // }
   // Translucent rectangle on the top, to obscure the area of the map where the covers are drawn.
-  fill(0, 0, 17, 75);
-  rect(0, 0, width, coverSide);
+  // fill(0, 0, 17, 75);
+  // rect(0, 0, width, coverSide);
 
   if (timerPuntoRojo.isFinished()) {
     statePuntoRojo = 0;
@@ -377,10 +376,11 @@ void drawLoops(HashMap loopParameters, int i) {
 
     float normFilter = map(filter, 135, 20, 1, 0);
 
+    float alphaStartingPoint = 0.6;
     float a = 0;
-    if (vol * normFilter <= 0.45) {
-      a = vol * normFilter * 223; // 100 / 0.45 = 223
-    } else  if (vol * normFilter > 0.45) {
+    if (vol * normFilter <= alphaStartingPoint) {
+      a = vol * normFilter * 100 / alphaStartingPoint;
+    } else  if (vol * normFilter > alphaStartingPoint) {
       a = 100;
     }
 

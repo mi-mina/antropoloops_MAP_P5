@@ -1,6 +1,7 @@
 boolean soloState() {
   HashMap<String, Integer> soloState = new HashMap<String, Integer>();
   Iterator soloInfo = miAntropoloops.entrySet().iterator();
+
   while (soloInfo.hasNext ()) {
     for (int i = 0; i < miAntropoloops.size(); i++) {
       Map.Entry me = (Map.Entry)soloInfo.next();
@@ -154,7 +155,7 @@ color getColor (String colorPalette, int track) {
       colorS = 65;
       colorB = 61;
     }
-  } else if (colorPalette.equals("med_delfines")) {
+  } else if (colorPalette.equals("med_delfines") || colorPalette.equals("med_fin")) {
     if (track == 0) {
       colorH = 0;
       colorS = 87;
@@ -183,10 +184,50 @@ color getColor (String colorPalette, int track) {
       colorH = 42;
       colorS = 76;
       colorB = 87;
+    } 
+    // else if (track == 7) {
+    //   colorH = 10;
+    //   colorS = 58;
+    //   colorB = 88;
+    // }
+    else if (track == 7) {
+      colorH = 189;
+      colorS = 91;
+      colorB = 79;
+    }
+  } else if (colorPalette.equals("med_alba")) {
+    if (track == 0) {
+      colorH = 0;
+      colorS = 0;
+      colorB = 100;
+    } else if (track == 1) {
+      colorH = 0;
+      colorS = 0;
+      colorB = 95;
+    } else if (track == 2) {
+      colorH = 0;
+      colorS = 0;
+      colorB = 90;
+    } else if (track == 3) {
+      colorH = 0;
+      colorS = 0;
+      colorB = 85;
+    } else if (track == 4) {
+      colorH = 0;
+      colorS = 0;
+      colorB = 81;
+    } else if (track == 5) {
+      colorH = 0;
+      colorS = 0;
+      colorB = 76;
+    } else if (track == 6) {
+      colorH = 0;
+      colorS = 0;
+      colorB = 71;
     } else if (track == 7) {
-      colorH = 10;
-      colorS = 58;
-      colorB = 88;
+      colorH = 0;
+      colorS = 0;
+      colorB = 67;
     }
   } else {
     colorS = random(50, 100);

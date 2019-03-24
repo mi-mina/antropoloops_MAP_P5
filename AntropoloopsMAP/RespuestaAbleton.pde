@@ -234,7 +234,7 @@ void oscEvent(OscMessage theOscMessage) {
           miAntropoloops.get(claveClip).put("placeTextColor", color(0, 0, 0));
         }
 
-        if (geoZoneColors.equals("med_delfines")) {
+        if (geoZoneColors.equals("med_delfines") || geoZoneColors.equals("med_fin")) {
           miAntropoloops.get(claveClip).put("dateTextColor", color(0, 0, 0));
         } else {
           miAntropoloops.get(claveClip).put("dateTextColor", color(0, 0, 100));
