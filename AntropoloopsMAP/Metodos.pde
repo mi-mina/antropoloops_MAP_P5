@@ -203,23 +203,23 @@ color getColor (String colorPalette, int track) {
     } else if (track == 1) {
       colorH = 0;
       colorS = 0;
-      colorB = 95;
+      colorB = 85;
     } else if (track == 2) {
       colorH = 0;
       colorS = 0;
-      colorB = 90;
+      colorB = 76;
     } else if (track == 3) {
       colorH = 0;
       colorS = 0;
-      colorB = 85;
+      colorB = 95;
     } else if (track == 4) {
       colorH = 0;
       colorS = 0;
-      colorB = 81;
+      colorB = 67;
     } else if (track == 5) {
       colorH = 0;
       colorS = 0;
-      colorB = 76;
+      colorB = 81;
     } else if (track == 6) {
       colorH = 0;
       colorS = 0;
@@ -227,7 +227,7 @@ color getColor (String colorPalette, int track) {
     } else if (track == 7) {
       colorH = 0;
       colorS = 0;
-      colorB = 67;
+      colorB = 90;
     }
   } else {
     colorS = random(50, 100);

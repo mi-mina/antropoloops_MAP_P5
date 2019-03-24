@@ -40,6 +40,7 @@ float backgroundImageHeight = 1080;
 // float backgroundImageHeight = 1200;
 float imageRatio = backgroundImageWidth / backgroundImageHeight;
 
+PFont myFont;
 int ct1;
 int m; //millis
 int sceneNumber;
@@ -48,8 +49,8 @@ String geoZoneData = "mundo";
 String geoZone = "mundo";
 float tempo;
 float coordX, coordY, coordXOnda, coordYOnda;
-float origenX, origenY;
-float coverSide;
+int origenX;
+int coverSide;
 float ladoCuadrado;
 float finalX;
 float finalY;
@@ -66,11 +67,22 @@ float diamOnda;
 
 //============================================================================
 void setup() {
-  size(displayWidth, displayHeight);
+  size(displayWidth, displayHeight, P2D);
+  // fullScreen(P2D);
+  // This function must be the first line in setup().
+  // The size() and fullScreen() functions cannot both be used in the same program, just choose one.
+  // The reference recomends to use fullScreen() instead of size(displayWidth, displayHeight);
+  // But fullScreen() doesn't have a frame and then it's not resizable
+  smooth(4);
   if (frame != null) {
     surface.setResizable(true);
   }
-  frameRate(10);
+  frameRate(30);
+  
+  // List all fonts available in the system
+  // println(PFont.list());
+  myFont = createFont("ArialMT", 60);
+  textFont(myFont);
 
   backgroundMapBase = loadImage("../1_BDatos/default.jpg");
   backgroundMapNew = loadImage("../1_BDatos/default.jpg");
@@ -160,7 +172,7 @@ void draw() {
   }
 
   if (alpha < 100) {
-    alpha += 5;
+    alpha += 1;
   }
 
   if (alpha == 100) {
@@ -246,11 +258,14 @@ void draw() {
               }
               strokeWeight(a);
               noFill();
+            
               if (float(width) / float(height) >= imageRatio) {
-                origenX = (width - (height * imageRatio)) / 2;
+                float origOrigenX = (width - (height * imageRatio)) / 2;
+                origenX = int(origOrigenX);
                 coordXOnda = origenX + map((Integer)placeCoordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
                 coordYOnda = map((Integer)placeCoordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
               } else if (float(width) / float(height) < imageRatio) {
+                origenX = 0;
                 coordXOnda = map((Integer)placeCoordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
                 coordYOnda = map((Integer)placeCoordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
               }
@@ -291,7 +306,7 @@ void draw() {
 
   // Draw antropoloops web
   textAlign(LEFT, BOTTOM);
-  textSize(bWidth / 100);
+  textSize(int(bWidth / 100));
   fill(255);
   text("www.antropoloops.com", textX, textY);
 }
@@ -310,7 +325,6 @@ void drawLoops(HashMap loopParameters, int i) {
 
     color trackColor = (color)loopParameters.get("color");
     color placeTextColor = (color)loopParameters.get("placeTextColor");
-    color dateTextColor = (color)loopParameters.get("dateTextColor");
     float vol = (Float)loopParameters.get("volume");
     float delay = (Float)loopParameters.get("delay");
     float send = (Float)loopParameters.get("send");
@@ -345,25 +359,25 @@ void drawLoops(HashMap loopParameters, int i) {
     }
 
     if (float(width) / float(height) >= imageRatio) {
-      origenX = (width - (height * imageRatio)) / 2;
+      origenX = int((width - (height * imageRatio)) / 2);
       coordX = origenX + map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
       coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
-      coverSide = height * imageRatio / 8;
+      coverSide = int(height * imageRatio / 8);
       finalX = width - (width - (height * imageRatio)) / 2;
       finalY = height;
       ladoCuadrado = height / 13;
     } else if (float(width) / float(height) < imageRatio) {
+      origenX = 0;
       coordX = map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
       coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
-      coverSide = width / 8;
+      coverSide = int(width / 8);
       finalX = width;
       finalY = width / imageRatio;
       ladoCuadrado = (width / imageRatio) / 13;
     }
 
-    float alturaRect = coverSide / 10;
-    int linSep = 0;
-    float alturaText = alturaRect - 2;
+    int alturaRect = int(coverSide / 9);
+    int alturaText = alturaRect - 4;
     textSize(alturaText);
 
     float effect;
@@ -388,13 +402,12 @@ void drawLoops(HashMap loopParameters, int i) {
       miRed[i] = new Red(
         coordX, 
         coordY, 
-        (origenX + coverSide * position + coverSide * 0.02), 
-        origenY + coverSide + linSep + alturaRect * 2.1, 
+        (origenX + coverSide * position + coverSide * 0.5), 
+        coverSide + alturaRect, 
         trackColor, 
         a * 0.6);
       miRed[i].dibujaRed();
       fill(trackColor, a); 
-      ellipse(origenX + coverSide * position + coverSide * 0.02, origenY + coverSide + linSep + alturaRect * 2.1, 3, 3);
 
       misAbanicos[i] = new Abanico(vol, effect, filter, trackColor);
       pushMatrix();
@@ -406,20 +419,29 @@ void drawLoops(HashMap loopParameters, int i) {
       popMatrix();
     }
 
-    textAlign(LEFT, CENTER);
+    
 
     // Color rect under album cover
-    fill(trackColor, a); 
-    rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
+    fill(trackColor, a);
+    rect(origenX + (coverSide * position), coverSide, coverSide, alturaRect);
     // Place name
+    textAlign(LEFT, CENTER);
     fill(placeTextColor, a);
-    text(placeName, coverSide * 0.04 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
+    int placeNameX =  int(origenX + coverSide * position + coverSide * 0.04);
+    int placeNameY = coverSide - 2;
+    int placeNameX2 = int(coverSide * 0.7);
+    int placeNameY2 = alturaRect;
+    text(placeName, placeNameX, placeNameY, placeNameX2, placeNameY2);
+    
+    
     // Date
-    fill(dateTextColor, a);
-    text(fecha, coverSide * 0.04 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
+    textAlign(RIGHT, CENTER);
+    fill(placeTextColor, a);
+    text(fecha, coverSide * 0.96 + (origenX + (coverSide * position)), coverSide + alturaRect / 2 - 1);
+
     // Album cover
     tint(360, a);
-    image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
+    image(miImagen, origenX + (coverSide * position), 0, coverSide, coverSide);
     noTint();
 
     //Info cuadrado abajo derecha ultimo loop
