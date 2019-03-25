@@ -41,6 +41,7 @@ float backgroundImageHeight = 1080;
 float imageRatio = backgroundImageWidth / backgroundImageHeight;
 
 PFont myFont;
+PFont myFontBold;
 int ct1;
 int m; //millis
 int sceneNumber;
@@ -67,8 +68,15 @@ float diamOnda;
 
 //============================================================================
 void setup() {
+  // Descomentar esta línea y comentar la de abajo para modo show. Te va a salir un aviso que tienes que darle a ok.
+  // fullScreen(P2D, SPAN);
+  
+  // Descomentar esta línea y comentar la de arriba para modo development 
   size(displayWidth, displayHeight, P2D);
-  // fullScreen(P2D);
+  
+  // Si todo falla, usar esta:
+  // size(displayWidth, displayHeight);
+  
   // This function must be the first line in setup().
   // The size() and fullScreen() functions cannot both be used in the same program, just choose one.
   // The reference recomends to use fullScreen() instead of size(displayWidth, displayHeight);
@@ -81,7 +89,8 @@ void setup() {
   
   // List all fonts available in the system
   // println(PFont.list());
-  myFont = createFont("ArialMT", 60);
+  myFont = createFont("ArialMT", 60, true);
+  myFontBold = createFont("Arial-BoldMT", 60, true);
   textFont(myFont);
 
   backgroundMapBase = loadImage("../1_BDatos/default.jpg");
@@ -152,6 +161,7 @@ void draw() {
   int dPuntos = 10;
   int paddingTexto = 10;
   int paddingPunto = 15;
+
 
   // La posición del background y del texto www.antropoloops.com cambia dependiendo
   // de la proporción de la pantalla.
@@ -240,7 +250,7 @@ void draw() {
         volu = (Float)ultimoLoop.get("volume");
 
         if (dibujaOnda == true && volu > 0.05) {
-          diamOnda = diamOnda + 8;
+          diamOnda = diamOnda + 4;
           String loopName = (String)ultimoLoop.get("nombreLoop");
           HashMap<String, Object> placeObject = (HashMap)loopsDB.get(loopName);
           String placeName = (String)placeObject.get("lugar");
@@ -252,7 +262,7 @@ void draw() {
             } else {
               placeCoordinates = (HashMap)placesDB.get(placeName);
               stroke(trackColorU, 100 - diamOnda / 90);
-              float a = 5 - diamOnda / 50;
+              float a = 6 - diamOnda / 50;
               if (a < 0) { 
                 a = 0;
               }
@@ -283,21 +293,20 @@ void draw() {
           Map.Entry me = (Map.Entry)recorreMiAntropoloops.next();
           HashMap<String, Object> loopParameters = (HashMap)me.getValue();
           
-          // boolean stateIsSet = loopParameters.get("state") != null;
-          // if (stateIsSet) {
+          boolean stateIsSet = loopParameters.get("state") != null;
+          if (stateIsSet) {
             int state = (Integer)loopParameters.get("state");
-            boolean soloState = soloState();
-            // boolean muteIsSet = (Integer)loopParameters.get("mute") != null;
-            int mute = (Integer)loopParameters.get("mute");
-            int solo = (Integer)loopParameters.get("solo");
             if (state == 2) {
+              boolean soloState = soloState();
+              int mute = (Integer)loopParameters.get("mute");
+              int solo = (Integer)loopParameters.get("solo");
               if (!soloState && mute == 0) {
                 drawLoops(loopParameters, index);
               } else if (soloState && solo == 1 && mute == 0) {
                 drawLoops(loopParameters, index);
               } 
             } 
-          // } 
+          } 
         } 
       } 
     }
@@ -319,7 +328,7 @@ void drawLoops(HashMap loopParameters, int i) {
 
     String placeName = (String)miCancion.get("lugar");
     String fecha = "";
-    if (miCancion.get("fecha") instanceof Integer) {
+    if (miCancion.get("fecha") instanceof Integer && (int)miCancion.get("fecha") != 0) {
       fecha = str((int)miCancion.get("fecha"));
     }
 
@@ -378,7 +387,7 @@ void drawLoops(HashMap loopParameters, int i) {
 
     int alturaRect = int(coverSide / 9);
     int alturaText = alturaRect - 4;
-    textSize(alturaText);
+    
 
     float effect;
 
@@ -426,6 +435,8 @@ void drawLoops(HashMap loopParameters, int i) {
     rect(origenX + (coverSide * position), coverSide, coverSide, alturaRect);
     // Place name
     textAlign(LEFT, CENTER);
+    textFont(myFontBold);
+    textSize(alturaText);
     fill(placeTextColor, a);
     int placeNameX =  int(origenX + coverSide * position + coverSide * 0.04);
     int placeNameY = coverSide - 2;
@@ -436,6 +447,8 @@ void drawLoops(HashMap loopParameters, int i) {
     
     // Date
     textAlign(RIGHT, CENTER);
+    textFont(myFont);
+    textSize(alturaText);
     fill(placeTextColor, a);
     text(fecha, coverSide * 0.96 + (origenX + (coverSide * position)), coverSide + alturaRect / 2 - 1);
 

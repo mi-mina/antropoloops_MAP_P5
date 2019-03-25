@@ -1,24 +1,10 @@
 boolean soloState() {
   HashMap<String, Integer> soloState = new HashMap<String, Integer>();
 
-  // Create a deep copy of miAntropoloops HashMap
-  HashMap<String, HashMap<String, Object>> miAntropoloopsCopy = new HashMap<String, HashMap<String, Object>>();
-
-  for(HashMap.Entry<String, HashMap<String, Object>> entry : miAntropoloops.entrySet()){
-      miAntropoloopsCopy.put(entry.getKey(), new HashMap<String, Object>(entry.getValue()));
-  }
-
-//   for (Map.Entry<Integer, int[]> entry : originalMatrix.entrySet()) {
-//     newMatrix.put(entry.getKey(), entry.getValue().clone());
-// }
-
-  // Copy miAntropoloops content into miAntropoloopsCopy
-  // println("miAntropoloopsCopy: "+miAntropoloopsCopy);
-
-  Iterator soloInfo = miAntropoloopsCopy.entrySet().iterator();
+  Iterator soloInfo = miAntropoloops.entrySet().iterator();
 
   while (soloInfo.hasNext ()) {
-    for (int i = 0; i < miAntropoloopsCopy.size(); i++) {
+    for (int i = 0; i < miAntropoloops.size(); i++) {
       Map.Entry me = (Map.Entry)soloInfo.next();
       HashMap<String, Object> soloClip = (HashMap)me.getValue();
 
@@ -53,8 +39,8 @@ color getColor (String colorPalette, int track) {
       colorB = 68;
     } else if (track == 4) {
       colorH = 30;
-      colorS = 55;
-      colorB = 100;
+      colorS = 50;
+      colorB = 88;
     } else if (track == 5) {
       colorH = 9;
       colorS = 63;
@@ -176,73 +162,67 @@ color getColor (String colorPalette, int track) {
       colorS = 87;
       colorB = 64;
     } else if (track == 1) {
-      colorH = 35;
-      colorS = 80;
-      colorB = 89;
-    } else if (track == 2) {
-      colorH = 49;
-      colorS = 91;
-      colorB = 70;
-    } else if (track == 3) {
-      colorH = 21;
-      colorS = 83;
-      colorB = 88;
-    } else if (track == 4) {
-      colorH = 49;
-      colorS = 76;
-      colorB = 85;
-    } else if (track == 5) {
       colorH = 28;
       colorS = 86;
       colorB = 91;
-    } else if (track == 6) {
+    } else if (track == 2) {
       colorH = 42;
       colorS = 76;
       colorB = 87;
-    } 
-    // else if (track == 7) {
-    //   colorH = 10;
-    //   colorS = 58;
-    //   colorB = 88;
-    // }
-    else if (track == 7) {
-      colorH = 189;
+    } else if (track == 3) {
+      colorH = 10;
+      colorS = 58;
+      colorB = 88;
+    } else if (track == 4) {
+      colorH = 49;
       colorS = 91;
-      colorB = 79;
+      colorB = 70;
+    } else if (track == 5) {
+      colorH = 35;
+      colorS = 80;
+      colorB = 89;
+    } else if (track == 6) {
+      colorH = 21;
+      colorS = 83;
+      colorB = 88;
+    } else if (track == 7) {
+      colorH = 49;
+      colorS = 76;
+      colorB = 85;
     }
   } else if (colorPalette.equals("med_alba")) {
     if (track == 0) {
       colorH = 0;
       colorS = 0;
-      colorB = 100;
+      colorB = 91;
     } else if (track == 1) {
       colorH = 0;
       colorS = 0;
-      colorB = 85;
+      colorB = 48;
     } else if (track == 2) {
       colorH = 0;
       colorS = 0;
-      colorB = 76;
+      colorB = 73;
     } else if (track == 3) {
       colorH = 0;
       colorS = 0;
-      colorB = 95;
+      colorB = 100;
     } else if (track == 4) {
       colorH = 0;
       colorS = 0;
-      colorB = 67;
+      colorB = 64;
     } else if (track == 5) {
       colorH = 0;
       colorS = 0;
-      colorB = 81;
+      colorB = 40;
     } else if (track == 6) {
       colorH = 0;
       colorS = 0;
-      colorB = 71;
+      colorB = 82;
     } else if (track == 7) {
       colorH = 0;
       colorS = 0;
-      colorB = 90;
+      colorB = 56;
     }
   } else {
     colorS = random(50, 100);
