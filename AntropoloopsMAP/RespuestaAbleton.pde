@@ -30,7 +30,6 @@ void oscEvent(OscMessage theOscMessage) {
     infoLoop.put("send", 0.0);
     infoLoop.put("filter", 135.0);
     infoLoop.put("color", trackColor);
-    infoLoop.put("dateTextColor", color(0, 0, 0));
 
     if (luminance < 0.5) {
       infoLoop.put("placeTextColor", color(0, 0, 100));
@@ -233,12 +232,6 @@ void oscEvent(OscMessage theOscMessage) {
           miAntropoloops.get(claveClip).put("placeTextColor", color(0, 0, 100));
         } else {
           miAntropoloops.get(claveClip).put("placeTextColor", color(0, 0, 0));
-        }
-
-        if (abanicoColors.equals("med_delfines")) {
-          miAntropoloops.get(claveClip).put("dateTextColor", color(0, 0, 0));
-        } else {
-          miAntropoloops.get(claveClip).put("dateTextColor", color(0, 0, 100));
         }
       }
     }

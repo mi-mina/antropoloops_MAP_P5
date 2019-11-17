@@ -40,6 +40,8 @@ float backgroundImageHeight = 1080;
 // float backgroundImageHeight = 1200;
 float imageRatio = backgroundImageWidth / backgroundImageHeight;
 
+PFont myFont;
+PFont myFontBold;
 int ct1;
 int m; //millis
 int sceneNumber;
@@ -49,8 +51,8 @@ String backgroundImage = "mundo";
 String abanicoColors = "generico";
 float tempo;
 float coordX, coordY, coordXOnda, coordYOnda;
-float origenX, origenY;
-float coverSide;
+int origenX;
+int coverSide;
 float ladoCuadrado;
 float finalX;
 float finalY;
@@ -67,11 +69,30 @@ float diamOnda;
 
 //============================================================================
 void setup() {
-  size(displayWidth, displayHeight);
+  // Descomentar esta línea y comentar la de abajo para modo show. Te va a salir un aviso que tienes que darle a ok.
+  // fullScreen(P2D, SPAN);
+  
+  // Descomentar esta línea y comentar la de arriba para modo development 
+  size(displayWidth, displayHeight, P2D);
+  
+  // Si todo falla, usar esta:
+  // size(displayWidth, displayHeight);
+  
+  // This function must be the first line in setup().
+  // The size() and fullScreen() functions cannot both be used in the same program, just choose one.
+  // The reference recomends to use fullScreen() instead of size(displayWidth, displayHeight);
+  // But fullScreen() doesn't have a frame and then it's not resizable
+  smooth(4);
   if (frame != null) {
     surface.setResizable(true);
   }
-  frameRate(10);
+  frameRate(30);
+  
+  // List all fonts available in the system
+  // println(PFont.list());
+  myFont = createFont("ArialMT", 60, true);
+  myFontBold = createFont("Arial-BoldMT", 60, true);
+  textFont(myFont);
 
   backgroundMapBase = loadImage("../1_BDatos/default.jpg");
   backgroundMapNew = loadImage("../1_BDatos/default.jpg");
@@ -142,6 +163,7 @@ void draw() {
   int paddingTexto = 10;
   int paddingPunto = 15;
 
+
   // La posición del background y del texto www.antropoloops.com cambia dependiendo
   // de la proporción de la pantalla.
   if (float(width) / float(height) >= imageRatio) {
@@ -161,7 +183,7 @@ void draw() {
   }
 
   if (alpha < 100) {
-    alpha += 5;
+    alpha += 1;
   }
 
   if (alpha == 100) {
@@ -180,8 +202,8 @@ void draw() {
   //   rect(0, finalY - ladoCuadrado, width, ladoCuadrado);
   // }
   // Translucent rectangle on the top, to obscure the area of the map where the covers are drawn.
-  fill(0, 0, 17, 75);
-  rect(0, 0, width, coverSide);
+  // fill(0, 0, 17, 75);
+  // rect(0, 0, width, coverSide);
 
   if (timerPuntoRojo.isFinished()) {
     statePuntoRojo = 0;
@@ -229,7 +251,7 @@ void draw() {
         volu = (Float)ultimoLoop.get("volume");
 
         if (dibujaOnda == true && volu > 0.05) {
-          diamOnda = diamOnda + 8;
+          diamOnda = diamOnda + 4;
           String loopName = (String)ultimoLoop.get("nombreLoop");
           HashMap<String, Object> placeObject = (HashMap)loopsDB.get(loopName);
           String placeName = (String)placeObject.get("lugar");
@@ -241,17 +263,20 @@ void draw() {
             } else {
               placeCoordinates = (HashMap)placesDB.get(placeName);
               stroke(trackColorU, 100 - diamOnda / 90);
-              float a = 5 - diamOnda / 50;
+              float a = 6 - diamOnda / 50;
               if (a < 0) { 
                 a = 0;
               }
               strokeWeight(a);
               noFill();
+            
               if (float(width) / float(height) >= imageRatio) {
-                origenX = (width - (height * imageRatio)) / 2;
+                float origOrigenX = (width - (height * imageRatio)) / 2;
+                origenX = int(origOrigenX);
                 coordXOnda = origenX + map((Integer)placeCoordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
                 coordYOnda = map((Integer)placeCoordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
               } else if (float(width) / float(height) < imageRatio) {
+                origenX = 0;
                 coordXOnda = map((Integer)placeCoordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
                 coordYOnda = map((Integer)placeCoordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
               }
@@ -269,21 +294,20 @@ void draw() {
           Map.Entry me = (Map.Entry)recorreMiAntropoloops.next();
           HashMap<String, Object> loopParameters = (HashMap)me.getValue();
           
-          // boolean stateIsSet = loopParameters.get("state") != null;
-          // if (stateIsSet) {
+          boolean stateIsSet = loopParameters.get("state") != null;
+          if (stateIsSet) {
             int state = (Integer)loopParameters.get("state");
-            boolean soloState = soloState();
-            // boolean muteIsSet = (Integer)loopParameters.get("mute") != null;
-            int mute = (Integer)loopParameters.get("mute");
-            int solo = (Integer)loopParameters.get("solo");
             if (state == 2) {
+              boolean soloState = soloState();
+              int mute = (Integer)loopParameters.get("mute");
+              int solo = (Integer)loopParameters.get("solo");
               if (!soloState && mute == 0) {
                 drawLoops(loopParameters, index);
               } else if (soloState && solo == 1 && mute == 0) {
                 drawLoops(loopParameters, index);
               } 
             } 
-          // } 
+          } 
         } 
       } 
     }
@@ -292,7 +316,7 @@ void draw() {
 
   // Draw antropoloops web
   textAlign(LEFT, BOTTOM);
-  textSize(bWidth / 100);
+  textSize(int(bWidth / 100));
   fill(255);
   text("www.antropoloops.com", textX, textY);
 }
@@ -305,13 +329,12 @@ void drawLoops(HashMap loopParameters, int i) {
 
     String placeName = (String)miCancion.get("lugar");
     String fecha = "";
-    if (miCancion.get("fecha") instanceof Integer) {
+    if (miCancion.get("fecha") instanceof Integer && (int)miCancion.get("fecha") != 0) {
       fecha = str((int)miCancion.get("fecha"));
     }
 
     color trackColor = (color)loopParameters.get("color");
     color placeTextColor = (color)loopParameters.get("placeTextColor");
-    color dateTextColor = (color)loopParameters.get("dateTextColor");
     float vol = (Float)loopParameters.get("volume");
     float delay = (Float)loopParameters.get("delay");
     float send = (Float)loopParameters.get("send");
@@ -346,26 +369,26 @@ void drawLoops(HashMap loopParameters, int i) {
     }
 
     if (float(width) / float(height) >= imageRatio) {
-      origenX = (width - (height * imageRatio)) / 2;
+      origenX = int((width - (height * imageRatio)) / 2);
       coordX = origenX + map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, height * imageRatio);
       coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, height);
-      coverSide = height * imageRatio / 8;
+      coverSide = int(height * imageRatio / 8);
       finalX = width - (width - (height * imageRatio)) / 2;
       finalY = height;
       ladoCuadrado = height / 13;
     } else if (float(width) / float(height) < imageRatio) {
+      origenX = 0;
       coordX = map((Integer)coordinates.get("coordX"), 0, backgroundImageWidth, 0, width);
       coordY = map((Integer)coordinates.get("coordY"), 0, backgroundImageHeight, 0, width / imageRatio);
-      coverSide = width / 8;
+      coverSide = int(width / 8);
       finalX = width;
       finalY = width / imageRatio;
       ladoCuadrado = (width / imageRatio) / 13;
     }
 
-    float alturaRect = coverSide / 10;
-    int linSep = 0;
-    float alturaText = alturaRect - 2;
-    textSize(alturaText);
+    int alturaRect = int(coverSide / 9);
+    int alturaText = alturaRect - 4;
+    
 
     float effect;
 
@@ -377,10 +400,11 @@ void drawLoops(HashMap loopParameters, int i) {
 
     float normFilter = map(filter, 135, 20, 1, 0);
 
+    float alphaStartingPoint = 0.6;
     float a = 0;
-    if (vol * normFilter <= 0.45) {
-      a = vol * normFilter * 223; // 100 / 0.45 = 223
-    } else  if (vol * normFilter > 0.45) {
+    if (vol * normFilter <= alphaStartingPoint) {
+      a = vol * normFilter * 100 / alphaStartingPoint;
+    } else  if (vol * normFilter > alphaStartingPoint) {
       a = 100;
     }
 
@@ -388,13 +412,12 @@ void drawLoops(HashMap loopParameters, int i) {
       miRed[i] = new Red(
         coordX, 
         coordY, 
-        (origenX + coverSide * position + coverSide * 0.02), 
-        origenY + coverSide + linSep + alturaRect * 2.1, 
+        (origenX + coverSide * position + coverSide * 0.5), 
+        coverSide + alturaRect, 
         trackColor, 
         a * 0.6);
       miRed[i].dibujaRed();
       fill(trackColor, a); 
-      ellipse(origenX + coverSide * position + coverSide * 0.02, origenY + coverSide + linSep + alturaRect * 2.1, 3, 3);
 
       misAbanicos[i] = new Abanico(vol, effect, filter, trackColor);
       pushMatrix();
@@ -406,20 +429,33 @@ void drawLoops(HashMap loopParameters, int i) {
       popMatrix();
     }
 
-    textAlign(LEFT, CENTER);
+    
 
     // Color rect under album cover
-    fill(trackColor, a); 
-    rect(origenX + (coverSide * position), origenY + coverSide + linSep, coverSide, alturaRect);
+    fill(trackColor, a);
+    rect(origenX + (coverSide * position), coverSide, coverSide, alturaRect);
     // Place name
+    textAlign(LEFT, CENTER);
+    textFont(myFontBold);
+    textSize(alturaText);
     fill(placeTextColor, a);
-    text(placeName, coverSide * 0.04 + (origenX + (coverSide * position)), origenY + coverSide + alturaRect / 2 - 1);
+    int placeNameX =  int(origenX + coverSide * position + coverSide * 0.04);
+    int placeNameY = coverSide - 2;
+    int placeNameX2 = int(coverSide * 0.7);
+    int placeNameY2 = alturaRect;
+    text(placeName, placeNameX, placeNameY, placeNameX2, placeNameY2);
+    
+    
     // Date
-    fill(dateTextColor, a);
-    text(fecha, coverSide * 0.04 + (origenX + (coverSide * position)), origenY + coverSide + linSep + alturaRect + linSep + alturaText / 2);
+    textAlign(RIGHT, CENTER);
+    textFont(myFont);
+    textSize(alturaText);
+    fill(placeTextColor, a);
+    text(fecha, coverSide * 0.96 + (origenX + (coverSide * position)), coverSide + alturaRect / 2 - 1);
+
     // Album cover
     tint(360, a);
-    image(miImagen, origenX + (coverSide * position), origenY, coverSide, coverSide);
+    image(miImagen, origenX + (coverSide * position), 0, coverSide, coverSide);
     noTint();
 
     //Info cuadrado abajo derecha ultimo loop
