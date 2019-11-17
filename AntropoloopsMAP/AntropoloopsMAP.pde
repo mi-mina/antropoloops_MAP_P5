@@ -44,8 +44,9 @@ int ct1;
 int m; //millis
 int sceneNumber;
 String sceneName;
-String geoZoneData = "mundo";
 String geoZone = "mundo";
+String backgroundImage = "mundo";
+String abanicoColors = "generico";
 float tempo;
 float coordX, coordY, coordXOnda, coordYOnda;
 float origenX, origenY;

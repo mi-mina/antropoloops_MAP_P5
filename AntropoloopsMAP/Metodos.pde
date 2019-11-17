@@ -188,6 +188,26 @@ color getColor (String colorPalette, int track) {
       colorS = 58;
       colorB = 88;
     }
+  } else if (colorPalette.equals("generico")) {
+    colorS = random(50, 100);
+    colorB = random(80, 100);
+    if (track == 0) {
+      colorH = random(105, 120);
+    } else if (track == 1) {
+      colorH = random(145, 160);
+    } else if (track == 2) {
+      colorH = random(300, 315);
+    } else if (track == 3) {
+      colorH = random(330, 345);
+    } else if (track == 4) {
+      colorH = random(190, 205);
+    } else if (track == 5) {
+      colorH = random(210, 225);
+    } else if (track == 6) {
+      colorH = random(25, 40);
+    } else if (track == 7) {
+      colorH = random(50, 65);
+    }
   } else {
     colorS = random(50, 100);
     colorB = random(80, 100);

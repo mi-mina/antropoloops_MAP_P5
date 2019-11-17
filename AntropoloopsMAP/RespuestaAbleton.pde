@@ -172,30 +172,32 @@ void oscEvent(OscMessage theOscMessage) {
 
     String[] parameters = sceneName.split(" ");
     if (parameters[7] != null && !parameters[7].equals("x")) {
-      String[] geoZoneDataBg = parameters[7].split("_");
-      geoZone = parameters[7];
+      String[] bgData = parameters[7].split("_");
+      backgroundImage = parameters[7];
 
-      if (geoZoneDataBg.length == 1) {
-        geoZoneData = parameters[7];
-      } else if (geoZoneDataBg.length > 1) {
-        geoZoneData = geoZoneDataBg[0];
+      if (bgData.length == 1) {
+        geoZone = parameters[7];
+        abanicoColors = "generico";
+      } else if (bgData.length > 1) {
+        geoZone = bgData[0];
+        abanicoColors = bgData[0] + "_" + bgData[1];
       }
 
       // Set base map according to the scene
-      if (loadImage("../1_BDatos/mapa_" + geoZone + ".jpg") != null) {
+      if (loadImage("../1_BDatos/mapa_" + backgroundImage + ".jpg") != null) {
         backgroundMapBase = backgroundMapNew;
-        backgroundMapNew = loadImage("../1_BDatos/mapa_" + geoZone + ".jpg");
+        backgroundMapNew = loadImage("../1_BDatos/mapa_" + backgroundImage + ".jpg");
         alpha = 0;
       } else {
         backgroundMapBase = loadImage("../1_BDatos/mapa_mundo.jpg");
         println("************************************************");
-        println("No se ha encontrado ninguna imagen de fondo con el nombre: mapa_" + geoZone);
+        println("No se ha encontrado ninguna imagen de fondo con el nombre: mapa_" + backgroundImage);
         println("************************************************");
       }
 
       // Load BDLugares acording to the scene
-      if (loadJSONArray("../1_BDatos/BDlugares_" + geoZoneData + ".txt") != null) {
-        misLugaresJSON = loadJSONArray("../1_BDatos/BDlugares_" + geoZoneData + ".txt");
+      if (loadJSONArray("../1_BDatos/BDlugares_" + geoZone + ".txt") != null) {
+        misLugaresJSON = loadJSONArray("../1_BDatos/BDlugares_" + geoZone + ".txt");
         // Empty placesDB
         placesDB = new HashMap<String, HashMap<String, Object>>();
 
@@ -209,18 +211,17 @@ void oscEvent(OscMessage theOscMessage) {
       } else {
         misLugaresJSON = loadJSONArray("../1_BDatos/BDlugares_mundo.txt");
         println("************************************************");
-        println("No se ha encontrado ningún archivo con el nombre: BDlugares_" + geoZoneData);
+        println("No se ha encontrado ningún archivo con el nombre: BDlugares_" + geoZone);
         println("************************************************");
       }
 
-      String geoZoneColors = geoZoneDataBg[0] + "_" + geoZoneDataBg[1];
       // Set colors according to scene
       for (int i = 0; i < loopsIndexed.size(); i++) {
         String claveClip = loopsIndexed.get(i);
         int[] a = int(split(claveClip, '-'));
         int track = a[0];
         
-        color trackColor = getColor(geoZoneColors, track);
+        color trackColor = getColor(abanicoColors, track);
         miAntropoloops.get(claveClip).put("color", trackColor);
 
         float r = trackColor >> 16 & 0xFF;
@@ -234,7 +235,7 @@ void oscEvent(OscMessage theOscMessage) {
           miAntropoloops.get(claveClip).put("placeTextColor", color(0, 0, 0));
         }
 
-        if (geoZoneColors.equals("med_delfines")) {
+        if (abanicoColors.equals("med_delfines")) {
           miAntropoloops.get(claveClip).put("dateTextColor", color(0, 0, 0));
         } else {
           miAntropoloops.get(claveClip).put("dateTextColor", color(0, 0, 100));
