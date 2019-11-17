@@ -23,7 +23,7 @@ class Abanico {
       relativeMessure = relativeWidth;
     }
 
-    int slicesTotal = 15;
+    int slicesTotal = 35;
     int slices = int(map(f, 135, 20, 0, slicesTotal));
     float step = 360 / slicesTotal;
 
@@ -50,15 +50,15 @@ class Abanico {
       noStroke();
 
       // volume circle
-      fill(tC, 20);
+      fill(tC, 10);
       arc(0, 0, diamVolumeCircle, diamVolumeCircle, startAngle, stopAngle);
 
       // translucent circle
-      fill(tC, 2);
+      fill(tC, 1);
       arc(0, 0, diamTransCircle, diamTransCircle, startAngle, stopAngle);
 
       // effect circle
-      fill(tC, 2);
+      fill(tC, 1);
       arc(0, 0, diamEffectCircle, diamEffectCircle, startAngle, stopAngle);
     }
   }
